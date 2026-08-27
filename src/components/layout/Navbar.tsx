@@ -31,7 +31,6 @@ export default function Navbar() {
     { label: 'Wristwatches', href: '#categories' },
     { label: 'Jewelry', href: '#categories' },
     { label: 'Lookbook', href: '#lookbook' },
-    { label: 'VIP Vault', href: '#flash-drop' },
   ];
 
   return (
@@ -136,12 +135,12 @@ export default function Navbar() {
             ))}
             <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
               <a
-                href="#vip"
+                href="#catalogue"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
-                <span>Join VIP Atelier</span>
+                <span>Explore Catalogue</span>
               </a>
             </div>
           </nav>

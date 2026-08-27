@@ -12,11 +12,9 @@ import HeroSection from '@/components/sections/HeroSection';
 import CategoryGrid from '@/components/sections/CategoryGrid';
 import FeaturedProducts from '@/components/sections/FeaturedProducts';
 import ShopTheLook from '@/components/sections/ShopTheLook';
-import FlashDropBanner from '@/components/sections/FlashDropBanner';
 import BrandPillars from '@/components/sections/BrandPillars';
 import CustomerReviews from '@/components/sections/CustomerReviews';
 import InstagramGallery from '@/components/sections/InstagramGallery';
-import NewsletterVIP from '@/components/sections/NewsletterVIP';
 import QuickViewModal from '@/components/ui/QuickViewModal';
 import ToastNotification from '@/components/ui/ToastNotification';
 
@@ -46,10 +44,8 @@ export default function Home() {
         setActiveCategory={setActiveCategory}
       />
       <ShopTheLook />
-      <FlashDropBanner />
       <CustomerReviews />
       <InstagramGallery />
-      <NewsletterVIP />
 
       {/* Footer */}
       <Footer />

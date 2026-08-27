@@ -80,37 +80,37 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-6 pb-16 lg:py-24 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
+    <section className="relative overflow-hidden pt-4 pb-16 lg:py-20 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-10 right-10 w-96 h-96 bg-amber-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#D4AF37]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-10 right-10 w-[500px] h-[500px] bg-amber-900/10 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Editorial Headline & CTAs */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Column: Editorial Headline & CTAs (Spans 5 cols on lg) */}
+          <div className="lg:col-span-5 flex flex-col items-start text-left">
             {/* Top Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#F3E5AB] text-xs font-medium mb-6 backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#F3E5AB] text-xs font-medium mb-5 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="tracking-wide">Designer Bags &bull; Fine Wears &bull; Luxury Wristwatches</span>
+              <span className="tracking-wide">Bags &bull; Wears &bull; Wristwatches</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-serif text-4xl sm:text-6xl xl:text-7xl font-light text-white tracking-tight leading-[1.1] mb-6">
+            <h1 className="font-serif text-3xl sm:text-5xl xl:text-6xl font-light text-white tracking-tight leading-[1.12] mb-5">
               Elegance That Is <br />
               <span className="italic font-normal gold-gradient-text">Truly Timeless</span>.
             </h1>
 
             {/* Subtext */}
-            <p className="text-sm sm:text-base text-gray-300 max-w-xl font-light leading-relaxed mb-8">
+            <p className="text-xs sm:text-sm text-gray-300 max-w-md font-light leading-relaxed mb-7">
               Explore an extraordinary curation of hand-stitched Italian leather bags, bespoke tailoring and wears, sculpted footwear, Swiss automatic wristwatches, and certified fine jewelry.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-10">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-8">
               <a
                 href="#categories"
-                className="py-3.5 px-7 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-xl shadow-[#D4AF37]/10"
+                className="py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-xl shadow-[#D4AF37]/10"
               >
                 <span>Explore Collections</span>
                 <ArrowRight className="w-4 h-4" />
@@ -118,46 +118,46 @@ export default function HeroSection() {
 
               <a
                 href="#lookbook"
-                className="py-3.5 px-6 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs uppercase tracking-widest text-center transition-all flex items-center justify-center gap-2"
+                className="py-3 px-5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs uppercase tracking-widest text-center transition-all flex items-center justify-center gap-2"
               >
                 <span>View Lookbook</span>
               </a>
             </div>
 
             {/* Trust Proof Badges */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 w-full max-w-lg text-left">
+            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 w-full max-w-md text-left">
               <div>
-                <div className="flex items-center gap-1.5 text-white font-serif text-xl sm:text-2xl font-bold">
+                <div className="flex items-center gap-1 text-white font-serif text-lg sm:text-xl font-bold">
                   <span>50k+</span>
                 </div>
-                <p className="text-[11px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
                   Clients Nationwide
                 </p>
               </div>
 
               <div>
-                <div className="flex items-center gap-1.5 text-white font-serif text-xl sm:text-2xl font-bold">
+                <div className="flex items-center gap-1 text-white font-serif text-lg sm:text-xl font-bold">
                   <span>100%</span>
                 </div>
-                <p className="text-[11px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
                   Certified Authentic
                 </p>
               </div>
 
               <div>
-                <div className="flex items-center gap-1.5 text-[#D4AF37] font-serif text-xl sm:text-2xl font-bold">
+                <div className="flex items-center gap-1 text-[#D4AF37] font-serif text-lg sm:text-xl font-bold">
                   <span>4.9★</span>
                 </div>
-                <p className="text-[11px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
                   Client Rating
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Hero Visual with Fade-In / Fade-Out Animation */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group">
+          {/* Right Column: Hero Visual with Wider Showcase (Spans 7 cols on lg) */}
+          <div className="lg:col-span-7 relative w-full">
+            <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/11] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group">
               {/* Slides Container (Fading in & out) */}
               {heroSlides.map((slide, idx) => {
                 const isActive = currentSlideIndex === idx;
@@ -184,7 +184,7 @@ export default function HeroSection() {
               {/* Navigation Arrows */}
               <button
                 onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white/70 hover:text-white border border-white/10 backdrop-blur-md transition-all"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer"
                 aria-label="Previous slide"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -192,14 +192,14 @@ export default function HeroSection() {
 
               <button
                 onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white/70 hover:text-white border border-white/10 backdrop-blur-md transition-all"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer"
                 aria-label="Next slide"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
 
               {/* Top Floating Badge */}
-              <div className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-[11px] font-medium">
+              <div className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white text-[11px] font-medium shadow-lg">
                 <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                 <span>{currentSlide.badge}</span>
               </div>
@@ -207,10 +207,10 @@ export default function HeroSection() {
               {/* Floating Active Product Card (Bottom) */}
               <div
                 onClick={() => setQuickViewProduct(activeProduct)}
-                className="absolute bottom-12 inset-x-6 z-20 p-4 rounded-2xl glass-panel text-white cursor-pointer hover:border-[#D4AF37]/50 transition-all flex items-center justify-between group/card shadow-2xl"
+                className="absolute bottom-12 inset-x-4 sm:inset-x-8 z-20 p-4 rounded-2xl glass-panel text-white cursor-pointer hover:border-[#D4AF37]/50 transition-all flex items-center justify-between group/card shadow-2xl"
               >
-                <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
+                <div className="flex items-center gap-3.5">
+                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
                     <Image
                       src={activeProduct.primaryImage}
                       alt={activeProduct.name}
@@ -222,7 +222,7 @@ export default function HeroSection() {
                     <span className="text-[9px] uppercase font-bold tracking-widest text-[#D4AF37]">
                       {activeProduct.categoryLabel}
                     </span>
-                    <h3 className="text-xs font-serif font-medium text-white line-clamp-1">
+                    <h3 className="text-xs sm:text-sm font-serif font-medium text-white line-clamp-1">
                       {activeProduct.name}
                     </h3>
                     <p className="text-xs font-semibold text-[#F3E5AB]">
@@ -230,19 +230,19 @@ export default function HeroSection() {
                     </p>
                   </div>
                 </div>
-                <div className="p-2 rounded-xl bg-white/10 group-hover/card:bg-[#D4AF37] group-hover/card:text-black transition-colors">
+                <div className="p-2.5 rounded-xl bg-white/10 group-hover/card:bg-[#D4AF37] group-hover/card:text-black transition-colors shrink-0">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
 
               {/* Slide Indicator Dots */}
-              <div className="absolute bottom-4 inset-x-0 z-20 flex justify-center items-center gap-1.5">
+              <div className="absolute bottom-4 inset-x-0 z-20 flex justify-center items-center gap-2">
                 {heroSlides.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentSlideIndex(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
-                      currentSlideIndex === idx ? 'w-6 bg-[#D4AF37]' : 'w-1.5 bg-white/40 hover:bg-white/70'
+                    className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                      currentSlideIndex === idx ? 'w-8 bg-[#D4AF37]' : 'w-2 bg-white/40 hover:bg-white/70'
                     }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
@@ -251,7 +251,7 @@ export default function HeroSection() {
             </div>
 
             {/* Decorative Offset Backdrop Accent */}
-            <div className="hidden sm:block absolute -bottom-4 -right-4 -z-10 w-full h-full rounded-3xl border border-[#D4AF37]/20" />
+            <div className="hidden sm:block absolute -bottom-3 -right-3 -z-10 w-full h-full rounded-3xl border border-[#D4AF37]/20" />
           </div>
         </div>
       </div>

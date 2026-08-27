@@ -76,8 +76,8 @@ export default function AnnouncementBar() {
             )}
           </div>
           <span className="h-3 w-px bg-white/10" />
-          <a href="#vip" className="hover:text-[#D4AF37] transition-colors">
-            VIP Atelier
+          <a href="#catalogue" className="hover:text-[#D4AF37] transition-colors">
+            Collections
           </a>
         </div>
       </div>

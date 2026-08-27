@@ -10,9 +10,9 @@ export default function Footer() {
     <footer className="bg-[#08090C] text-gray-400 text-xs border-t border-white/10 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-white/10">
-          {/* Col 1 & 2: Brand Identity */}
-          <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+          {/* Brand Identity */}
+          <div className="md:col-span-8 space-y-4">
             <div className="flex flex-col">
               <span className="font-serif text-2xl font-bold tracking-[0.28em] text-white flex items-center gap-1.5">
                 <span>TIMELESS</span>
@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
             </div>
 
-            <p className="text-gray-400 text-xs font-light max-w-sm leading-relaxed">
+            <p className="text-gray-400 text-xs font-light max-w-md leading-relaxed">
               Curating the finest handcrafted leather bags, bespoke wears, high-precision Swiss wristwatches, and certified fine jewelry for discerning patrons.
             </p>
 
@@ -33,47 +33,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 3: Collections */}
-          <div>
+          {/* Collections Column */}
+          <div className="md:col-span-4">
             <h4 className="font-serif text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Collections
             </h4>
-            <ul className="space-y-2.5">
-              {['Designer Bags', 'Wears', 'Luxury Shoes', 'Wristwatches', 'Fine Jewelry', 'Limited Vault Drops'].map((item) => (
+            <ul className="grid grid-cols-2 gap-2.5">
+              {['Designer Bags', 'Wears', 'Luxury Shoes', 'Wristwatches', 'Fine Jewelry', 'Lookbook'].map((item) => (
                 <li key={item}>
-                  <a href="#categories" className="hover:text-[#D4AF37] transition-colors">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 4: Client Concierge */}
-          <div>
-            <h4 className="font-serif text-sm font-semibold uppercase tracking-wider text-white mb-4">
-              Concierge
-            </h4>
-            <ul className="space-y-2.5">
-              {['Track Your Order', 'Certificate Verification', 'Bespoke Sizing & Styling', 'Complimentary Returns', 'Book Private Atelier Appointment'].map((item) => (
-                <li key={item}>
-                  <a href="#catalogue" className="hover:text-[#D4AF37] transition-colors">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 5: Maison Heritage */}
-          <div>
-            <h4 className="font-serif text-sm font-semibold uppercase tracking-wider text-white mb-4">
-              Heritage
-            </h4>
-            <ul className="space-y-2.5">
-              {['The Florence Atelier', 'Ethical Gold & Diamonds', 'Sustainability Charter', 'Global Flagships', 'Press & Media'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="hover:text-[#D4AF37] transition-colors">
+                  <a href={item === 'Lookbook' ? '#lookbook' : '#categories'} className="hover:text-[#D4AF37] transition-colors">
                     {item}
                   </a>
                 </li>
@@ -82,9 +50,9 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar: Payments & Copyright */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-400">
+        {/* Bottom Bar: Copyright & Back to Top */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-400 text-center sm:text-left">
             <span>&copy; {new Date().getFullYear()} TIMELESS Luxury Collective. All rights reserved.</span>
             <span className="hidden sm:inline">&bull;</span>
             <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
@@ -92,23 +60,15 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
 
-          {/* Payment Badges & Back to Top */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-[10px] font-semibold tracking-wider text-gray-400">
-              <span className="px-2 py-1 rounded bg-white/5 border border-white/10">VISA</span>
-              <span className="px-2 py-1 rounded bg-white/5 border border-white/10">MC</span>
-              <span className="px-2 py-1 rounded bg-white/5 border border-white/10">AMEX</span>
-              <span className="px-2 py-1 rounded bg-white/5 border border-white/10">APPLE PAY</span>
-            </div>
-
-            <button
-              onClick={scrollToTop}
-              className="p-2 rounded-xl bg-white/5 hover:bg-[#D4AF37] hover:text-black transition-all border border-white/10 text-gray-300"
-              aria-label="Scroll to top"
-            >
-              <ArrowUp className="w-4 h-4" />
-            </button>
-          </div>
+          {/* Back to Top */}
+          <button
+            onClick={scrollToTop}
+            className="p-2 rounded-xl bg-white/5 hover:bg-[#D4AF37] hover:text-black transition-all border border-white/10 text-gray-300 flex items-center gap-2 text-xs"
+            aria-label="Scroll to top"
+          >
+            <span>Back to top</span>
+            <ArrowUp className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </footer>
