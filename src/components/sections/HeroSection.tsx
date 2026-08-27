@@ -40,12 +40,12 @@ export default function HeroSection() {
     },
     {
       id: 'slide-4',
-      productId: 'watch-02',
-      title: 'Astral Diamond Skeleton Dial',
-      subtitle: 'Open-worked Movement with 12 Diamonds',
+      productId: 'watch-05',
+      title: 'Poe Edgar Nocturne Automatic',
+      subtitle: 'Ivory Tourbillon Dial with Gilt Numerals & Moonphase',
       category: 'Wristwatches',
-      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Limited Allocation',
+      image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1600&auto=format&fit=crop',
+      badge: 'Poe Edgar Edition',
     },
     {
       id: 'slide-5',

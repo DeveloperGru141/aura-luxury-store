@@ -496,6 +496,35 @@ export const PRODUCTS: Product[] = [
       { label: 'Crystal', value: 'Anti-Reflective Sapphire' },
     ],
   },
+  {
+    id: 'watch-05',
+    name: 'Poe Edgar Nocturne Automatic',
+    category: 'watches',
+    categoryLabel: 'Wristwatches',
+    tagline: 'Ivory tourbillon dial with gilt Poe Edgar numerals & moonphase',
+    description: 'A literary tribute crafted for nocturnal elegance. Features an ivory lacquer dial with gilt numerals inspired by Poe’s Raven, open tourbillon at 6 o’clock, exhibition caseback engraved with Edgar’s signature, and a 72-hour power reserve automatic movement.',
+    price: 890000,
+    originalPrice: 1050000,
+    rating: 4.9,
+    reviewCount: 17,
+    primaryImage: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1000&auto=format&fit=crop',
+    secondaryImage: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=1000&auto=format&fit=crop',
+    badge: 'LIMITED',
+    badgeColor: 'bg-purple-700',
+    colors: [
+      { name: 'Nocturne Black & Gold', hex: '#0A0A0A' },
+      { name: 'Midnight Raven', hex: '#1C1C1E' },
+    ],
+    materials: ['316L Black PVD Steel', 'Sapphire Crystal with AR Coating', 'Alligator Leather Strap'],
+    inStock: true,
+    isNew: true,
+    specs: [
+      { label: 'Movement', value: 'Automatic Calibre Nocturne 72h' },
+      { label: 'Case Diameter', value: '40mm (11.2mm thickness)' },
+      { label: 'Complication', value: 'Moonphase at 6 o’clock' },
+      { label: 'Water Resistance', value: '5 ATM (50m)' },
+    ],
+  },
 
   // ================= 5. JEWELRY =================
   {
