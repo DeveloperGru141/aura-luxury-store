@@ -26,7 +26,7 @@ export default function BrandPillars() {
   ];
 
   return (
-    <section className="py-16 bg-[#0B0D11] border-t border-b border-white/5">
+    <section id="heritage" className="py-16 bg-[#0B0D11] border-t border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {pillars.map((item, idx) => {

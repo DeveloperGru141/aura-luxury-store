@@ -3,8 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/StoreContext';
 import { Search, Heart, ShoppingBag, Menu, X, Sparkles } from 'lucide-react';
+import type { ProductCategory } from '@/types/store';
 
-export default function Navbar() {
+interface NavbarProps {
+  onSelectCategory?: (cat: ProductCategory) => void;
+}
+
+export default function Navbar({ onSelectCategory }: NavbarProps) {
   const {
     cartItemCount,
     wishlist,
@@ -24,14 +29,44 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: 'Bags', href: '#categories' },
-    { label: 'Wears', href: '#categories' },
-    { label: 'Shoes', href: '#categories' },
-    { label: 'Wristwatches', href: '#categories' },
-    { label: 'Jewelry', href: '#categories' },
+  // Properly named + routed CTAs — each maps to a real section ID
+  // Category CTAs filter catalogue via onSelectCategory + scroll to #catalogue
+  const navLinks: { label: string; href: string; category?: ProductCategory }[] = [
+    { label: 'Bags', href: '#catalogue', category: 'bags' },
+    { label: 'Wears', href: '#catalogue', category: 'apparel' },
+    { label: 'Shoes', href: '#catalogue', category: 'shoes' },
+    { label: 'Wristwatches', href: '#catalogue', category: 'watches' },
+    { label: 'Jewelry', href: '#catalogue', category: 'jewelry' },
     { label: 'Lookbook', href: '#lookbook' },
+    { label: 'Reviews', href: '#reviews' },
   ];
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: (typeof navLinks)[number]
+  ) => {
+    // Category links: trigger filter + smooth scroll to catalogue
+    if (link.category && onSelectCategory) {
+      e.preventDefault();
+      onSelectCategory(link.category);
+      // fallback scroll if page handler didn't scroll (e.g. already on catalogue)
+      const el = document.getElementById('catalogue');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
+      // update hash without jump
+      window.history.replaceState(null, '', link.href);
+      return;
+    }
+    // Non-category: smooth scroll to section
+    if (link.href.startsWith('#')) {
+      e.preventDefault();
+      const id = link.href.slice(1);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      window.history.replaceState(null, '', link.href);
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <header
@@ -52,8 +87,16 @@ export default function Navbar() {
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          {/* Logo */}
-          <a href="#" className="flex flex-col group">
+          {/* Logo — routes to hero */}
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+              window.history.replaceState(null, '', '#home');
+            }}
+            className="flex flex-col group"
+          >
             <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.28em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
               <span>TIMELESS</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
@@ -70,6 +113,7 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link)}
               className="text-xs font-medium uppercase tracking-wider text-gray-300 hover:text-[#D4AF37] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#D4AF37] hover:after:w-full after:transition-all after:duration-300"
             >
               {link.label}
@@ -99,7 +143,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link)}
                 className="text-sm font-medium tracking-wide text-gray-200 hover:text-[#D4AF37] transition-colors py-1 flex items-center justify-between"
               >
                 <span>{link.label}</span>
