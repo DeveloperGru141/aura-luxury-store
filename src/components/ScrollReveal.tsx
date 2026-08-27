@@ -38,13 +38,6 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
-    // Respect reduced motion at JS level as well (CSS also handles)
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      setIsVisible(true);
-      return;
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

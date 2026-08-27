@@ -9,10 +9,9 @@ import { Heart, Eye, ShoppingBag, Star, Check } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
-  revealIndex?: number;
 }
 
-export default function ProductCard({ product, revealIndex = 0 }: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
   const { formatPrice, addToCart, toggleWishlist, isInWishlist, setQuickViewProduct } = useStore();
   const [isHovered, setIsHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
@@ -39,8 +38,7 @@ export default function ProductCard({ product, revealIndex = 0 }: ProductCardPro
 
   return (
     <div
-      className="mobile-reveal group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-all duration-500 hover:border-[#D4AF37]/30 hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
-      style={{ '--reveal-delay': `${Math.min(revealIndex, 8) * 60}ms` } as React.CSSProperties}
+      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-all duration-500 hover:border-[#D4AF37]/30 hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={(event) => {

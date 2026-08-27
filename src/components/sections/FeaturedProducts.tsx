@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ProductCategory } from '@/types/store';
 import { PRODUCTS } from '@/data/mockData';
 import ProductCard from '@/components/ui/ProductCard';
+import ScrollReveal from '@/components/ScrollReveal';
 import { Sparkles, SlidersHorizontal } from 'lucide-react';
 
 interface FeaturedProductsProps {
@@ -105,7 +106,9 @@ export default function FeaturedProducts({
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} revealIndex={index} />
+              <ScrollReveal key={product.id} delay={(index % 4) * 0.05} className="h-full">
+                <ProductCard product={product} />
+              </ScrollReveal>
             ))}
           </div>
         )}

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CATEGORIES } from '@/data/mockData';
 import { ProductCategory } from '@/types/store';
 import { ArrowUpRight } from 'lucide-react';
+import ScrollReveal from '@/components/ScrollReveal';
 
 interface CategoryGridProps {
   onSelectCategory: (category: ProductCategory) => void;
@@ -34,46 +35,46 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
           {CATEGORIES.map((cat, idx) => {
             const isFeatured = idx === 0 || idx === 3;
             return (
-              <div
-                key={cat.id}
-                onClick={() => onSelectCategory(cat.id as ProductCategory)}
-                className={`mobile-reveal group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60 transition-all duration-700 aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[180px] ${
-                  isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
-                }`}
-                style={{ '--reveal-delay': `${idx * 70}ms` } as React.CSSProperties}
-              >
-                {/* Background Image */}
-                <Image
-                  src={cat.image}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover object-center group-hover:scale-108 transition-transform duration-1000 ease-out"
-                />
+              <ScrollReveal key={cat.id} delay={idx * 0.07} className="h-full">
+                <div
+                  onClick={() => onSelectCategory(cat.id as ProductCategory)}
+                  className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60 transition-all duration-700 aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[180px] ${
+                    isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
+                  }`}
+                >
+                  {/* Background Image */}
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover object-center group-hover:scale-108 transition-transform duration-1000 ease-out"
+                  />
 
-                {/* Dark Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10 group-hover:via-black/40 transition-colors" />
+                  {/* Dark Vignette Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10 group-hover:via-black/40 transition-colors" />
 
-                {/* Card Top Pill */}
-                <div className="absolute top-4 right-4 z-10">
-                  <div className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
-                    <ArrowUpRight className="w-4 h-4" />
+                  {/* Card Top Pill */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  {/* Card Info Bottom */}
+                  <div className="absolute inset-x-6 bottom-6 z-10">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] mb-1 block">
+                      {cat.count}
+                    </span>
+                    <h3 className="font-serif text-2xl font-medium text-white mb-1 group-hover:text-[#F3E5AB] transition-colors">
+                      {cat.name}
+                    </h3>
+                    <p className="text-xs text-gray-300 font-light opacity-90 line-clamp-1">
+                      {cat.tagline}
+                    </p>
                   </div>
                 </div>
-
-                {/* Card Info Bottom */}
-                <div className="absolute inset-x-6 bottom-6 z-10">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] mb-1 block">
-                    {cat.count}
-                  </span>
-                  <h3 className="font-serif text-2xl font-medium text-white mb-1 group-hover:text-[#F3E5AB] transition-colors">
-                    {cat.name}
-                  </h3>
-                  <p className="text-xs text-gray-300 font-light opacity-90 line-clamp-1">
-                    {cat.tagline}
-                  </p>
-                </div>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>
