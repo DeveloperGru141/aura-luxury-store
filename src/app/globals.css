@@ -272,3 +272,31 @@ html, body {
     outline-offset: 2px;
   }
 }
+
+/* TIMELESS ScrollReveal — luxury motion, but fully accessible */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Reset will-change to avoid GPU layer bloat when motion is reduced */
+  .will-change-transform,
+  [style*="will-change"] {
+    will-change: auto !important;
+  }
+
+  /* ScrollReveal: instantly visible, no lift */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
+
+  .translate-y-6 {
+    transform: translateY(0) !important;
+  }
+}

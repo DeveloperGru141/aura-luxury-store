@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -26,10 +26,6 @@ export default function Footer() {
             <p className="text-gray-400 text-xs font-light max-w-md leading-relaxed">
               Curating the finest handcrafted leather bags, bespoke wears, high-precision Swiss wristwatches, and certified fine jewelry for discerning patrons.
             </p>
-
-            <div className="flex items-center gap-2 text-xs text-gray-300 pt-2">
-              <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-            </div>
           </div>
 
           {/* Collections Column */}
