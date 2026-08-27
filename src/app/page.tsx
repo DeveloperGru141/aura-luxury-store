@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { ProductCategory } from '@/types/store';
-import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
 import CartDrawer from '@/components/layout/CartDrawer';
 import WishlistDrawer from '@/components/layout/WishlistDrawer';
@@ -31,8 +30,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#0D0F14] text-white selection:bg-[#D4AF37] selection:text-black">
-      {/* Top Banner & Navigation */}
-      <AnnouncementBar />
+      {/* Navigation Header */}
       <Navbar />
 
       {/* Main Landing Sections */}

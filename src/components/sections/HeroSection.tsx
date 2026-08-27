@@ -17,7 +17,7 @@ export default function HeroSection() {
       title: 'Precision Swiss Chronographs',
       subtitle: '18k Rose Gold & Automatic Calibre',
       category: 'Wristwatches',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1400&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop',
       badge: 'Master Horology Drop',
     },
     {
@@ -26,7 +26,7 @@ export default function HeroSection() {
       title: 'Hand-Burnished Italian Leather',
       subtitle: 'Structured Croc-Embossed Calfskin',
       category: 'Designer Bags',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1400&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
       badge: 'Florence Atelier',
     },
     {
@@ -35,7 +35,7 @@ export default function HeroSection() {
       title: 'Mulberry Silk Architectural Wears',
       subtitle: 'Fluid Bias-Cut Backless Silhouette',
       category: 'Wears',
-      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1400&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1600&auto=format&fit=crop',
       badge: 'Runway Collection',
     },
     {
@@ -44,7 +44,7 @@ export default function HeroSection() {
       title: 'Astral Diamond Skeleton Dial',
       subtitle: 'Open-worked Movement with 12 Diamonds',
       category: 'Wristwatches',
-      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1400&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop',
       badge: 'Limited Allocation',
     },
     {
@@ -53,7 +53,7 @@ export default function HeroSection() {
       title: 'Sienna Chevron Quilted Chain Bag',
       subtitle: 'Plush Nappa Lambskin in Ivory & Gold',
       category: 'Designer Bags',
-      image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1400&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
       badge: 'New Season Arrival',
     },
   ];
@@ -80,15 +80,15 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-4 pb-16 lg:py-20 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
+    <section className="relative overflow-hidden pt-4 pb-14 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#D4AF37]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-10 right-10 w-[500px] h-[500px] bg-amber-900/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#D4AF37]/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 right-10 w-[600px] h-[600px] bg-amber-900/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Left Column: Editorial Headline & CTAs (Spans 5 cols on lg) */}
-          <div className="lg:col-span-5 flex flex-col items-start text-left">
+          {/* Left Column: Editorial Headline & CTAs (Spans 4 cols on lg) */}
+          <div className="lg:col-span-4 flex flex-col items-start text-left">
             {/* Top Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#F3E5AB] text-xs font-medium mb-5 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
@@ -96,14 +96,14 @@ export default function HeroSection() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-serif text-3xl sm:text-5xl xl:text-6xl font-light text-white tracking-tight leading-[1.12] mb-5">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-[42px] xl:text-5xl font-light text-white tracking-tight leading-[1.14] mb-4">
               Elegance That Is <br />
               <span className="italic font-normal gold-gradient-text">Truly Timeless</span>.
             </h1>
 
             {/* Subtext */}
-            <p className="text-xs sm:text-sm text-gray-300 max-w-md font-light leading-relaxed mb-7">
-              Explore an extraordinary curation of hand-stitched Italian leather bags, bespoke tailoring and wears, sculpted footwear, Swiss automatic wristwatches, and certified fine jewelry.
+            <p className="text-xs sm:text-sm text-gray-300 max-w-sm font-light leading-relaxed mb-6">
+              Explore an extraordinary curation of hand-stitched Italian leather bags, bespoke wears, sculpted footwear, Swiss automatic wristwatches, and fine jewelry.
             </p>
 
             {/* CTAs */}
@@ -125,39 +125,39 @@ export default function HeroSection() {
             </div>
 
             {/* Trust Proof Badges */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 w-full max-w-md text-left">
+            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-white/10 w-full max-w-sm text-left">
               <div>
-                <div className="flex items-center gap-1 text-white font-serif text-lg sm:text-xl font-bold">
+                <div className="flex items-center gap-1 text-white font-serif text-lg font-bold">
                   <span>50k+</span>
                 </div>
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
-                  Clients Nationwide
+                  Clients
                 </p>
               </div>
 
               <div>
-                <div className="flex items-center gap-1 text-white font-serif text-lg sm:text-xl font-bold">
+                <div className="flex items-center gap-1 text-white font-serif text-lg font-bold">
                   <span>100%</span>
                 </div>
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
-                  Certified Authentic
+                  Authentic
                 </p>
               </div>
 
               <div>
-                <div className="flex items-center gap-1 text-[#D4AF37] font-serif text-lg sm:text-xl font-bold">
+                <div className="flex items-center gap-1 text-[#D4AF37] font-serif text-lg font-bold">
                   <span>4.9★</span>
                 </div>
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5">
-                  Client Rating
+                  Rating
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Hero Visual with Wider Showcase (Spans 7 cols on lg) */}
-          <div className="lg:col-span-7 relative w-full">
-            <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/11] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group">
+          {/* Right Column: Expansive Widescreen Animation Box (Spans 8 cols on lg) */}
+          <div className="lg:col-span-8 relative w-full">
+            <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/9] min-h-[420px] lg:min-h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group">
               {/* Slides Container (Fading in & out) */}
               {heroSlides.map((slide, idx) => {
                 const isActive = currentSlideIndex === idx;
@@ -175,8 +175,8 @@ export default function HeroSection() {
                       priority={idx === 0}
                       className="object-cover object-center"
                     />
-                    {/* Dark gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
+                    {/* Cinematic dark gradient vignette overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/30" />
                   </div>
                 );
               })}
@@ -184,7 +184,7 @@ export default function HeroSection() {
               {/* Navigation Arrows */}
               <button
                 onClick={handlePrev}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer shadow-lg"
                 aria-label="Previous slide"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -192,7 +192,7 @@ export default function HeroSection() {
 
               <button
                 onClick={handleNext}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer shadow-lg"
                 aria-label="Next slide"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -207,10 +207,10 @@ export default function HeroSection() {
               {/* Floating Active Product Card (Bottom) */}
               <div
                 onClick={() => setQuickViewProduct(activeProduct)}
-                className="absolute bottom-12 inset-x-4 sm:inset-x-8 z-20 p-4 rounded-2xl glass-panel text-white cursor-pointer hover:border-[#D4AF37]/50 transition-all flex items-center justify-between group/card shadow-2xl"
+                className="absolute bottom-12 inset-x-4 sm:inset-x-8 z-20 p-4 sm:p-5 rounded-2xl glass-panel text-white cursor-pointer hover:border-[#D4AF37]/50 transition-all flex items-center justify-between group/card shadow-2xl"
               >
-                <div className="flex items-center gap-3.5">
-                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
+                <div className="flex items-center gap-4">
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
                     <Image
                       src={activeProduct.primaryImage}
                       alt={activeProduct.name}
@@ -219,18 +219,19 @@ export default function HeroSection() {
                     />
                   </div>
                   <div>
-                    <span className="text-[9px] uppercase font-bold tracking-widest text-[#D4AF37]">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37]">
                       {activeProduct.categoryLabel}
                     </span>
-                    <h3 className="text-xs sm:text-sm font-serif font-medium text-white line-clamp-1">
+                    <h3 className="text-sm sm:text-base font-serif font-medium text-white line-clamp-1">
                       {activeProduct.name}
                     </h3>
-                    <p className="text-xs font-semibold text-[#F3E5AB]">
+                    <p className="text-xs sm:text-sm font-semibold text-[#F3E5AB]">
                       {formatPrice(activeProduct.price)}
                     </p>
                   </div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white/10 group-hover/card:bg-[#D4AF37] group-hover/card:text-black transition-colors shrink-0">
+                <div className="p-3 rounded-xl bg-white/10 group-hover/card:bg-[#D4AF37] group-hover/card:text-black transition-colors shrink-0 flex items-center gap-1 text-xs font-semibold">
+                  <span className="hidden sm:inline">Inspect</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>

@@ -77,7 +77,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right: Actions (Search, Wishlist, Bag) */}
+        {/* Right: Actions (Search, Bag) */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search Trigger */}
           <button
@@ -87,20 +87,6 @@ export default function Navbar() {
           >
             <Search className="w-4 h-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
             <span className="hidden md:inline text-xs text-gray-400 group-hover:text-gray-200">Search</span>
-          </button>
-
-          {/* Wishlist Trigger */}
-          <button
-            onClick={() => setIsWishlistOpen(true)}
-            className="relative p-2 sm:p-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
-            aria-label="Saved wishlist"
-          >
-            <Heart className="w-4 h-4 text-gray-300 hover:text-rose-400 transition-colors" />
-            {wishlist.length > 0 && (
-              <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center animate-scale-in">
-                {wishlist.length}
-              </span>
-            )}
           </button>
 
           {/* Cart Bag Trigger */}
