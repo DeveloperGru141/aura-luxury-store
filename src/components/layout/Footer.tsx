@@ -7,10 +7,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#08090C] text-gray-400 text-xs border-t border-white/10 pt-16 pb-12">
+    <footer className="bg-[#08090C] text-gray-400 text-xs border-t border-white/10 pt-10 sm:pt-12 lg:pt-16 pb-8 sm:pb-12 pb-[max(2rem,env(safe-area-inset-bottom))]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        {/* Top Grid — fluid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 pb-8 sm:pb-10 lg:pb-12 border-b border-white/10">
           {/* Brand Identity */}
           <div className="md:col-span-8 space-y-4">
             <div className="flex flex-col">

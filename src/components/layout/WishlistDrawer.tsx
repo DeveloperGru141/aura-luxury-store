@@ -25,28 +25,28 @@ export default function WishlistDrawer() {
         onClick={() => setIsWishlistOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-[#11141A] border-l border-white/10 text-white shadow-2xl flex flex-col justify-between">
-          {/* Header */}
-          <div className="p-6 border-b border-white/10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Heart className="w-5 h-5 text-rose-400 fill-rose-400" />
-              <h2 className="font-serif text-lg font-medium">Saved Pieces</h2>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-gray-300">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-6 justify-end">
+        <div className="w-[100vw] sm:w-screen max-w-[92vw] sm:max-w-md bg-[#11141A] border-l border-white/10 text-white shadow-2xl flex flex-col justify-between overflow-hidden">
+          {/* Header — fluid */}
+          <div className="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <Heart className="w-5 h-5 text-rose-400 fill-rose-400 shrink-0" />
+              <h2 className="font-serif text-base sm:text-lg font-medium truncate">Saved Pieces</h2>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-gray-300 shrink-0">
                 {wishlist.length}
               </span>
             </div>
             <button
               onClick={() => setIsWishlistOpen(false)}
-              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-gray-400 hover:text-white hover:bg-white/5 active:bg-white/10 transition-colors touch-manipulation shrink-0"
               aria-label="Close wishlist"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* List */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          {/* List — fluid */}
+          <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-3 sm:space-y-4 pb-[env(safe-area-inset-bottom)] touch-manipulation">
             {wishlist.length === 0 ? (
               <div className="py-16 text-center flex flex-col items-center">
                 <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-gray-500 mb-3">

@@ -78,10 +78,10 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Left: Mobile Menu Toggle & Brand Logo */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+            className="lg:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 active:bg-white/10 transition-colors flex items-center justify-center touch-manipulation"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -107,54 +107,54 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           </a>
         </div>
 
-        {/* Center: Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-7">
+        {/* Center: Desktop Navigation Links — fluid gap, wraps on mid screens */}
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-7">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={(e) => handleNavClick(e, link)}
-              className="text-xs font-medium uppercase tracking-wider text-gray-300 hover:text-[#D4AF37] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#D4AF37] hover:after:w-full after:transition-all after:duration-300"
+              className="text-[11px] xl:text-xs font-medium uppercase tracking-wider text-gray-300 hover:text-[#D4AF37] transition-colors relative py-2 touch-manipulation after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#D4AF37] hover:after:w-full after:transition-all after:duration-300"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Right: Actions (Search) */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Search Trigger */}
+        {/* Right: Actions (Search) — fluid touch targets */}
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          {/* Search Trigger — 44px min hit target */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="p-2 sm:p-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2 group border border-transparent hover:border-white/10"
+            className="min-h-[44px] min-w-[44px] p-2.5 sm:p-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 active:bg-white/10 transition-colors flex items-center justify-center gap-2 group border border-transparent hover:border-white/10 touch-manipulation"
             aria-label="Search catalogue"
           >
-            <Search className="w-4 h-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
+            <Search className="w-4.5 h-4.5 sm:w-4 sm:h-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
             <span className="hidden md:inline text-xs text-gray-400 group-hover:text-gray-200">Search</span>
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Navigation Drawer — fluid, scrollable, safe-area */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-[#0D0F14]/98 backdrop-blur-2xl px-6 py-6 transition-all">
-          <nav className="flex flex-col gap-4">
+        <div className="lg:hidden border-t border-white/10 bg-[#0D0F14]/98 backdrop-blur-2xl px-4 sm:px-6 py-5 sm:py-6 transition-all max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))] touch-manipulation">
+          <nav className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link)}
-                className="text-sm font-medium tracking-wide text-gray-200 hover:text-[#D4AF37] transition-colors py-1 flex items-center justify-between"
+                className="text-[15px] font-medium tracking-wide text-gray-200 hover:text-[#D4AF37] active:text-[#D4AF37] transition-colors py-3.5 min-h-[44px] flex items-center justify-between touch-manipulation"
               >
                 <span>{link.label}</span>
                 <span className="text-[#D4AF37] text-xs">&rarr;</span>
               </a>
             ))}
-            <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
+            <div className="pt-4 mt-2 border-t border-white/10 flex flex-col gap-3">
               <a
                 href="#catalogue"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2"
+                onClick={(e) => handleNavClick(e, { label: 'Catalogue', href: '#catalogue' } as any)}
+                className="w-full py-3.5 min-h-[44px] rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Explore Catalogue</span>

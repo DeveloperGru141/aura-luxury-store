@@ -23,24 +23,24 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export default function InstagramGallery() {
   return (
-    <section id="instagram" className="py-20 bg-[#0A0C0F] border-t border-white/5">
+    <section id="instagram" className="py-12 sm:py-16 lg:py-20 bg-[#0A0C0F] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-gray-300 text-xs font-semibold uppercase tracking-widest mb-3">
-            <InstagramIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
+        {/* Header — fluid */}
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10 lg:mb-12 px-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-gray-300 text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
+            <InstagramIcon className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
             <span>@TimelessLuxury</span>
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl font-light text-white mb-2">
+          <h2 className="font-serif text-[24px] sm:text-3xl lg:text-4xl font-light text-white mb-2 leading-tight">
             The Living <span className="italic font-normal gold-gradient-text">Lookbook</span>
           </h2>
-          <p className="text-xs text-gray-400 font-light">
+          <p className="text-[13px] sm:text-xs text-gray-400 font-light leading-relaxed">
             Tag #TimelessLuxury on Instagram for an opportunity to be featured in our seasonal global lookbook.
           </p>
         </div>
 
-        {/* 4-Image Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* 4-Image Grid — fluid gaps */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {INSTAGRAM_POSTS.map((post) => (
             <div
               key={post.id}

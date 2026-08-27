@@ -89,31 +89,31 @@ export default function ShopTheLook() {
   };
 
   return (
-    <section id="lookbook" className="py-24 bg-[#0A0C0F] relative overflow-hidden">
-      {/* Subtle ambient light */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#D4AF37]/5 rounded-full blur-[160px] pointer-events-none" />
+    <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#0A0C0F] relative overflow-hidden">
+      {/* Subtle ambient light — fluid */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Minimalist Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-xs font-semibold uppercase tracking-widest mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+        {/* Minimalist Section Header — fluid */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
+          <div className="min-w-0">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
               <span>Living Showcase</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-light text-white">
+            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">
               Curated <span className="italic font-normal gold-gradient-text">Lookbook</span>
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-gray-400 max-w-md mt-4 md:mt-0 font-light leading-relaxed">
+          <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">
             A seamless transition of master Swiss wristwatches, bespoke wears, luxury shoes, and handcrafted Italian leather bags.
           </p>
         </div>
 
-        {/* Animated Multi-Product Transition Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Main Visual Crossfade Frame (Spans 8 cols on lg) */}
-          <div className="lg:col-span-8 relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/10] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#14171E] group">
+        {/* Animated Multi-Product Transition Container — fluid gaps */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
+          {/* Main Visual Crossfade Frame (Spans 8 cols on lg) — fluid aspect */}
+          <div className="lg:col-span-8 relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#14171E] group min-h-[280px] sm:min-h-[360px]">
             {/* Crossfade Slides */}
             {stylingSlides.map((slide, idx) => {
               const isActive = currentIndex === idx;
@@ -137,10 +137,10 @@ export default function ShopTheLook() {
               );
             })}
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows — fluid 44px */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer shadow-lg"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-black/60 hover:bg-black/90 active:bg-black text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer shadow-lg touch-manipulation"
               aria-label="Previous look"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -148,36 +148,36 @@ export default function ShopTheLook() {
 
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer shadow-lg"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-black/60 hover:bg-black/90 active:bg-black text-white/80 hover:text-white border border-white/15 backdrop-blur-md transition-all cursor-pointer shadow-lg touch-manipulation"
               aria-label="Next look"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
 
-            {/* Top Badge */}
-            <div className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white text-[11px] font-medium shadow-lg">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>{currentSlide.badge}</span>
+            {/* Top Badge — fluid */}
+            <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white text-[10px] sm:text-[11px] font-medium shadow-lg max-w-[70%]">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
+              <span className="truncate">{currentSlide.badge}</span>
             </div>
 
             {/* Bottom Floating Title */}
-            <div className="absolute bottom-6 inset-x-6 z-20 hidden sm:block pointer-events-none">
+            <div className="absolute bottom-5 sm:bottom-6 inset-x-4 sm:inset-x-6 z-20 hidden sm:block pointer-events-none">
               <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] block mb-1">
                 {currentSlide.category}
               </span>
-              <h3 className="font-serif text-2xl font-light text-white">
+              <h3 className="font-serif text-xl lg:text-2xl font-light text-white line-clamp-1">
                 {currentSlide.title}
               </h3>
             </div>
 
-            {/* Slide Indicator Dots */}
-            <div className="absolute bottom-4 inset-x-0 z-20 flex justify-center items-center gap-2">
+            {/* Slide Indicator Dots — fluid */}
+            <div className="absolute bottom-3 sm:bottom-4 inset-x-0 z-20 flex justify-center items-center gap-1.5 sm:gap-2">
               {stylingSlides.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                    currentIndex === idx ? 'w-8 bg-[#D4AF37]' : 'w-2 bg-white/40 hover:bg-white/70'
+                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer touch-manipulation min-h-[8px] min-w-[8px] ${
+                    currentIndex === idx ? 'w-6 sm:w-8 bg-[#D4AF37]' : 'w-1.5 sm:w-2 bg-white/40 hover:bg-white/70'
                   }`}
                   aria-label={`Go to look ${idx + 1}`}
                 />
@@ -185,11 +185,11 @@ export default function ShopTheLook() {
             </div>
           </div>
 
-          {/* Right Column: Active Featured Product Inspector */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
+          {/* Right Column: Active Featured Product Inspector — fluid */}
+          <div className="lg:col-span-4 flex flex-col gap-3 sm:gap-4">
             {/* Active Spotlight Card */}
             {activeProduct && (
-              <div className="p-6 rounded-3xl bg-[#13161D] border border-[#D4AF37]/40 shadow-2xl flex flex-col justify-between">
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#13161D] border border-[#D4AF37]/40 shadow-2xl flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
