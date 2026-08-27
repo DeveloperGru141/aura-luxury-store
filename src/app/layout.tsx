@@ -17,22 +17,23 @@ const serif = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "AURA Luxury Collective | Bags, Haute Couture, Timepieces & Fine Jewelry",
+  title: "TIMELESS | Designer Bags, Wears, Shoes, Wristwatches & Fine Jewelry",
   description:
-    "Discover handcrafted Italian leather bags, bespoke haute couture, Swiss automatic chronometers, sculpted footwear, and certified 18k fine jewelry.",
+    "Discover handcrafted Italian leather bags, bespoke wears, luxury shoes, Swiss automatic wristwatches, and certified 18k fine jewelry.",
   keywords: [
     "Luxury fashion",
     "Designer bags",
-    "Haute couture",
-    "Swiss timepieces",
+    "Fine wears",
+    "Wristwatches",
+    "Luxury timepieces",
     "Fine jewelry",
     "Luxury shoes",
     "Italian leather",
   ],
   openGraph: {
-    title: "AURA Luxury Collective | Maison de Luxe",
+    title: "TIMELESS | Designer Bags, Wears, Wristwatches & Fine Jewelry",
     description:
-      "Handcrafted Italian leather bags, bespoke haute couture, Swiss automatic chronometers, and 18k fine jewelry.",
+      "Handcrafted Italian leather bags, bespoke wears, Swiss automatic wristwatches, and 18k fine jewelry.",
     type: "website",
   },
 };

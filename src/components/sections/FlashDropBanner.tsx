@@ -6,7 +6,7 @@ import { useStore } from '@/context/StoreContext';
 import { Timer, Copy, Check, Sparkles, Flame, ArrowRight } from 'lucide-react';
 
 export default function FlashDropBanner() {
-  const { showToast } = useStore();
+  const { showToast, formatPrice } = useStore();
   const [copied, setCopied] = useState(false);
 
   // Dynamic countdown timer (e.g. 14 hours 28 mins left)
@@ -36,7 +36,7 @@ export default function FlashDropBanner() {
   const copyVipCode = () => {
     navigator.clipboard?.writeText('VIP20');
     setCopied(true);
-    showToast('VIP Voucher "VIP20" copied! (20% OFF Orders > $500)', 'success');
+    showToast('VIP Voucher "VIP20" copied! (20% OFF Orders > ₦500,000)', 'success');
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -126,7 +126,7 @@ export default function FlashDropBanner() {
               <div className="absolute bottom-4 left-4 right-4 text-left">
                 <span className="text-[10px] uppercase font-bold text-[#D4AF37] block">Reserve Allocation</span>
                 <p className="font-serif text-sm text-white font-medium">Astral Diamond Skeleton Dial</p>
-                <p className="text-xs font-semibold text-[#F3E5AB]">$1,890 &bull; Swiss Certified</p>
+                <p className="text-xs font-semibold text-[#F3E5AB]">{formatPrice(1850000)} &bull; Swiss Certified</p>
               </div>
             </div>
           </div>

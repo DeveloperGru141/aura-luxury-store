@@ -6,7 +6,7 @@ export default function BrandPillars() {
     {
       icon: Globe,
       title: 'Global Express Courier',
-      description: 'Complimentary insured shipping on all orders over $300 with signature delivery.',
+      description: 'Complimentary insured shipping on all orders over ₦250,000 with signature delivery.',
     },
     {
       icon: ShieldCheck,

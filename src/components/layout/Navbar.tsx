@@ -25,20 +25,21 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Bags & Leather', href: '#categories' },
-    { label: 'Haute Couture', href: '#categories' },
-    { label: 'Timepieces', href: '#categories' },
-    { label: 'Fine Jewelry', href: '#categories' },
+    { label: 'Bags', href: '#categories' },
+    { label: 'Wears', href: '#categories' },
+    { label: 'Shoes', href: '#categories' },
+    { label: 'Wristwatches', href: '#categories' },
+    { label: 'Jewelry', href: '#categories' },
     { label: 'Lookbook', href: '#lookbook' },
-    { label: 'VIP Drop', href: '#flash-drop' },
+    { label: 'VIP Vault', href: '#flash-drop' },
   ];
 
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#0D0F14]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl py-3.5'
-          : 'bg-[#0D0F14]/60 backdrop-blur-md border-b border-white/5 py-4'
+          ? 'bg-[#0D0F14]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-3.5'
+          : 'bg-[#0D0F14]/70 backdrop-blur-md border-b border-white/5 py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -54,12 +55,12 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="#" className="flex flex-col group">
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.25em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
-              <span>AURA</span>
+            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.28em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+              <span>TIMELESS</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
             </span>
-            <span className="text-[8px] uppercase tracking-[0.35em] text-gray-400 font-sans -mt-1 group-hover:text-gray-200 transition-colors">
-              Maison de Luxe
+            <span className="text-[8px] uppercase tracking-[0.4em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
+              Fine Goods &bull; Horology
             </span>
           </a>
         </div>

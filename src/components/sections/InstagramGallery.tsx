@@ -29,13 +29,13 @@ export default function InstagramGallery() {
         <div className="text-center max-w-xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-gray-300 text-xs font-semibold uppercase tracking-widest mb-3">
             <InstagramIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>@AuraLuxuryCollective</span>
+            <span>@TimelessLuxury</span>
           </div>
           <h2 className="font-serif text-2xl sm:text-4xl font-light text-white mb-2">
             The Living <span className="italic font-normal gold-gradient-text">Lookbook</span>
           </h2>
           <p className="text-xs text-gray-400 font-light">
-            Tag #AuraLuxury on Instagram for an opportunity to be featured in our seasonal global editorial.
+            Tag #TimelessLuxury on Instagram for an opportunity to be featured in our seasonal global lookbook.
           </p>
         </div>
 

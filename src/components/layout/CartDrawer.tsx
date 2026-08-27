@@ -128,7 +128,7 @@ export default function CartDrawer() {
                 </div>
                 <h3 className="font-serif text-2xl font-medium mb-2">Order Confirmed</h3>
                 <p className="text-xs text-gray-300 max-w-xs mb-6 leading-relaxed">
-                  Thank you for shopping with AURA. A confirmation email and tracking docket have been dispatched.
+                  Thank you for shopping with TIMELESS. A confirmation email and tracking docket have been dispatched.
                 </p>
                 <button
                   onClick={() => {
@@ -147,7 +147,7 @@ export default function CartDrawer() {
                 </div>
                 <h3 className="font-serif text-lg font-medium text-gray-200 mb-1">Your bag is empty</h3>
                 <p className="text-xs text-gray-400 max-w-xs mb-6">
-                  Discover timeless leather accessories, high-jewelry, and fine timepieces.
+                  Discover timeless leather accessories, fine wears, and luxury wristwatches.
                 </p>
                 <button
                   onClick={() => setIsCartOpen(false)}
@@ -246,7 +246,7 @@ export default function CartDrawer() {
                       type="text"
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
-                      placeholder="Promo Code (e.g. LUXE15)"
+                      placeholder="Promo Code (e.g. TIMELESS15)"
                       className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 uppercase tracking-wider outline-none focus:border-[#D4AF37]"
                     />
                     <button

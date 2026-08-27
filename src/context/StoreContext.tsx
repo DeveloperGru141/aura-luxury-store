@@ -4,21 +4,22 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, WishlistItem, PromoCode } from '@/types/store';
 import { PROMO_CODES } from '@/data/mockData';
 
-export type Currency = 'USD' | 'EUR' | 'GBP';
+export type Currency = 'NGN' | 'USD' | 'GBP';
 
 const CURRENCY_SYMBOLS: Record<Currency, string> = {
+  NGN: '₦',
   USD: '$',
-  EUR: '€',
   GBP: '£',
 };
 
+// Base price in Nigerian Naira (NGN)
 const CURRENCY_RATES: Record<Currency, number> = {
-  USD: 1.0,
-  EUR: 0.92,
-  GBP: 0.79,
+  NGN: 1.0,
+  USD: 1 / 1550,
+  GBP: 1 / 1950,
 };
 
-const FREE_SHIPPING_THRESHOLD = 300;
+const FREE_SHIPPING_THRESHOLD = 250000; // ₦250,000 for free nationwide shipping
 
 interface ToastInfo {
   id: string;
@@ -55,7 +56,7 @@ interface StoreContextType {
   applyPromoCode: (codeStr: string) => { success: boolean; message: string };
   removePromoCode: () => void;
 
-  formatPrice: (amountInUSD: number) => string;
+  formatPrice: (amountInNGN: number) => string;
   showToast: (message: string, type?: 'success' | 'info' | 'warning') => void;
   removeToast: (id: string) => void;
 
@@ -78,17 +79,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [currency, setCurrency] = useState<Currency>('USD');
+  const [currency, setCurrency] = useState<Currency>('NGN');
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
 
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem('aura_cart');
+      const savedCart = localStorage.getItem('timeless_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
 
-      const savedWishlist = localStorage.getItem('aura_wishlist');
+      const savedWishlist = localStorage.getItem('timeless_wishlist');
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
     } catch {
       // Ignore parse errors
@@ -98,7 +99,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Save to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('aura_cart', JSON.stringify(cart));
+      localStorage.setItem('timeless_cart', JSON.stringify(cart));
     } catch {
       // Ignore storage errors
     }
@@ -106,7 +107,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('aura_wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('timeless_wishlist', JSON.stringify(wishlist));
     } catch {
       // Ignore storage errors
     }
@@ -204,7 +205,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const found = PROMO_CODES.find((p) => p.code === trimmed);
 
     if (!found) {
-      return { success: false, message: 'Invalid promo code. Try "LUXE15" or "WELCOME10"' };
+      return { success: false, message: 'Invalid promo code. Try "TIMELESS15" or "WELCOME10"' };
     }
 
     if (found.minSpend && subtotal < found.minSpend) {
@@ -224,10 +225,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     showToast('Promo code removed', 'info');
   };
 
-  const formatPrice = (amountInUSD: number) => {
+  const formatPrice = (amountInNGN: number) => {
     const rate = CURRENCY_RATES[currency] || 1;
-    const symbol = CURRENCY_SYMBOLS[currency] || '$';
-    const converted = amountInUSD * rate;
+    const symbol = CURRENCY_SYMBOLS[currency] || '₦';
+    const converted = amountInNGN * rate;
+    
+    if (currency === 'NGN') {
+      return `${symbol}${Math.round(converted).toLocaleString('en-NG')}`;
+    }
     return `${symbol}${converted.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
 
@@ -235,7 +240,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   const discountAmount = appliedPromo ? (subtotal * appliedPromo.discountPercent) / 100 : 0;
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 35;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 15000;
   const total = Math.max(0, subtotal - discountAmount + shipping);
 
   const freeShippingProgress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));

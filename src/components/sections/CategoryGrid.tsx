@@ -18,21 +18,20 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4AF37] block mb-2">
-              Curated Universes
+              Curated Collections
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-light text-white">
-              Explore By <span className="italic font-normal gold-gradient-text">Maison Category</span>
+              Explore By <span className="italic font-normal gold-gradient-text">Category</span>
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-gray-400 max-w-md mt-4 md:mt-0 leading-relaxed">
-            From the ateliers of Florence and Geneva, discover handcrafted accessories and timeless statements designed to endure generations.
+            From handcrafted Italian leather bags to Swiss automatic timepieces, discover statement pieces designed to endure generations.
           </p>
         </div>
 
-        {/* 5-Category Bento Grid */}
+        {/* 5-Category Bento Grid (Order: Bags, Wears, Shoes, Wristwatches, Jewelry) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CATEGORIES.map((cat, idx) => {
-            // First item spans 2 cols on lg if desired or featured style
             const isFeatured = idx === 0 || idx === 3;
             return (
               <div

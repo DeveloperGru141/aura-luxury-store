@@ -14,17 +14,17 @@ export default function Footer() {
           {/* Col 1 & 2: Brand Identity */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex flex-col">
-              <span className="font-serif text-2xl font-bold tracking-[0.25em] text-white flex items-center gap-1.5">
-                <span>AURA</span>
+              <span className="font-serif text-2xl font-bold tracking-[0.28em] text-white flex items-center gap-1.5">
+                <span>TIMELESS</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
               </span>
-              <span className="text-[9px] uppercase tracking-[0.35em] text-gray-400 font-sans -mt-1">
-                Maison de Luxe &bull; Paris &bull; Milan &bull; Geneva
+              <span className="text-[9px] uppercase tracking-[0.38em] text-gray-400 font-sans -mt-1">
+                Fine Goods &bull; Wristwatches &bull; Jewelry
               </span>
             </div>
 
             <p className="text-gray-400 text-xs font-light max-w-sm leading-relaxed">
-              Curating the world&apos;s finest handcrafted leather accessories, haute couture apparel, high-precision Swiss timepieces, and certified fine jewelry for discerning patrons worldwide.
+              Curating the finest handcrafted leather bags, bespoke wears, high-precision Swiss wristwatches, and certified fine jewelry for discerning patrons.
             </p>
 
             <div className="flex items-center gap-2 text-xs text-gray-300 pt-2">
@@ -39,7 +39,7 @@ export default function Footer() {
               Collections
             </h4>
             <ul className="space-y-2.5">
-              {['Designer Bags', 'Haute Couture', 'Luxury Footwear', 'Swiss Watches', 'Fine Jewelry', 'Limited Runway Drops'].map((item) => (
+              {['Designer Bags', 'Wears', 'Luxury Shoes', 'Wristwatches', 'Fine Jewelry', 'Limited Vault Drops'].map((item) => (
                 <li key={item}>
                   <a href="#categories" className="hover:text-[#D4AF37] transition-colors">
                     {item}
@@ -85,11 +85,11 @@ export default function Footer() {
         {/* Bottom Bar: Payments & Copyright */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-400">
-            <span>&copy; {new Date().getFullYear()} AURA Luxury Collective S.A. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} TIMELESS Luxury Collective. All rights reserved.</span>
             <span className="hidden sm:inline">&bull;</span>
             <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
             <span>&bull;</span>
-            <a href="#" className="hover:text-white transition-colors">Terms of Luxury Service</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
 
           {/* Payment Badges & Back to Top */}

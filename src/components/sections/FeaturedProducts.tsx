@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ProductCategory, Product } from '@/types/store';
+import { ProductCategory } from '@/types/store';
 import { PRODUCTS } from '@/data/mockData';
 import ProductCard from '@/components/ui/ProductCard';
 import { Sparkles, SlidersHorizontal } from 'lucide-react';
@@ -17,12 +17,13 @@ export default function FeaturedProducts({
 }: FeaturedProductsProps) {
   const [filterTrendingOnly, setFilterTrendingOnly] = useState(false);
 
+  // Exact order: Bags, Wears (Clothes), Shoes, Wristwatches, Jewelry
   const tabs: { id: ProductCategory; label: string }[] = [
     { id: 'all', label: 'All Collections' },
-    { id: 'bags', label: 'Bags & Leather' },
-    { id: 'apparel', label: 'Haute Couture' },
-    { id: 'shoes', label: 'Footwear' },
-    { id: 'watches', label: 'Timepieces' },
+    { id: 'bags', label: 'Bags' },
+    { id: 'apparel', label: 'Wears' },
+    { id: 'shoes', label: 'Shoes' },
+    { id: 'watches', label: 'Wristwatches' },
     { id: 'jewelry', label: 'Fine Jewelry' },
   ];
 
@@ -39,13 +40,13 @@ export default function FeaturedProducts({
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-xs font-semibold uppercase tracking-widest mb-3">
             <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>Seasonal Showcase</span>
+            <span>Curated Showcase</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl font-light text-white mb-4">
-            The Autumn <span className="italic font-normal gold-gradient-text">Catalogue</span>
+            The <span className="italic font-normal gold-gradient-text">Catalogue</span>
           </h2>
           <p className="text-xs sm:text-sm text-gray-400 font-light">
-            Indulge in certified haute couture garments, Italian leather craftsmanship, chronographs, and diamond fine jewelry.
+            Explore our curated inventory of leather bags, fine wears, shoes, luxury chronographs, and certified jewelry.
           </p>
         </div>
 

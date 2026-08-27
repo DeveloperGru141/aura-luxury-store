@@ -9,16 +9,16 @@ export default function AnnouncementBar() {
   const [copied, setCopied] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
 
-  const promoCode = 'LUXE15';
+  const promoCode = 'TIMELESS15';
 
   const copyPromo = () => {
     navigator.clipboard?.writeText(promoCode);
     setCopied(true);
-    showToast('Promo code "LUXE15" copied to clipboard! (15% OFF)', 'success');
+    showToast('Promo code "TIMELESS15" copied to clipboard! (15% OFF)', 'success');
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const currencies: Currency[] = ['USD', 'EUR', 'GBP'];
+  const currencies: Currency[] = ['NGN', 'USD', 'GBP'];
 
   return (
     <aside aria-label="Special Offers" className="bg-[#0A0C0F] border-b border-white/5 text-gray-300 text-xs py-2 px-4 relative z-40">
@@ -26,14 +26,14 @@ export default function AnnouncementBar() {
         {/* Left: Shipping perk */}
         <div className="hidden lg:flex items-center gap-2 text-gray-400">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
-          <span>Complimentary worldwide express courier on orders over $300</span>
+          <span>Complimentary express delivery on orders over ₦250,000</span>
         </div>
 
         {/* Center: Promo Banner */}
         <div className="flex items-center gap-2">
           <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse" />
           <span className="font-medium text-gray-200">
-            Autumn Haute Collection Drop &mdash; Save 15% with code
+            Exclusive Launch &mdash; Save 15% with code
           </span>
           <button
             onClick={copyPromo}
@@ -69,7 +69,7 @@ export default function AnnouncementBar() {
                       currency === curr ? 'text-[#D4AF37] font-semibold' : 'text-gray-300'
                     }`}
                   >
-                    {curr}
+                    {curr} {curr === 'NGN' ? '(₦)' : curr === 'USD' ? '($)' : '(£)'}
                   </button>
                 ))}
               </div>
