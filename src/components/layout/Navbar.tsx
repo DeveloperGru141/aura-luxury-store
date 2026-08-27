@@ -77,7 +77,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right: Actions (Search, Bag) */}
+        {/* Right: Actions (Search) */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Search Trigger */}
           <button
@@ -87,19 +87,6 @@ export default function Navbar() {
           >
             <Search className="w-4 h-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
             <span className="hidden md:inline text-xs text-gray-400 group-hover:text-gray-200">Search</span>
-          </button>
-
-          {/* Cart Bag Trigger */}
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="relative flex items-center gap-2 py-2 px-3 sm:px-4 rounded-xl bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 border border-[#D4AF37]/40 text-[#F3E5AB] transition-all hover:scale-[1.02] shadow-lg shadow-[#D4AF37]/5"
-            aria-label="Shopping Bag"
-          >
-            <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
-            <span className="text-xs font-semibold hidden sm:inline">Bag</span>
-            <span className="w-5 h-5 rounded-full bg-[#D4AF37] text-black text-[10px] font-bold flex items-center justify-center -mr-1">
-              {cartItemCount}
-            </span>
           </button>
         </div>
       </div>
