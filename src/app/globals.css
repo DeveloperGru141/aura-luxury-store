@@ -57,22 +57,6 @@
   }
 }
 
-@keyframes pulseSubtle {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -82,17 +66,6 @@
   from {
     opacity: 0;
     transform: translate3d(1.5rem, 0, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 1rem, 0);
   }
   to {
     opacity: 1;
@@ -134,30 +107,12 @@
   100% { opacity: 0; }
 }
 
-.animate-pulse-subtle {
-  animation: pulseSubtle 3s ease-in-out infinite;
-}
-
-.animate-marquee {
-  display: flex;
-  width: 200%;
-  animation: marquee 25s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
 .animate-fade-in {
   animation: fadeIn 350ms ease-out both;
 }
 
 .animate-slide-in {
   animation: slideIn 350ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.animate-slide-up {
-  animation: slideUp 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-slide-down {
@@ -168,14 +123,8 @@
   animation: scaleIn 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Scroll/appearance motion for compact touch layouts. The delay is supplied per item. */
-.mobile-reveal {
-  animation: slideUp 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: var(--reveal-delay, 0ms);
-}
-
 /* Touch devices have no hover state, so alternate product photography gently crossfades. */
-@media (hover: none) {
+@media (hover: none), (pointer: coarse) {
   .mobile-product-primary {
     animation: mobileProductPrimary 8s ease-in-out infinite;
   }
@@ -208,33 +157,6 @@
 
 .gold-gradient-border {
   border-image: linear-gradient(to right, #D4AF37, #F3E5AB, #9A7B2C) 1;
-}
-
-.card-hover-glow {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .card-hover-glow:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(212, 175, 55, 0.15);
-  }
-}
-
-/* Avoid motion and long-running effects for users who request less motion. */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 }
 
 /* Mobile fluidity utilities */
