@@ -26,23 +26,23 @@ export default function BrandPillars() {
   ];
 
   return (
-    <section className="py-16 bg-[#0B0D11] border-t border-b border-white/5">
+    <section id="heritage" className="py-10 sm:py-12 lg:py-16 bg-[#0B0D11] border-t border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {pillars.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#D4AF37]/30 transition-all group"
+                className="flex flex-col items-center text-center p-4 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#D4AF37]/30 active:border-[#D4AF37]/40 transition-all group touch-manipulation"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/25 text-[#D4AF37] flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
-                  <Icon className="w-6 h-6" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/25 text-[#D4AF37] flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="font-serif text-base font-medium text-white mb-2">
+                <h3 className="font-serif text-[15px] sm:text-base font-medium text-white mb-1.5 sm:mb-2 leading-tight">
                   {item.title}
                 </h3>
-                <p className="text-xs text-gray-400 font-light leading-relaxed">
+                <p className="text-[13px] sm:text-xs text-gray-400 font-light leading-relaxed">
                   {item.description}
                 </p>
               </div>

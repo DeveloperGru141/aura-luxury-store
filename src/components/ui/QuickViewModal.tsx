@@ -53,23 +53,23 @@ export default function QuickViewModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 lg:p-6 bg-black/80 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
       {/* Backdrop click dismiss */}
       <div className="absolute inset-0" onClick={() => setQuickViewProduct(null)} />
 
-      {/* Modal Container */}
-      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-[#11141A] border border-[#D4AF37]/30 shadow-2xl flex flex-col md:flex-row text-white">
-        {/* Close Button */}
+      {/* Modal Container — fluid, safe-area */}
+      <div className="relative z-10 w-full max-w-4xl max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto overscroll-contain rounded-2xl sm:rounded-3xl bg-[#11141A] border border-[#D4AF37]/30 shadow-2xl flex flex-col md:flex-row text-white animate-scale-in">
+        {/* Close Button — 44px hit */}
         <button
           onClick={() => setQuickViewProduct(null)}
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/60 text-gray-400 hover:text-white hover:bg-black/90 transition-all border border-white/10"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-black/60 text-gray-400 hover:text-white hover:bg-black/90 active:bg-black transition-all border border-white/10 touch-manipulation"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Left Side: Images Showcase */}
-        <div className="md:w-1/2 flex flex-col p-6 gap-4 bg-[#0A0C0F]/50">
+        {/* Left Side: Images Showcase — fluid padding */}
+        <div className="md:w-1/2 flex flex-col p-4 sm:p-6 gap-3 sm:gap-4 bg-[#0A0C0F]/50">
           <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-[#181C24] border border-white/5">
             <Image
               src={images[activeImageIndex]}
@@ -102,8 +102,8 @@ export default function QuickViewModal() {
           )}
         </div>
 
-        {/* Right Side: Product Details */}
-        <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between">
+        {/* Right Side: Product Details — fluid */}
+        <div className="md:w-1/2 p-4 sm:p-6 lg:p-8 flex flex-col justify-between">
           <div>
             {/* Category & Ratings */}
             <div className="flex items-center justify-between mb-2">
@@ -208,73 +208,75 @@ export default function QuickViewModal() {
             </div>
           </div>
 
-          {/* Action Row */}
+          {/* Action Row — fluid */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              {/* Quantity Controls */}
-              <div className="flex items-center rounded-xl border border-white/15 bg-white/5 p-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-4">
+              {/* Quantity Controls — 44px */}
+              <div className="flex items-center justify-between sm:justify-start rounded-xl border border-white/15 bg-white/5 p-1 w-full sm:w-auto">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-base font-semibold"
+                  className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 active:bg-white/15 rounded-lg transition-colors text-base font-semibold touch-manipulation"
                 >
                   -
                 </button>
-                <span className="w-8 text-center text-sm font-semibold">{quantity}</span>
+                <span className="w-12 sm:w-8 text-center text-sm font-semibold">{quantity}</span>
                 <button
                   onClick={() => setQuantity((q) => q + 1)}
-                  className="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-base font-semibold"
+                  className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 active:bg-white/15 rounded-lg transition-colors text-base font-semibold touch-manipulation"
                 >
                   +
                 </button>
               </div>
 
-              {/* Add to Cart CTA */}
-              <button
-                onClick={handleAddToCart}
-                disabled={addedAnimation}
-                className={`flex-1 py-3 px-6 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg ${
-                  addedAnimation
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black hover:brightness-110 shadow-[#D4AF37]/10'
-                }`}
-              >
-                {addedAnimation ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>Added to Shopping Bag</span>
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Add to Shopping Bag</span>
-                  </>
-                )}
-              </button>
+              <div className="flex items-center gap-2 sm:gap-3 w-full">
+                {/* Add to Cart CTA */}
+                <button
+                  onClick={handleAddToCart}
+                  disabled={addedAnimation}
+                  className={`flex-1 py-3.5 sm:py-3 px-4 sm:px-6 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg min-h-[44px] touch-manipulation ${
+                    addedAnimation
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black hover:brightness-110 active:brightness-95 active:scale-[0.98] shadow-[#D4AF37]/10'
+                  }`}
+                >
+                  {addedAnimation ? (
+                    <>
+                      <Check className="w-4 h-4 shrink-0" />
+                      <span className="truncate">Added</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-4 h-4 shrink-0" />
+                      <span className="truncate">Add to Bag</span>
+                    </>
+                  )}
+                </button>
 
-              {/* Wishlist Button */}
-              <button
-                onClick={() => toggleWishlist(quickViewProduct)}
-                className={`p-3 rounded-xl border transition-all ${
-                  isWishlisted
-                    ? 'border-rose-500/50 bg-rose-950/40 text-rose-400'
-                    : 'border-white/15 bg-white/5 text-gray-300 hover:text-white hover:border-white/30'
-                }`}
-                aria-label="Wishlist toggle"
-              >
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-rose-400' : ''}`} />
-              </button>
+                {/* Wishlist Button — 44px */}
+                <button
+                  onClick={() => toggleWishlist(quickViewProduct)}
+                  className={`p-3 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl border transition-all touch-manipulation ${
+                    isWishlisted
+                      ? 'border-rose-500/50 bg-rose-950/40 text-rose-400'
+                      : 'border-white/15 bg-white/5 text-gray-300 hover:text-white hover:border-white/30 active:bg-white/10'
+                  }`}
+                  aria-label="Wishlist toggle"
+                >
+                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-rose-400' : ''}`} />
+                </button>
+              </div>
             </div>
 
-            {/* Value Highlights */}
-            <div className="flex items-center justify-between text-[11px] text-gray-400 pt-3 border-t border-white/5">
+            {/* Value Highlights — fluid wrap */}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-400 pt-3 border-t border-white/5">
               <span className="flex items-center gap-1">
-                <Truck className="w-3.5 h-3.5 text-[#D4AF37]" /> Free Global Delivery
+                <Truck className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /> Free Delivery
               </span>
               <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" /> Authenticity Guaranteed
+                <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /> Authentic
               </span>
               <span className="flex items-center gap-1">
-                <RotateCcw className="w-3.5 h-3.5 text-[#D4AF37]" /> 30-Day Returns
+                <RotateCcw className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /> 30-Day Returns
               </span>
             </div>
           </div>

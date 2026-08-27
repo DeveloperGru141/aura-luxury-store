@@ -25,32 +25,32 @@ export default function SearchModal() {
   if (!isSearchOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/85 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[max(1rem,env(safe-area-inset-top))] sm:pt-20 px-3 sm:px-4 bg-black/85 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
-      <div className="relative z-10 w-full max-w-2xl bg-[#12151B] border border-[#D4AF37]/30 rounded-2xl shadow-2xl p-6 text-white overflow-hidden">
-        {/* Search Header */}
-        <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-          <Search className="w-5 h-5 text-[#D4AF37]" />
+      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-none bg-[#12151B] border border-[#D4AF37]/30 rounded-2xl shadow-2xl p-4 sm:p-6 text-white overflow-hidden flex flex-col animate-scale-in">
+        {/* Search Header — fluid */}
+        <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-white/10">
+          <Search className="w-5 h-5 text-[#D4AF37] shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search bags, silk dresses, watches, gold jewelry..."
-            className="flex-1 bg-transparent border-none outline-none text-base text-white placeholder-gray-500 font-medium"
+            className="flex-1 min-w-0 bg-transparent border-none outline-none text-[16px] sm:text-base text-white placeholder-gray-500 font-medium"
             autoFocus
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-gray-400 hover:text-white p-1 text-xs"
+              className="text-gray-400 hover:text-white active:text-white p-2 min-h-[36px] min-w-[36px] flex items-center justify-center text-xs touch-manipulation shrink-0"
             >
               Clear
             </button>
           )}
           <button
             onClick={() => setIsSearchOpen(false)}
-            className="p-1.5 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 active:bg-white/15 touch-manipulation shrink-0"
           >
             <X className="w-5 h-5" />
           </button>

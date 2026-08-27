@@ -30,8 +30,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#0D0F14] text-white selection:bg-[#D4AF37] selection:text-black">
-      {/* Navigation Header */}
-      <Navbar />
+      {/* Navigation Header — wired to catalogue filtering */}
+      <Navbar onSelectCategory={handleSelectCategory} />
 
       {/* Main Landing Sections */}
       <HeroSection />
