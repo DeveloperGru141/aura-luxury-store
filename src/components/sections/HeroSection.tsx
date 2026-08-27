@@ -80,7 +80,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-4 pb-14 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
+    <section id="hero" className="relative overflow-hidden pt-4 pb-14 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
       {/* Ambient background glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#D4AF37]/5 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute top-10 right-10 w-[600px] h-[600px] bg-amber-900/10 rounded-full blur-[140px] pointer-events-none" />

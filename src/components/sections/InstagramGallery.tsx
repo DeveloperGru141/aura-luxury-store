@@ -23,7 +23,7 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export default function InstagramGallery() {
   return (
-    <section className="py-20 bg-[#0A0C0F] border-t border-white/5">
+    <section id="gallery" className="py-20 bg-[#0A0C0F] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-12">

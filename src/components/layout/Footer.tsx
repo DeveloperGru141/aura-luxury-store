@@ -29,7 +29,6 @@ export default function Footer() {
 
             <div className="flex items-center gap-2 text-xs text-gray-300 pt-2">
               <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-              <span>Certified Member of the International Horology &amp; Gem Council</span>
             </div>
           </div>
 

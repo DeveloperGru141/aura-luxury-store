@@ -25,12 +25,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Bags', href: '#categories' },
-    { label: 'Wears', href: '#categories' },
-    { label: 'Shoes', href: '#categories' },
-    { label: 'Wristwatches', href: '#categories' },
-    { label: 'Jewelry', href: '#categories' },
+    { label: 'Collections', href: '#categories' },
+    { label: 'Catalogue', href: '#catalogue' },
     { label: 'Lookbook', href: '#lookbook' },
+    { label: 'Reviews', href: '#reviews' },
+    { label: 'Gallery', href: '#gallery' },
   ];
 
   return (
