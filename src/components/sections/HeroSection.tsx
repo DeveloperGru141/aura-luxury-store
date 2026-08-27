@@ -17,7 +17,7 @@ export default function HeroSection() {
       title: 'Precision Swiss Chronographs',
       subtitle: '18k Rose Gold & Automatic Calibre',
       category: 'Wristwatches',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop',
       badge: 'Master Horology Drop',
     },
     {

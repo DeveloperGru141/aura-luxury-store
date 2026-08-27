@@ -559,10 +559,10 @@ export const INSTAGRAM_POSTS = [
   },
   {
     id: 'ig-3',
-    handle: '@sofia_atelier',
-    image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=800&auto=format&fit=crop',
-    caption: 'Adorning the 18k solid gold diamond solitaire choker. Radiant sparkle 💎✨',
-    productTag: 'Lumière 18k Choker',
+    handle: '@nina.stiletto',
+    image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop',
+    caption: 'Stepping into the weekend in the Venice sculpted ankle-strap pumps 👠✨',
+    productTag: 'Venice Ankle-Strap Pumps',
   },
   {
     id: 'ig-4',
