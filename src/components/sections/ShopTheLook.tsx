@@ -1,10 +1,10 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { PRODUCTS } from '@/data/mockData';
 import { useStore } from '@/context/StoreContext';
-import { Eye, ShoppingBag, Sparkles, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { Eye, ShoppingBag, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ShopTheLook() {
   const { setQuickViewProduct, addToCart, formatPrice } = useStore();
@@ -132,7 +132,7 @@ export default function ShopTheLook() {
                     alt={slide.title}
                     fill
                     priority={idx === 0}
-                    className="object-cover object-center"
+                    className="mobile-category-img object-cover object-center"
                   />
                   {/* Subtle dark gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/20" />
@@ -157,8 +157,8 @@ export default function ShopTheLook() {
               <ChevronRight className="w-4 h-4" />
             </button>
 
-            {/* Top Badge — fluid */}
-            <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white text-[10px] sm:text-[11px] font-medium shadow-lg max-w-[70%]">
+            {/* Top Badge — fluid + float animation */}
+            <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/30 text-white text-[10px] sm:text-[11px] font-medium shadow-xl max-w-[70%] animate-float-slow">
               <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
               <span className="truncate">{currentSlide.badge}</span>
             </div>
@@ -192,11 +192,15 @@ export default function ShopTheLook() {
           <div className="lg:col-span-4 flex flex-col gap-3 sm:gap-4">
             {/* Active Spotlight Card */}
             {activeProduct && (
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#13161D] border border-[#D4AF37]/40 shadow-2xl flex flex-col justify-between">
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#13161D] border border-[#D4AF37]/40 shadow-2xl flex flex-col justify-between animate-gold-pulse">
                 <div>
                   <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
-                      {activeProduct.categoryLabel}
+                    <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
+                      <span className="relative flex h-1.5 w-1.5 shrink-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" />
+                      </span>
+                      <span>{activeProduct.categoryLabel}</span>
                     </span>
                     <span className="text-emerald-400 font-medium text-[11px]">&bull; In Stock</span>
                   </div>
@@ -229,7 +233,7 @@ export default function ShopTheLook() {
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => setQuickViewProduct(activeProduct)}
-                      className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-xs font-medium text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation min-h-[40px]"
                     >
                       <Eye className="w-3.5 h-3.5 text-[#D4AF37]" />
                       <span>Quick View</span>
@@ -237,10 +241,11 @@ export default function ShopTheLook() {
 
                     <button
                       onClick={() => addToCart(activeProduct)}
-                      className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 hover:brightness-110 shadow-lg cursor-pointer"
+                      className="relative overflow-hidden py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] shadow-lg cursor-pointer touch-manipulation min-h-[40px]"
                     >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      <span>Add to Bag</span>
+                      <span className="shimmer-sheen" />
+                      <ShoppingBag className="w-3.5 h-3.5 relative z-10" />
+                      <span className="relative z-10">Add to Bag</span>
                     </button>
                   </div>
                 </div>
@@ -259,7 +264,7 @@ export default function ShopTheLook() {
                   <button
                     key={slide.id}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`w-full p-2.5 rounded-xl text-left transition-all flex items-center justify-between text-xs cursor-pointer ${
+                    className={`w-full p-2.5 rounded-xl text-left transition-all flex items-center justify-between text-xs cursor-pointer touch-manipulation ${
                       isSelected
                         ? 'bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-white font-medium'
                         : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5'

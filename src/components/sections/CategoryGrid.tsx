@@ -42,13 +42,13 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
                   }`}
                 >
-                  {/* Background Image */}
+                  {/* Background Image — Ken Burns on touch */}
                   <Image
                     src={cat.image}
                     alt={cat.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover object-center group-hover:scale-108 transition-transform duration-1000 ease-out"
+                    className="mobile-category-img object-cover object-center group-hover:scale-108 transition-transform duration-1000 ease-out"
                   />
 
                   {/* Dark Vignette Overlay */}
@@ -56,7 +56,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
 
                   {/* Card Top Pill */}
                   <div className="absolute top-4 right-4 z-10">
-                    <div className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
+                    <div className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black group-active:scale-90 transition-all">
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>

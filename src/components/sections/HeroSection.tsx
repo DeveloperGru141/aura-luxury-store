@@ -92,8 +92,8 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
           {/* Left Column: Editorial Headline & CTAs (Spans 4 cols on lg) */}
           <div className="lg:col-span-4 flex flex-col items-start text-left w-full min-w-0">
-            {/* Top Pill — fluid */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#F3E5AB] text-[11px] sm:text-xs font-medium mb-4 sm:mb-5 backdrop-blur-md max-w-full">
+            {/* Top Pill — fluid + floating micro-animation */}
+            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/35 text-[#F3E5AB] text-[11px] sm:text-xs font-medium mb-4 sm:mb-5 backdrop-blur-md max-w-full animate-float-slow shadow-lg shadow-[#D4AF37]/5">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
               <span className="tracking-wide truncate">Bags &bull; Wears &bull; Wristwatches</span>
             </div>
@@ -109,14 +109,15 @@ export default function HeroSection() {
               Explore an extraordinary curation of hand-stitched Italian leather bags, bespoke wears, sculpted footwear, Swiss automatic wristwatches, and fine jewelry.
             </p>
 
-            {/* CTAs — 44px min hit, fluid full-width on mobile */}
+            {/* CTAs — 44px min hit, fluid full-width on mobile with luxury shimmer */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8">
               <a
                 href="#categories"
-                className="py-3.5 sm:py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] transition-all shadow-xl shadow-[#D4AF37]/10 min-h-[44px] touch-manipulation"
+                className="relative overflow-hidden py-3.5 sm:py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] transition-all shadow-xl shadow-[#D4AF37]/15 min-h-[44px] touch-manipulation group/cta"
               >
-                <span>Explore Collections</span>
-                <ArrowRight className="w-4 h-4 shrink-0" />
+                <span className="shimmer-sheen" />
+                <span className="relative z-10">Explore Collections</span>
+                <ArrowRight className="w-4 h-4 shrink-0 relative z-10 group-hover/cta:translate-x-0.5 transition-transform" />
               </a>
 
               <a
@@ -201,16 +202,16 @@ export default function HeroSection() {
                 <ChevronRight className="w-4 h-4" />
               </button>
 
-              {/* Top Floating Badge — fluid */}
-              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white text-[10px] sm:text-[11px] font-medium shadow-lg max-w-[70%]">
+              {/* Top Floating Badge — fluid + floating micro-animation */}
+              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/30 text-white text-[10px] sm:text-[11px] font-medium shadow-xl max-w-[70%] animate-float-slow">
                 <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
                 <span className="truncate">{currentSlide.badge}</span>
               </div>
 
-              {/* Floating Active Product Card (Bottom) — fluid */}
+              {/* Floating Active Product Card (Bottom) — fluid + living indicator dot */}
               <div
                 onClick={() => setQuickViewProduct(activeProduct)}
-                className="absolute bottom-10 sm:bottom-12 inset-x-3 sm:inset-x-4 lg:inset-x-8 z-20 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl glass-panel text-white cursor-pointer hover:border-[#D4AF37]/50 active:scale-[0.98] transition-all flex items-center justify-between gap-2 sm:gap-3 group/card shadow-2xl touch-manipulation min-h-[72px]"
+                className="absolute bottom-10 sm:bottom-12 inset-x-3 sm:inset-x-4 lg:inset-x-8 z-20 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl glass-panel text-white cursor-pointer border border-[#D4AF37]/30 hover:border-[#D4AF37]/60 active:scale-[0.98] transition-all flex items-center justify-between gap-2 sm:gap-3 group/card shadow-2xl touch-manipulation min-h-[72px] animate-gold-pulse"
               >
                 <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1">
                   <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
@@ -222,8 +223,12 @@ export default function HeroSection() {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] block truncate">
-                      {activeProduct.categoryLabel}
+                    <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] mb-0.5">
+                      <span className="relative flex h-1.5 w-1.5 shrink-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" />
+                      </span>
+                      <span className="truncate">{activeProduct.categoryLabel}</span>
                     </span>
                     <h3 className="text-[13px] sm:text-sm lg:text-base font-serif font-medium text-white line-clamp-1">
                       {activeProduct.name}

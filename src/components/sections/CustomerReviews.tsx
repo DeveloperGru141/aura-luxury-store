@@ -10,7 +10,7 @@ export default function CustomerReviews() {
         {/* Header — fluid */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12 lg:mb-16">
           <div className="min-w-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/25 text-[#F3E5AB] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3 animate-float-slow">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
               <span>Patron Reviews</span>
             </div>
@@ -20,7 +20,7 @@ export default function CustomerReviews() {
           </div>
 
           {/* Rating Summary Pill — fluid */}
-          <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/10 shrink-0 w-full md:w-auto justify-between md:justify-start">
+          <div className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/10 shrink-0 w-full md:w-auto justify-between md:justify-start shadow-lg">
             <div className="flex items-center gap-1 text-amber-400">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400" />
@@ -37,7 +37,7 @@ export default function CustomerReviews() {
           {CUSTOMER_REVIEWS.map((rev) => (
             <div
               key={rev.id}
-              className="flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/30 active:border-[#D4AF37]/40 transition-all group touch-manipulation"
+              className="flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.99] transition-all duration-300 group touch-manipulation relative"
             >
               <div>
                 {/* Quote Icon & Stars */}

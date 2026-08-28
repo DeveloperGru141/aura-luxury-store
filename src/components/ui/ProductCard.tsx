@@ -38,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-all duration-500 hover:border-[#D4AF37]/30 hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
+      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-all duration-500 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={(event) => {
@@ -109,21 +109,22 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             onClick={handleQuickAdd}
             disabled={justAdded}
-            className={`py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 ${
+            className={`relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 ${
               justAdded
                 ? 'bg-emerald-600 text-white'
                 : 'bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:brightness-95'
             }`}
           >
+            {!justAdded && <span className="shimmer-sheen" />}
             {justAdded ? (
               <>
-                <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                <span>Added</span>
+                <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
+                <span className="relative z-10">Added</span>
               </>
             ) : (
               <>
-                <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                <span>Add</span>
+                <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
+                <span className="relative z-10">Add</span>
               </>
             )}
           </button>

@@ -44,21 +44,34 @@ export default function InstagramGallery() {
           {INSTAGRAM_POSTS.map((post) => (
             <div
               key={post.id}
-              className="group relative aspect-square rounded-2xl overflow-hidden bg-gray-900 border border-white/5 cursor-pointer"
+              className="group relative aspect-square rounded-2xl overflow-hidden bg-gray-900 border border-white/5 hover:border-[#D4AF37]/40 active:scale-[0.98] transition-all cursor-pointer touch-manipulation"
             >
               <Image
                 src={post.image}
                 alt={post.caption}
                 fill
                 sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                className="mobile-category-img object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
               />
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-black/75 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between text-white">
+              {/* Mobile Ambient Badge — visible on touch screens */}
+              <div className="absolute inset-x-2 bottom-2 z-10 sm:hidden flex flex-col gap-1 pointer-events-none">
+                <div className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 shadow-lg">
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="font-semibold text-[#D4AF37] truncate">{post.handle}</span>
+                    <ArrowUpRight className="w-3 h-3 text-white/80 shrink-0" />
+                  </div>
+                  <span className="text-[9px] text-gray-300 truncate block mt-0.5 font-light">
+                    {post.productTag}
+                  </span>
+                </div>
+              </div>
+
+              {/* Desktop Full Hover Overlay */}
+              <div className="hidden sm:flex absolute inset-0 bg-black/80 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex-col justify-between text-white">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-semibold text-[#D4AF37]">{post.handle}</span>
-                  <div className="p-1.5 rounded-full bg-white/10 text-white">
+                  <div className="p-1.5 rounded-full bg-white/10 text-white group-hover:bg-[#D4AF37] group-hover:text-black transition-colors">
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </div>
                 </div>

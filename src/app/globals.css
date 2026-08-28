@@ -107,6 +107,67 @@
   100% { opacity: 0; }
 }
 
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  30%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes goldGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.12), inset 0 0 8px rgba(212, 175, 55, 0.04);
+    border-color: rgba(212, 175, 55, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.28), inset 0 0 14px rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.55);
+  }
+}
+
+@keyframes mobileKenBurns {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.06) translate3d(-0.8%, -0.8%, 0);
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes pulseGoldDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 350ms ease-out both;
 }
@@ -123,7 +184,41 @@
   animation: scaleIn 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Touch devices have no hover state, so alternate product photography gently crossfades. */
+.animate-float-slow {
+  animation: subtleFloat 5s ease-in-out infinite;
+}
+
+.animate-gold-pulse {
+  animation: goldGlowPulse 4s ease-in-out infinite;
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.shimmer-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: shimmerSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Touch devices have no hover state, so photography gently crossfades & breathes. */
 @media (hover: none), (pointer: coarse) {
   .mobile-product-primary {
     animation: mobileProductPrimary 8s ease-in-out infinite;
@@ -131,6 +226,14 @@
 
   .mobile-product-secondary {
     animation: mobileProductSecondary 8s ease-in-out infinite;
+  }
+
+  .mobile-category-img {
+    animation: mobileKenBurns 14s ease-in-out infinite alternate;
+  }
+
+  .mobile-card-glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.12);
   }
 }
 
@@ -176,7 +279,6 @@
   touch-action: manipulation;
 }
 
-/* Fluid safe-area helpers */
 .pb-safe {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
