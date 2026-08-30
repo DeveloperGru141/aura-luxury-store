@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -91,6 +91,27 @@ export default function ShopTheLook() {
     setCurrentIndex((prev) => (prev + 1) % stylingSlides.length);
   };
 
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    setTouchStartX(null);
+  };
+
   return (
     <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#0A0C0F] relative overflow-hidden">
       {/* Subtle ambient light — fluid */}
@@ -115,8 +136,12 @@ export default function ShopTheLook() {
 
         {/* Animated Multi-Product Transition Container — fluid gaps */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
-          {/* Main Visual Crossfade Frame (Spans 8 cols on lg) — fluid aspect */}
-          <div className="lg:col-span-8 relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#14171E] group min-h-[280px] sm:min-h-[360px]">
+          {/* Main Visual Crossfade Frame with Touch Swipe (Spans 8 cols on lg) */}
+          <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="lg:col-span-8 relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#14171E] group min-h-[280px] sm:min-h-[360px] touch-pan-y"
+          >
             {/* Crossfade Slides */}
             {stylingSlides.map((slide, idx) => {
               const isActive = currentIndex === idx;

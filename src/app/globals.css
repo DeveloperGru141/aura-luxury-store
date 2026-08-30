@@ -218,23 +218,30 @@
   animation: shimmerSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* Touch devices have no hover state, so photography gently crossfades & breathes. */
-@media (hover: none), (pointer: coarse) {
+/* Touch & Mobile animations: Photography gently crossfades & breathes on mobile */
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
   .mobile-product-primary {
-    animation: mobileProductPrimary 8s ease-in-out infinite;
+    animation: mobileProductPrimary 7s ease-in-out infinite !important;
   }
 
   .mobile-product-secondary {
-    animation: mobileProductSecondary 8s ease-in-out infinite;
+    animation: mobileProductSecondary 7s ease-in-out infinite !important;
   }
 
   .mobile-category-img {
-    animation: mobileKenBurns 14s ease-in-out infinite alternate;
+    animation: mobileKenBurns 12s ease-in-out infinite alternate !important;
   }
 
   .mobile-card-glow {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.12);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.18) !important;
+    border-color: rgba(212, 175, 55, 0.6) !important;
   }
+}
+
+/* Enable hardware acceleration & smooth touch momentum */
+.smooth-touch {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
 }
 
 /* Glassmorphism helpers */

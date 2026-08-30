@@ -82,6 +82,28 @@ export default function HeroSection() {
     setCurrentSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   };
 
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    // Minimum swipe threshold (40px)
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    setTouchStartX(null);
+  };
+
   return (
     <section id="home" className="relative overflow-hidden pt-6 sm:pt-8 pb-8 sm:pb-12 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
       {/* Ambient background glows — contained to avoid mobile overflow */}
@@ -159,9 +181,13 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: Expansive Widescreen Animation Box (Spans 8 cols on lg) — fluid aspect */}
+          {/* Right Column: Expansive Widescreen Animation Box with Touch Swipe */}
           <div className="lg:col-span-8 relative w-full min-w-0">
-            <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group">
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group touch-pan-y"
+            >
               {/* Slides Container (Fading in & out) */}
               {heroSlides.map((slide, idx) => {
                 const isActive = currentSlideIndex === idx;

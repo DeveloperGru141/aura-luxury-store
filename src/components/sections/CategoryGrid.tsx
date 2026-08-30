@@ -31,9 +31,9 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
         });
       },
       {
-        // Focus on the center band of the mobile viewport
-        rootMargin: '-25% 0px -25% 0px',
-        threshold: 0.2,
+        // Focus on mobile viewport center band with flexible threshold
+        rootMargin: '-10% 0px -10% 0px',
+        threshold: 0.15,
       }
     );
 
@@ -75,6 +75,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     cardRefs.current[cat.id] = el;
                   }}
                   data-cat-id={cat.id}
+                  onTouchStart={() => setActiveMobileCard(cat.id)}
                   onClick={() => onSelectCategory(cat.id as ProductCategory)}
                   className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[180px] ${
                     isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
