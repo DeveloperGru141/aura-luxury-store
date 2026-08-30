@@ -53,6 +53,8 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
             <span>&bull;</span>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <span>&bull;</span>
+            <a href="/admin/login" className="hover:text-white transition-colors opacity-60 hover:opacity-100">Admin</a>
           </div>
 
           {/* Back to Top */}

@@ -14,9 +14,16 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { formatPrice, toggleWishlist, isInWishlist, setQuickViewProduct } = useStore();
   const [isHovered, setIsHovered] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
+  const [selectedColor, setSelectedColor] = useState((product as any).colors?.[0]?.name || '');
 
   const isWishlisted = isInWishlist(product.id);
+  // Supabase product shape has stock_status and images[]; mock has primaryImage/secondaryImage and inStock
+  const anyProduct: any = product as any;
+  const stockStatus: 'in_stock' | 'out_of_stock' | undefined = anyProduct.stock_status;
+  const isOutOfStock = stockStatus === 'out_of_stock' || anyProduct.inStock === false;
+  // Handle both mock (primaryImage) and supabase (images[]) shapes
+  const primaryImg: string = anyProduct.primaryImage ?? anyProduct.images?.[0] ?? '';
+  const secondaryImg: string | undefined = anyProduct.secondaryImage ?? anyProduct.images?.[1];
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,8 +37,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const whatsappOrderUrl = getWhatsAppOrderUrl(
     product.name,
-    formatPrice(product.price),
-    selectedColor || product.colors[0]?.name
+    formatPrice(Number(product.price)),
+    selectedColor || (product as any).colors?.[0]?.name
   );
 
   return (
@@ -48,21 +55,21 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       {/* Product Image Container — fluid */}
       <div className="relative aspect-[3/4] sm:aspect-[3/4] w-full overflow-hidden bg-[#1A1E26] cursor-pointer" onClick={handleQuickView}>
-        {/* Primary Image */}
+        {/* Primary Image — supports both mock and Supabase shapes */}
         <Image
-          src={product.primaryImage}
+          src={primaryImg}
           alt={product.name}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className={`mobile-product-primary object-cover object-center transition-all duration-700 ease-out ${
-            isHovered && product.secondaryImage ? 'opacity-0 scale-105' : 'scale-100'
+            isHovered && secondaryImg ? 'opacity-0 scale-105' : 'scale-100'
           }`}
         />
 
         {/* Secondary Image for Hover Reveal & Mobile Auto-Crossfade */}
-        {product.secondaryImage && (
+        {secondaryImg && (
           <Image
-            src={product.secondaryImage}
+            src={secondaryImg}
             alt={`${product.name} alternate view`}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -70,6 +77,13 @@ export default function ProductCard({ product }: ProductCardProps) {
               isHovered ? 'opacity-100 scale-105' : 'scale-100'
             }`}
           />
+        )}
+
+        {/* Out-of-stock badge — never hide product, per spec */}
+        {isOutOfStock && (
+          <div className="absolute top-3 left-3 z-10 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border backdrop-blur-md bg-amber-950/80 border-amber-500/40 text-amber-300">
+            Out of Stock
+          </div>
         )}
 
         {/* Wishlist Button — fluid 44px */}
@@ -117,15 +131,15 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Information — fluid */}
       <div className="flex flex-col p-3 sm:p-4 flex-1 justify-between gap-1">
         <div>
-          {/* Category & Star Rating */}
+          {/* Category & Star Rating — supports both mock and Supabase shapes */}
           <div className="flex items-center justify-between text-xs text-gray-400 mb-1 sm:mb-1.5 gap-2">
             <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold text-[#D4AF37] truncate">
-              {product.categoryLabel}
+              {(product as any).categoryLabel ?? (anyProduct.categories?.name as string) ?? anyProduct.category ?? '—'}
             </span>
             <div className="flex items-center gap-1 text-amber-400 shrink-0">
               <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400" />
-              <span className="font-medium text-gray-300 text-[11px] sm:text-xs">{product.rating.toFixed(1)}</span>
-              <span className="text-gray-500 text-[10px] hidden sm:inline">({product.reviewCount})</span>
+              <span className="font-medium text-gray-300 text-[11px] sm:text-xs">{(product as any).rating?.toFixed?.(1) ?? '5.0'}</span>
+              <span className="text-gray-500 text-[10px] hidden sm:inline">({(product as any).reviewCount ?? 0})</span>
             </div>
           </div>
 
@@ -137,17 +151,17 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
 
-          {/* Tagline — fluid */}
+          {/* Tagline — fluid, fallback to description for Supabase shape */}
           <p className="text-[11px] sm:text-xs text-gray-400 line-clamp-1 mb-2 sm:mb-3 leading-tight">
-            {product.tagline}
+            {(product as any).tagline ?? (anyProduct.description ? String(anyProduct.description).slice(0, 60) : '')}
           </p>
         </div>
 
         {/* Bottom: Color Swatches & Price (No discount strikethrough) */}
         <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-auto gap-2">
-          {/* Color swatches */}
+          {/* Color swatches — only if product has colors (mock shape) */}
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-            {product.colors.map((c) => (
+            {((product as any).colors as any[])?.map((c: any) => (
               <button
                 key={c.name}
                 onClick={(e) => {
@@ -167,7 +181,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Price — Pure luxury pricing without discount badges */}
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
             <span className="text-[13px] sm:text-sm font-semibold text-[#F3E5AB] tracking-tight truncate">
-              {formatPrice(product.price)}
+              {formatPrice(Number(product.price))}
             </span>
           </div>
         </div>
