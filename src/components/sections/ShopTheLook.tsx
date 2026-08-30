@@ -17,7 +17,6 @@ export default function ShopTheLook() {
       title: 'Chronographe Imperial Rose Gold Timepiece',
       description: 'Handcrafted Swiss automatic movement paired with Italian emerald crocodile strap.',
       category: 'Timepieces',
-      badge: 'Masterpiece Calibre',
       image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -26,7 +25,6 @@ export default function ShopTheLook() {
       title: 'Monceau Croc-Embossed Structured Satchel',
       description: 'Hand-burnished Italian calfskin with 24k gold-plated hardware in deep noir.',
       category: 'Designer Bags',
-      badge: 'Atelier Signature',
       image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -35,7 +33,6 @@ export default function ShopTheLook() {
       title: 'Aurelia Silk Crepe Backless Gown',
       description: '22-momme pure Mulberry silk bias-cut gown draped with fluid elegance.',
       category: 'Wears',
-      badge: 'Haute Couture',
       image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -44,7 +41,6 @@ export default function ShopTheLook() {
       title: 'Venice Sculpted Ankle-Strap Pumps',
       description: 'Architectural stiletto heel wrapped in glazed Italian patent leather.',
       category: 'Luxury Shoes',
-      badge: 'Runway Statement',
       image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -53,7 +49,6 @@ export default function ShopTheLook() {
       title: 'Lumière 18k Solitaire Diamond Choker',
       description: '1.5 carat GIA-certified brilliant diamond suspended on solid 18k yellow gold.',
       category: 'Fine Jewelry',
-      badge: 'High Jewelry',
       image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -62,7 +57,6 @@ export default function ShopTheLook() {
       title: 'Sienna Chevron Quilted Chain Bag',
       description: 'Plush lambskin micro-quilting with sliding gold chain strap for versatile day-to-night styling.',
       category: 'Designer Bags',
-      badge: 'New Season Bag',
       image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
     },
   ];
@@ -186,12 +180,6 @@ export default function ShopTheLook() {
             >
               <ChevronRight className="w-4 h-4" />
             </button>
-
-            {/* Top Badge — fluid + float animation */}
-            <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/30 text-white text-[10px] sm:text-[11px] font-medium shadow-xl max-w-[70%] animate-float-slow">
-              <Sparkles className="w-3 h-3 text-[#D4AF37] shrink-0" />
-              <span className="truncate">{currentSlide.badge}</span>
-            </div>
 
             {/* Bottom Floating Title */}
             <div className="absolute bottom-5 sm:bottom-6 inset-x-4 sm:inset-x-6 z-20 hidden sm:block pointer-events-none">

@@ -18,7 +18,6 @@ export default function HeroSection() {
       subtitle: '18k Rose Gold & Automatic Calibre',
       category: 'Wristwatches',
       image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Master Timepieces Drop',
     },
     {
       id: 'slide-2',
@@ -27,7 +26,6 @@ export default function HeroSection() {
       subtitle: 'Structured Croc-Embossed Calfskin',
       category: 'Designer Bags',
       image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Florence Atelier',
     },
     {
       id: 'slide-3',
@@ -36,7 +34,6 @@ export default function HeroSection() {
       subtitle: 'Fluid Bias-Cut Backless Silhouette',
       category: 'Wears',
       image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Runway Collection',
     },
     {
       id: 'slide-4',
@@ -45,7 +42,6 @@ export default function HeroSection() {
       subtitle: 'Ivory Tourbillon Dial with Gilt Numerals & Moonphase',
       category: 'Wristwatches',
       image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Poe Edgar Edition',
     },
     {
       id: 'slide-5',
@@ -54,7 +50,6 @@ export default function HeroSection() {
       subtitle: 'Plush Nappa Lambskin in Ivory & Gold',
       category: 'Designer Bags',
       image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
-      badge: 'New Season Arrival',
     },
   ];
 
@@ -227,12 +222,6 @@ export default function HeroSection() {
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
-
-              {/* Top Floating Badge — fluid + floating micro-animation */}
-              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/30 text-white text-[10px] sm:text-[11px] font-medium shadow-xl max-w-[70%] animate-float-slow">
-                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
-                <span className="truncate">{currentSlide.badge}</span>
-              </div>
 
               {/* Floating Active Product Card (Bottom) — fluid + living indicator dot */}
               <div
