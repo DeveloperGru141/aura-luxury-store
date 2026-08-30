@@ -9,14 +9,6 @@ export default function AnnouncementBar() {
   const [copied, setCopied] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
 
-  const promoCode = 'TIMELESS15';
-
-  const copyPromo = () => {
-    navigator.clipboard?.writeText(promoCode);
-    setCopied(true);
-    showToast('Promo code "TIMELESS15" copied to clipboard! (15% OFF)', 'success');
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const currencies: Currency[] = ['NGN', 'USD', 'GBP'];
 
@@ -26,23 +18,7 @@ export default function AnnouncementBar() {
         {/* Left: Shipping perk */}
         <div className="hidden lg:flex items-center gap-2 text-gray-400">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
-          <span>Complimentary express delivery on orders over ₦250,000</span>
-        </div>
-
-        {/* Center: Promo Banner */}
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse" />
-          <span className="font-medium text-gray-200">
-            Exclusive Launch &mdash; Save 15% with code
-          </span>
-          <button
-            onClick={copyPromo}
-            className="inline-flex items-center gap-1 font-mono font-bold text-[#F3E5AB] bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 px-2 py-0.5 rounded border border-[#D4AF37]/30 transition-all cursor-pointer"
-            title="Click to copy promo code"
-          >
-            <span>{promoCode}</span>
-            {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3 text-[#D4AF37]" />}
-          </button>
+          <span></span>
         </div>
 
         {/* Right: Currency Selector */}
