@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import CategoryCreateForm from './CategoryCreateForm';
+import { AdminCard, AdminTable, AdminTableHeader, AdminTableHead, AdminTableRow, AdminTableCell, AdminErrorState, AdminEmptyState } from '../components/ui';
 
 export default async function AdminCategoriesPage() {
   const supabase = await createClient();
@@ -22,62 +23,55 @@ export default async function AdminCategoriesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-serif text-2xl font-light text-white">Categories</h1>
-        <span className="text-xs text-gray-400">{categories?.length ?? 0} total</span>
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Categories</h1>
+          <p className="mt-1 text-sm text-gray-500">{categories?.length ?? 0} total</p>
+        </div>
       </div>
 
       {error && (
-        <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-500/20 text-rose-300 text-xs">
-          Error loading categories: {error.message}
-          {error.message.includes('does not exist') && (
-            <span className="block mt-1 text-amber-300">Run supabase/migrations/20250830000001_initial_schema.sql in Supabase SQL Editor</span>
-          )}
-        </div>
+        <AdminErrorState message={error.message + (error.message.includes('does not exist') ? ' — Run supabase/migrations/20250830000001_initial_schema.sql in Supabase SQL Editor' : '')} />
       )}
 
       <CategoryCreateForm />
 
-      <div className="rounded-2xl bg-[#13161D] border border-white/10 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-white/[0.03] text-gray-400 text-xs uppercase tracking-wider">
+      <AdminCard>
+        <AdminTable>
+          <AdminTableHeader>
+            <tr>
+              <AdminTableHead>Name</AdminTableHead>
+              <AdminTableHead>Slug</AdminTableHead>
+              <AdminTableHead>Products</AdminTableHead>
+              <AdminTableHead>Image</AdminTableHead>
+              <AdminTableHead>Created</AdminTableHead>
+            </tr>
+          </AdminTableHeader>
+          <tbody>
+            {categories?.map((cat) => (
+              <AdminTableRow key={cat.id}>
+                <AdminTableCell className="font-medium text-gray-900">{cat.name}</AdminTableCell>
+                <AdminTableCell className="font-mono text-xs text-gray-500">{cat.slug}</AdminTableCell>
+                <AdminTableCell className="text-gray-700">{counts[cat.id] ?? 0}</AdminTableCell>
+                <AdminTableCell>
+                  {cat.image_url ? (
+                    <img src={cat.image_url} alt={cat.name} className="h-10 w-10 rounded-lg border border-gray-200 object-cover" />
+                  ) : (
+                    <span className="text-xs text-gray-400">—</span>
+                  )}
+                </AdminTableCell>
+                <AdminTableCell className="text-xs text-gray-500">{new Date(cat.created_at).toLocaleDateString()}</AdminTableCell>
+              </AdminTableRow>
+            ))}
+            {(!categories || categories.length === 0) && !error && (
               <tr>
-                <th className="text-left px-4 py-3">Name</th>
-                <th className="text-left px-4 py-3">Slug</th>
-                <th className="text-left px-4 py-3">Products</th>
-                <th className="text-left px-4 py-3">Image</th>
-                <th className="text-left px-4 py-3">Created</th>
+                <td colSpan={5} className="p-0">
+                  <AdminEmptyState title="No categories" description="Categories will appear here after the initial migration. Use the form above to add one." />
+                </td>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {categories?.map((cat) => (
-                <tr key={cat.id} className="hover:bg-white/[0.02]">
-                  <td className="px-4 py-3 text-white font-medium">{cat.name}</td>
-                  <td className="px-4 py-3 text-gray-400 font-mono text-xs">{cat.slug}</td>
-                  <td className="px-4 py-3 text-[#F3E5AB]">{counts[cat.id] ?? 0}</td>
-                  <td className="px-4 py-3">
-                    {cat.image_url ? (
-                      <img src={cat.image_url} alt={cat.name} className="w-10 h-10 rounded-lg object-cover border border-white/10" />
-                    ) : (
-                      <span className="text-gray-500 text-xs">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">{new Date(cat.created_at).toLocaleDateString()}</td>
-                </tr>
-              ))}
-              {(!categories || categories.length === 0) && (
-                <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-gray-500 text-sm">
-                    No categories yet — 5 defaults will appear after migration is applied.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p className="text-[11px] text-gray-500">Categories: create + list only. No update/delete UI per spec — DB has ON DELETE RESTRICT safety.</p>
+            )}
+          </tbody>
+        </AdminTable>
+      </AdminCard>
     </div>
   );
 }

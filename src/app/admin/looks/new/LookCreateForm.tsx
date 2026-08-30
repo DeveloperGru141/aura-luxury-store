@@ -69,55 +69,66 @@ export default function LookCreateForm({ products }: { products: { id: string; n
   };
 
   const filtered = products.filter((p) => p.name.toLowerCase().includes(filter.toLowerCase()) || p.slug.includes(filter.toLowerCase()));
+  const imageError = !imageFile ? 'Image is required' : null;
+  const productsError = selectedProducts.length === 0 ? 'Tag at least one product' : null;
 
   return (
-    <form onSubmit={handleSubmit} className="p-5 rounded-2xl bg-[#13161D] border border-white/10 space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="rounded-xl border border-gray-200 bg-white">
+      <div className="border-b border-gray-200 px-6 py-4">
+        <h2 className="text-sm font-semibold text-gray-900">Look details</h2>
+        <p className="mt-1 text-xs text-gray-500">Image will be rendered with object-fit: cover — use consistent aspect ratio.</p>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4 p-6" noValidate>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-gray-700">Placement *</label>
+            <select value={placement} onChange={(e) => setPlacement(e.target.value as any)} className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+              <option value="hero">Hero</option>
+              <option value="lookbook">Lookbook</option>
+            </select>
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-gray-700">Display order</label>
+            <input type="number" value={displayOrder} onChange={(e) => setDisplayOrder(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
+          </div>
+        </div>
+
         <div>
-          <label className="text-xs text-gray-300 mb-1 block">Placement *</label>
-          <select value={placement} onChange={(e) => setPlacement(e.target.value as any)} className="w-full px-3 py-2.5 rounded-xl bg-[#0A0C0F] border border-white/10 text-white text-sm">
-            <option value="hero">Hero</option>
-            <option value="lookbook">Lookbook</option>
-          </select>
+          <label className="mb-1.5 block text-sm font-medium text-gray-700">Caption</label>
+          <input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="e.g. Masterpiece Calibre" className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
         </div>
+
         <div>
-          <label className="text-xs text-gray-300 mb-1 block">Display Order</label>
-          <input type="number" value={displayOrder} onChange={(e) => setDisplayOrder(parseInt(e.target.value) || 0)} className="w-full px-3 py-2.5 rounded-xl bg-[#0A0C0F] border border-white/10 text-white text-sm" />
+          <label className="mb-1.5 block text-sm font-medium text-gray-700">Image *</label>
+          <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)} className="w-full text-sm text-gray-500 file:mr-3 file:rounded-lg file:border-0 file:bg-gray-100 file:px-3 file:py-2 file:text-xs file:font-medium file:text-gray-700 hover:file:bg-gray-200" required />
+          {imageError && !imageFile && error && <p className="mt-1.5 text-xs text-red-600">{imageError}</p>}
         </div>
-      </div>
 
-      <div>
-        <label className="text-xs text-gray-300 mb-1 block">Caption (optional)</label>
-        <input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="e.g. Masterpiece Calibre" className="w-full px-3 py-2.5 rounded-xl bg-[#0A0C0F] border border-white/10 text-white text-sm" />
-      </div>
-
-      <div>
-        <label className="text-xs text-gray-300 mb-1 block">Image *</label>
-        <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)} className="w-full text-sm text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#D4AF37]/15 file:text-[#F3E5AB] file:text-xs" required />
-        <p className="text-[11px] text-gray-500 mt-1">Hero animation assumes consistent aspect — upload will be rendered with object-fit: cover</p>
-      </div>
-
-      <div>
-        <label className="text-xs text-gray-300 mb-1 block">Tag Products * (multi-select, searchable)</label>
-        <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter by name or slug..." className="w-full mb-2 px-3 py-2 rounded-xl bg-[#0A0C0F] border border-white/10 text-white text-sm" />
-        <div className="max-h-48 overflow-y-auto rounded-xl border border-white/10 bg-[#0A0C0F] divide-y divide-white/5">
-          {filtered.length === 0 && <div className="p-3 text-xs text-gray-500">No products — create products first (FK requirement)</div>}
-          {filtered.map((p) => (
-            <label key={p.id} className="flex items-center gap-2 px-3 py-2 hover:bg-white/5 cursor-pointer text-sm">
-              <input type="checkbox" checked={selectedProducts.includes(p.id)} onChange={() => toggleProduct(p.id)} className="rounded border-white/20 bg-transparent text-[#D4AF37] focus:ring-[#D4AF37]/30" />
-              <span className="text-white flex-1 truncate">{p.name}</span>
-              <span className="text-gray-500 text-xs font-mono">{p.slug}</span>
-            </label>
-          ))}
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-gray-700">Tag products *</label>
+          <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter by name or slug..." className="mb-2 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
+          <div className="max-h-48 overflow-y-auto rounded-lg border border-gray-200 bg-white">
+            {filtered.length === 0 && <div className="p-3 text-xs text-gray-500">No products — create products first.</div>}
+            {filtered.map((p) => (
+              <label key={p.id} className="flex cursor-pointer items-center gap-2 border-b border-gray-100 px-3 py-2 text-sm last:border-0 hover:bg-gray-50">
+                <input type="checkbox" checked={selectedProducts.includes(p.id)} onChange={() => toggleProduct(p.id)} className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span className="flex-1 truncate text-gray-900">{p.name}</span>
+                <span className="font-mono text-xs text-gray-500">{p.slug}</span>
+              </label>
+            ))}
+          </div>
+          {productsError && selectedProducts.length === 0 && error && <p className="mt-1.5 text-xs text-red-600">{productsError}</p>}
+          <p className="mt-1 text-xs text-gray-500">{selectedProducts.length} selected</p>
         </div>
-        <p className="text-[11px] text-gray-500 mt-1">{selectedProducts.length} selected</p>
-      </div>
 
-      {error && <div className="p-2 rounded-lg bg-rose-950/40 border border-rose-500/20 text-rose-300 text-xs">{error}</div>}
+        {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
 
-      <button type="submit" disabled={loading} className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-wider hover:brightness-110 disabled:opacity-50">
-        {loading ? 'Creating...' : 'Create Look'}
-      </button>
-    </form>
+        <div className="flex justify-end">
+          <button type="submit" disabled={loading} className="inline-flex items-center rounded-lg bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50">
+            {loading ? 'Creating…' : 'Create look'}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

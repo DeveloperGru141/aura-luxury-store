@@ -21,6 +21,7 @@ export default function CategoryCreateForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleNameChange = (v: string) => {
     setName(v);
@@ -29,8 +30,12 @@ export default function CategoryCreateForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitted(true);
     setError(null);
     setSuccess(null);
+    if (!name.trim() || !slug.trim()) {
+      return;
+    }
     setLoading(true);
 
     const supabase = createClient();
@@ -65,52 +70,63 @@ export default function CategoryCreateForm() {
     setLoading(false);
   };
 
+  const nameError = submitted && !name.trim() ? 'Name is required' : null;
+  const slugError = submitted && !slug.trim() ? 'Slug is required' : null;
+
   return (
-    <form onSubmit={handleSubmit} className="p-4 sm:p-5 rounded-2xl bg-[#13161D] border border-white/10 space-y-4">
-      <h2 className="font-medium text-white text-sm">Create Category</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="text-xs text-gray-300 mb-1 block">Name</label>
-          <input
-            value={name}
-            onChange={(e) => handleNameChange(e.target.value)}
-            placeholder="e.g. Clothes"
-            className="w-full px-3 py-2.5 rounded-xl bg-[#0A0C0F] border border-white/10 text-white text-sm focus:outline-none focus:border-[#D4AF37]/50"
-            required
-          />
-        </div>
-        <div>
-          <label className="text-xs text-gray-300 mb-1 block">Slug (auto)</label>
-          <input
-            value={slug}
-            onChange={(e) => setSlug(slugify(e.target.value))}
-            placeholder="clothes"
-            className="w-full px-3 py-2.5 rounded-xl bg-[#0A0C0F] border border-white/10 text-white text-sm font-mono focus:outline-none focus:border-[#D4AF37]/50"
-            required
-          />
-        </div>
+    <div className="rounded-xl border border-gray-200 bg-white">
+      <div className="border-b border-gray-200 px-6 py-4">
+        <h2 className="text-sm font-semibold text-gray-900">Create category</h2>
+        <p className="mt-1 text-xs text-gray-500">Add a new category — slug is auto-generated, image is optional.</p>
       </div>
+      <form onSubmit={handleSubmit} className="space-y-4 p-6" noValidate>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-gray-700">Name</label>
+            <input
+              value={name}
+              onChange={(e) => handleNameChange(e.target.value)}
+              placeholder="e.g. Clothes"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              aria-invalid={!!nameError}
+            />
+            {nameError && <p className="mt-1.5 text-xs text-red-600">{nameError}</p>}
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-gray-700">Slug</label>
+            <input
+              value={slug}
+              onChange={(e) => setSlug(slugify(e.target.value))}
+              placeholder="clothes"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 font-mono text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              aria-invalid={!!slugError}
+            />
+            {slugError && <p className="mt-1.5 text-xs text-red-600">{slugError}</p>}
+          </div>
+        </div>
 
-      <div>
-        <label className="text-xs text-gray-300 mb-1 block">Image (optional, stored in product-images bucket)</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
-          className="w-full text-sm text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#D4AF37]/15 file:text-[#F3E5AB] file:text-xs hover:file:bg-[#D4AF37]/25"
-        />
-      </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-gray-700">Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+            className="w-full text-sm text-gray-500 file:mr-3 file:rounded-lg file:border-0 file:bg-gray-100 file:px-3 file:py-2 file:text-xs file:font-medium file:text-gray-700 hover:file:bg-gray-200"
+          />
+          <p className="mt-1 text-xs text-gray-500">Optional — stored in product-images bucket.</p>
+        </div>
 
-      {error && <div className="p-2 rounded-lg bg-rose-950/40 border border-rose-500/20 text-rose-300 text-xs">{error}</div>}
-      {success && <div className="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 text-xs">{success}</div>}
+        {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
+        {success && <div className="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">{success}</div>}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-wider hover:brightness-110 disabled:opacity-50"
-      >
-        {loading ? 'Creating...' : 'Create Category'}
-      </button>
-    </form>
+        <button
+          type="submit"
+          disabled={loading}
+          className="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+        >
+          {loading ? 'Creating…' : 'Create category'}
+        </button>
+      </form>
+    </div>
   );
 }

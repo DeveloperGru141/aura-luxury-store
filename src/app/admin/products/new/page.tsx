@@ -7,8 +7,10 @@ export default async function NewProductPage() {
 
   return (
     <div className="space-y-6 max-w-2xl">
-      <h1 className="font-serif text-2xl font-light text-white">New Product</h1>
-      <p className="text-sm text-gray-400">Single image upload for MVP (schema supports images[] array for future gallery). Stock defaults to in_stock.</p>
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight text-gray-900">New product</h1>
+        <p className="mt-1 text-sm text-gray-500">Single image for MVP — schema supports images array for future gallery.</p>
+      </div>
       <ProductCreateForm categories={categories ?? []} />
     </div>
   );

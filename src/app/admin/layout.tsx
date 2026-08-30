@@ -2,24 +2,35 @@ import Link from 'next/link';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#0A0C0F] text-white">
-      <header className="sticky top-0 z-30 bg-[#0D0F14]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
-          <Link href="/admin" className="font-serif text-lg font-bold tracking-[0.2em] text-white">
-            TIMELESS <span className="text-[#D4AF37]">ADMIN</span>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <header className="sticky top-0 z-30 border-b border-gray-200 bg-white">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
+          <Link href="/admin" className="text-sm font-semibold tracking-tight text-gray-900">
+            Admin<span className="font-normal text-gray-500"> — Timeless</span>
           </Link>
-          <nav className="flex items-center gap-4 text-xs">
-            <Link href="/admin/categories" className="text-gray-300 hover:text-white transition-colors">Categories</Link>
-            <Link href="/admin/products" className="text-gray-300 hover:text-white transition-colors">Products</Link>
-            <Link href="/admin/looks" className="text-gray-300 hover:text-white transition-colors">Looks</Link>
-            <Link href="/" className="text-gray-400 hover:text-white transition-colors">← Storefront</Link>
-            <form action="/admin/logout" method="post">
-              <button type="submit" className="text-rose-300 hover:text-rose-200 transition-colors">Logout</button>
+          <nav className="flex items-center gap-1 text-sm">
+            <Link href="/admin/categories" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+              Categories
+            </Link>
+            <Link href="/admin/products" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+              Products
+            </Link>
+            <Link href="/admin/looks" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+              Looks
+            </Link>
+            <span className="mx-1 h-4 w-px bg-gray-200" />
+            <Link href="/" className="rounded-lg px-3 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              Storefront
+            </Link>
+            <form action="/admin/logout" method="post" className="ml-1">
+              <button type="submit" className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                Logout
+              </button>
             </form>
           </nav>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">{children}</main>
+      <main className="mx-auto max-w-7xl px-6 py-8">{children}</main>
     </div>
   );
 }

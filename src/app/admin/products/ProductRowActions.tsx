@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { AdminConfirmDialog } from '../components/ui';
 
 export default function ProductRowActions({
   id,
@@ -15,6 +16,7 @@ export default function ProductRowActions({
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleToggle = async () => {
     setLoading(true);
@@ -27,24 +29,35 @@ export default function ProductRowActions({
   };
 
   const handleDelete = async () => {
-    if (!confirm('Delete this product? This is a hard delete with no undo.')) return;
     setLoading(true);
     const supabase = createClient();
     const { error } = await supabase.from('products').delete().eq('id', id);
     if (error) alert(error.message);
     else router.refresh();
     setLoading(false);
+    setConfirmOpen(false);
   };
 
   if (variant === 'delete') {
     return (
-      <button
-        onClick={handleDelete}
-        disabled={loading}
-        className="px-3 py-1.5 rounded-lg bg-rose-950/40 border border-rose-500/20 text-rose-300 text-xs hover:bg-rose-900/40 disabled:opacity-50"
-      >
-        Delete
-      </button>
+      <>
+        <button
+          onClick={() => setConfirmOpen(true)}
+          disabled={loading}
+          className="rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+        >
+          Delete
+        </button>
+        <AdminConfirmDialog
+          open={confirmOpen}
+          title="Delete product?"
+          description="This is a hard delete with no undo. The product will be removed from all listings and looks."
+          confirmLabel="Delete"
+          onConfirm={handleDelete}
+          onCancel={() => setConfirmOpen(false)}
+          loading={loading}
+        />
+      </>
     );
   }
 
@@ -53,13 +66,13 @@ export default function ProductRowActions({
     <button
       onClick={handleToggle}
       disabled={loading}
-      className={`relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border transition-colors disabled:opacity-50 ${
-        isInStock ? 'bg-emerald-950/40 border-emerald-500/20 text-emerald-300' : 'bg-amber-950/40 border-amber-500/20 text-amber-300'
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors disabled:opacity-50 ${
+        isInStock ? 'border-green-200 bg-green-50 text-green-700' : 'border-gray-300 bg-gray-100 text-gray-600'
       }`}
-      title="Click to toggle stock status"
+      title="Toggle stock status"
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${isInStock ? 'bg-emerald-400' : 'bg-amber-400'} `} />
-      {isInStock ? 'In Stock' : 'Out of Stock'}
+      <span className={`h-1.5 w-1.5 rounded-full ${isInStock ? 'bg-green-500' : 'bg-gray-400'}`} />
+      {isInStock ? 'In stock' : 'Out of stock'}
     </button>
   );
 }

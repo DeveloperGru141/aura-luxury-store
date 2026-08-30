@@ -7,8 +7,10 @@ export default async function NewLookPage() {
 
   return (
     <div className="space-y-6 max-w-2xl">
-      <h1 className="font-serif text-2xl font-light text-white">New Look</h1>
-      <p className="text-sm text-gray-400">One styled image routed to hero or lookbook, tagging multiple products. Delete-and-recreate to change tags/image per spec.</p>
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight text-gray-900">New look</h1>
+        <p className="mt-1 text-sm text-gray-500">One styled image for hero or lookbook, tagging multiple products.</p>
+      </div>
       <LookCreateForm products={products ?? []} />
     </div>
   );
