@@ -9,9 +9,33 @@ export default function AnnouncementBar() {
   const { currency, setCurrency } = useStore();
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
 
-
   const currencies: Currency[] = ['NGN', 'USD', 'GBP'];
   const conciergeUrl = getWhatsAppConciergeUrl();
+
+  return (
+    <aside aria-label="Luxury Concierge" className="bg-[#080A0E] border-b border-white/5 text-gray-300 text-xs py-2 px-4 relative z-40">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+        {/* Left: Shipping perk */}
+        <div className="hidden lg:flex items-center gap-2 text-gray-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
+          <span>Complimentary insured express courier on orders over ₦250,000</span>
+        </div>
+
+        {/* Center: WhatsApp Direct Order Hotline */}
+        <div className="flex items-center gap-2">
+          <MessageCircle className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <span className="font-light text-gray-300">
+            Direct Client Orders &amp; Inquiries:
+          </span>
+          <a
+            href={conciergeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-semibold text-[#F3E5AB] hover:underline transition-all"
+          >
+            <span>+234 706 507 6565</span>
+          </a>
+        </div>
 
         {/* Right: Currency Selector */}
         <div className="hidden sm:flex items-center gap-4 text-gray-400 relative">

@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
-import Badge from './Badge';
 import {
   X,
   Heart,
@@ -81,11 +80,6 @@ export default function QuickViewModal() {
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover object-center transition-all duration-500"
             />
-            {quickViewProduct.badge && (
-              <div className="absolute top-3 left-3 z-10">
-                <Badge type={quickViewProduct.badge} />
-              </div>
-            )}
           </div>
 
           {/* Thumbnails */}

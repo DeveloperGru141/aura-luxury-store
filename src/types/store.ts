@@ -1,8 +1,5 @@
 export type ProductCategory = 'all' | 'bags' | 'apparel' | 'shoes' | 'watches' | 'jewelry';
 
-export type ProductBadge = 'NEW' | 'LIMITED' | 'BESTSELLER' | 'SALE' | 'EXCLUSIVE' | 'TRENDING';
-
-
 export interface Product {
   id: string;
   name: string;
@@ -16,8 +13,6 @@ export interface Product {
   reviewCount: number;
   primaryImage: string;
   secondaryImage: string;
-  badge?: ProductBadge;
-  badgeColor?: string;
   colors: { name: string; hex: string }[];
   sizes?: string[];
   materials: string[];

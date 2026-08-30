@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/store';
 import { useStore } from '@/context/StoreContext';
-import Badge from './Badge';
 import { Heart, Eye, MessageCircle, Star } from 'lucide-react';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
@@ -72,11 +71,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             }`}
           />
         )}
-
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
-          {product.badge && <Badge type={product.badge} />}
-        </div>
 
         {/* Wishlist Button — fluid 44px */}
         <button

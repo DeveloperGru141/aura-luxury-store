@@ -59,8 +59,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 48,
     primaryImage: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=1000&auto=format&fit=crop',
-    badge: 'BESTSELLER',
-    badgeColor: 'bg-amber-600',
     colors: [
       { name: 'Noir Black', hex: '#141414' },
       { name: 'Cognac Saddle', hex: '#8B4513' },
@@ -88,8 +86,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 32,
     primaryImage: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?q=80&w=1000&auto=format&fit=crop',
-    badge: 'NEW',
-    badgeColor: 'bg-emerald-700',
     colors: [
       { name: 'Ivory Cream', hex: '#FDFBF7' },
       { name: 'Midnight Navy', hex: '#0E1726' },
@@ -116,8 +112,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 26,
     primaryImage: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
-    badge: 'EXCLUSIVE',
-    badgeColor: 'bg-rose-700',
     colors: [
       { name: 'Ebony Canvas', hex: '#222222' },
       { name: 'Rich Caramel', hex: '#A5682A' },
@@ -167,8 +161,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 27,
     primaryImage: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1000&auto=format&fit=crop',
-    badge: 'EXCLUSIVE',
-    badgeColor: 'bg-rose-700',
     colors: [
       { name: 'Champagne Gold', hex: '#E7D3A7' },
       { name: 'Midnight Noir', hex: '#0B0C10' },
@@ -197,8 +189,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 41,
     primaryImage: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop',
-    badge: 'BESTSELLER',
-    badgeColor: 'bg-amber-600',
     colors: [
       { name: 'Charcoal Houndstooth', hex: '#323639' },
       { name: 'Cream Alabaster', hex: '#EFECE6' },
@@ -224,8 +214,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 26,
     primaryImage: 'https://images.unsplash.com/photo-1485968579580-b6d095142e6e?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=1000&auto=format&fit=crop',
-    badge: 'NEW',
-    badgeColor: 'bg-emerald-700',
     colors: [
       { name: 'Heritage Plaid', hex: '#0F2335' },
       { name: 'Oatmeal Melange', hex: '#D6CFC2' },
@@ -253,8 +241,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 22,
     primaryImage: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1000&auto=format&fit=crop',
-    badge: 'TRENDING',
-    badgeColor: 'bg-indigo-600',
     colors: [
       { name: 'Natural Cream', hex: '#E8E0D1' },
       { name: 'Sage Olive', hex: '#7A8B6F' },
@@ -282,8 +268,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 18,
     primaryImage: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1000&auto=format&fit=crop',
-    badge: 'LIMITED',
-    badgeColor: 'bg-purple-700',
     colors: [
       { name: 'Heather Grey Wrap', hex: '#C2C8C5' },
       { name: 'Burgundy Beanie', hex: '#5D1A2A' },
@@ -310,8 +294,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 29,
     primaryImage: 'https://images.unsplash.com/photo-1495385794356-15371f348c31?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1000&auto=format&fit=crop',
-    badge: 'BESTSELLER',
-    badgeColor: 'bg-amber-600',
     colors: [
       { name: 'Teal Silk', hex: '#0E8A8A' },
       { name: 'Noir Satin', hex: '#0A0A0A' },
@@ -341,8 +323,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 38,
     primaryImage: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=1000&auto=format&fit=crop',
-    badge: 'TRENDING',
-    badgeColor: 'bg-indigo-600',
     colors: [
       { name: 'Patent Onyx', hex: '#111111' },
       { name: 'Nude Blush', hex: '#E8C5B8' },
@@ -398,8 +378,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 54,
     primaryImage: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1000&auto=format&fit=crop',
-    badge: 'LIMITED',
-    badgeColor: 'bg-purple-700',
     colors: [
       { name: 'Rose Gold & Emerald', hex: '#B76E79' },
       { name: 'Silver & Obsidian', hex: '#C0C0C0' },
@@ -428,8 +406,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 33,
     primaryImage: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=1000&auto=format&fit=crop',
-    badge: 'EXCLUSIVE',
-    badgeColor: 'bg-rose-700',
     colors: [
       { name: 'Platinum Steel', hex: '#E5E4E2' },
       { name: 'Midnight Diamond', hex: '#1C2331' },
@@ -455,8 +431,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 42,
     primaryImage: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
-    badge: 'BESTSELLER',
-    badgeColor: 'bg-amber-600',
     colors: [
       { name: 'Ceramic Blue', hex: '#1B3B6F' },
       { name: 'Onyx Black', hex: '#111111' },
@@ -483,8 +457,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 19,
     primaryImage: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1000&auto=format&fit=crop',
-    badge: 'NEW',
-    badgeColor: 'bg-emerald-700',
     colors: [
       { name: 'Champagne Gold', hex: '#E5B80B' },
       { name: 'Rose Blush', hex: '#B76E79' },
@@ -509,8 +481,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 17,
     primaryImage: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=1000&auto=format&fit=crop',
-    badge: 'LIMITED',
-    badgeColor: 'bg-purple-700',
     colors: [
       { name: 'Nocturne Black & Gold', hex: '#0A0A0A' },
       { name: 'Midnight Raven', hex: '#1C1C1E' },
@@ -539,8 +509,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 61,
     primaryImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1000&auto=format&fit=crop',
-    badge: 'BESTSELLER',
-    badgeColor: 'bg-amber-600',
     colors: [
       { name: '18k Yellow Gold', hex: '#E5B80B' },
       { name: '18k White Gold', hex: '#F0F0F0' },
@@ -568,8 +536,6 @@ export const PRODUCTS: Product[] = [
     reviewCount: 18,
     primaryImage: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1000&auto=format&fit=crop',
     secondaryImage: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=1000&auto=format&fit=crop',
-    badge: 'NEW',
-    badgeColor: 'bg-emerald-700',
     colors: [
       { name: 'Platinum 950', hex: '#E5E4E2' },
       { name: '18k Yellow Gold', hex: '#E5B80B' },
