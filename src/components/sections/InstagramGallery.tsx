@@ -1,7 +1,37 @@
 import React from 'react';
 import Image from 'next/image';
-import { INSTAGRAM_POSTS } from '@/data/mockData';
-import { ArrowUpRight, Camera } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+
+const INSTAGRAM_POSTS = [
+  {
+    id: 'ig-1',
+    handle: '@clara.vogue',
+    image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop',
+    caption: 'Carrying the iconic Monceau croc leather satchel on the streets of Paris ✨👜',
+    productTag: 'Monceau Croc Satchel',
+  },
+  {
+    id: 'ig-2',
+    handle: '@julian_lifestyle',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop',
+    caption: 'Fastening the Chronographe Imperial rose gold timepiece before the gala ⌚🤵',
+    productTag: 'Chronographe Imperial',
+  },
+  {
+    id: 'ig-3',
+    handle: '@nina.stiletto',
+    image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800&auto=format&fit=crop',
+    caption: 'Stepping into the weekend in the Venice sculpted ankle-strap pumps 👠✨',
+    productTag: 'Venice Ankle-Strap Pumps',
+  },
+  {
+    id: 'ig-4',
+    handle: '@marcus.lux',
+    image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop',
+    caption: 'The Grand Nautique 300M on wrist & ready for the weekend voyage ⌚🌊',
+    productTag: 'Grand Nautique Diver',
+  },
+];
 
 function InstagramIcon({ className }: { className?: string }) {
   return (

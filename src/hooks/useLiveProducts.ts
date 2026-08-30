@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Product, ProductCategory } from '@/types/store';
-import { PRODUCTS as MOCK_PRODUCTS, CATEGORIES as MOCK_CATEGORIES } from '@/data/mockData';
 
 type SupabaseProductRow = {
   id: string;
@@ -18,11 +17,41 @@ type SupabaseProductRow = {
   categories?: { name: string; slug: string } | null;
 };
 
+const CATEGORY_META: Record<string, { tagline: string; image: string }> = {
+  clothes: {
+    tagline: 'Silk Gowns, Virgin Wool Tailoring & Knitwear',
+    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
+  },
+  bags: {
+    tagline: 'Hand-stitched Full-Grain Italian Leathers & Satchels',
+    image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
+  },
+  shoes: {
+    tagline: 'Sculpted Stiletto Heels & Blake-Stitched Loafers',
+    image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1000&auto=format&fit=crop',
+  },
+  wristwatches: {
+    tagline: 'Swiss Automatic Calibres & Master Chronometers',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
+  },
+  watches: {
+    tagline: 'Swiss Automatic Calibres & Master Chronometers',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
+  },
+  jewelry: {
+    tagline: '18k Solid Gold, Platinum & Certified Diamonds',
+    image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1000&auto=format&fit=crop',
+  },
+  apparel: {
+    tagline: 'Silk Gowns, Virgin Wool Tailoring & Knitwear',
+    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
+  },
+};
+
 function mapSupabaseToProduct(row: SupabaseProductRow): Product {
   const categorySlug = row.categories?.slug ?? 'bags';
   const categoryLabelMap: Record<string, string> = {
     clothes: 'Wears',
-    cloth: 'Wears',
     bags: 'Designer Bags',
     shoes: 'Luxury Shoes',
     wristwatches: 'Wristwatches',
@@ -32,7 +61,6 @@ function mapSupabaseToProduct(row: SupabaseProductRow): Product {
   };
   const slugToCategory: Record<string, ProductCategory> = {
     clothes: 'apparel',
-    cloth: 'apparel',
     bags: 'bags',
     shoes: 'shoes',
     wristwatches: 'watches',
@@ -58,7 +86,6 @@ function mapSupabaseToProduct(row: SupabaseProductRow): Product {
     materials: [],
     inStock: row.stock_status === 'in_stock',
     specs: [],
-    // carry supabase fields for out-of-stock badge
     ...(row as any),
   } as unknown as Product;
 }
@@ -79,15 +106,14 @@ export function useLiveProducts() {
 
         if (cancelled) return;
 
-        if (!error && data && data.length > 0) {
+        if (!error && data) {
           const mapped = (data as unknown as SupabaseProductRow[]).map(mapSupabaseToProduct);
           setProducts(mapped);
         } else {
-          // Fallback to mock when live empty or error
-          setProducts(MOCK_PRODUCTS);
+          setProducts([]);
         }
       } catch {
-        if (!cancelled) setProducts(MOCK_PRODUCTS);
+        if (!cancelled) setProducts([]);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -98,7 +124,7 @@ export function useLiveProducts() {
     };
   }, []);
 
-  return { products: products ?? MOCK_PRODUCTS, loading, isLive: products !== null && products !== MOCK_PRODUCTS };
+  return { products: products ?? [], loading, isLive: products !== null };
 }
 
 export function useLiveCategories() {
@@ -112,26 +138,19 @@ export function useLiveCategories() {
         const { data, error } = await supabase.from('categories').select('id, name, slug, image_url').order('created_at');
         if (cancelled) return;
         if (!error && data && data.length > 0) {
-          // Map to mock shape — handle slug mismatches (clothes->apparel, wristwatches->watches, cloth->apparel)
-          const slugToMockId: Record<string, string> = {
-            clothes: 'apparel',
-            cloth: 'apparel',
-            wristwatches: 'watches',
-            watches: 'watches',
-          };
           const mapped = data.map((c: any) => ({
             id: c.slug,
             name: c.name,
-            tagline: MOCK_CATEGORIES.find((m) => m.id === (slugToMockId[c.slug] ?? c.slug))?.tagline ?? '',
+            tagline: CATEGORY_META[c.slug]?.tagline ?? '',
             count: '',
-            image: c.image_url ?? MOCK_CATEGORIES.find((m) => m.id === (slugToMockId[c.slug] ?? c.slug))?.image ?? '',
+            image: c.image_url ?? CATEGORY_META[c.slug]?.image ?? '',
           }));
           setCategories(mapped);
         } else {
-          setCategories(MOCK_CATEGORIES);
+          setCategories([]);
         }
       } catch {
-        if (!cancelled) setCategories(MOCK_CATEGORIES);
+        if (!cancelled) setCategories([]);
       }
     };
     fetchLive();
@@ -140,5 +159,5 @@ export function useLiveCategories() {
     };
   }, []);
 
-  return categories ?? MOCK_CATEGORIES;
+  return categories ?? [];
 }

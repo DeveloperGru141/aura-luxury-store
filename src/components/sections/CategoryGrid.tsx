@@ -86,7 +86,6 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                   onClick={() => {
                     const slugToCat: Record<string, ProductCategory> = {
                       clothes: 'apparel',
-                      cloth: 'apparel',
                       bags: 'bags',
                       shoes: 'shoes',
                       wristwatches: 'watches',

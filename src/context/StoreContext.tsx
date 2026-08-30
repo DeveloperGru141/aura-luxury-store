@@ -2,7 +2,12 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, WishlistItem, PromoCode } from '@/types/store';
-import { PROMO_CODES } from '@/data/mockData';
+
+const PROMO_CODES: PromoCode[] = [
+  { code: 'TIMELESS15', discountPercent: 15, description: '15% Off Your Entire Order' },
+  { code: 'WELCOME10', discountPercent: 10, description: '10% Off For First-Time Shoppers' },
+  { code: 'VIP20', discountPercent: 20, description: '20% Off Orders Above ₦500,000', minSpend: 500000 },
+];
 
 export type Currency = 'NGN' | 'USD' | 'GBP';
 

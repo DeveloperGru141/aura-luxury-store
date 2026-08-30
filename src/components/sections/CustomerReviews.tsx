@@ -1,7 +1,45 @@
 import React from 'react';
 import Image from 'next/image';
-import { CUSTOMER_REVIEWS } from '@/data/mockData';
 import { Star, CheckCircle2, Quote, Sparkles } from 'lucide-react';
+
+const CUSTOMER_REVIEWS = [
+  {
+    id: 'rev-1',
+    author: 'Genevieve Du Pont',
+    location: 'Paris, France',
+    rating: 5,
+    title: 'Unrivaled craftsmanship in leather and finishing',
+    comment: 'The Monceau croc satchel exceeded all my expectations. The leather texture, weight of the gold hardware, and the hand-burnished edges are immaculate. I receive compliments every single day.',
+    productName: 'Monceau Croc-Embossed Satchel',
+    productImage: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=400&auto=format&fit=crop',
+    date: 'February 18, 2026',
+    verified: true,
+  },
+  {
+    id: 'rev-2',
+    author: 'Alexander Sterling',
+    location: 'Zurich, Switzerland',
+    rating: 5,
+    title: 'The chronograph mechanism is a true work of horological art',
+    comment: 'As a long-time timepieces collector, I was astonished by the build quality and finishing on the Chronographe Imperial. The 68-hour power reserve is rock solid and the dial depth is stunning in natural sunlight.',
+    productName: 'Chronographe Imperial Automatic',
+    productImage: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400&auto=format&fit=crop',
+    date: 'January 24, 2026',
+    verified: true,
+  },
+  {
+    id: 'rev-3',
+    author: 'Elena Rostova',
+    location: 'London, UK',
+    rating: 5,
+    title: 'Bespoke packaging and exquisite diamond brilliance',
+    comment: 'Ordered the Lumière 18k choker for our anniversary. It arrived in a stunning velvet monogrammed box with full authenticity documentation. The sparkle is radiant and it sits perfectly on the collarbone.',
+    productName: 'Lumière 18k Solitaire Diamond Choker',
+    productImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=400&auto=format&fit=crop',
+    date: 'February 02, 2026',
+    verified: true,
+  },
+];
 
 export default function CustomerReviews() {
   return (
