@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { ProductCategory } from '@/types/store';
-import { PRODUCTS } from '@/data/mockData';
 import ProductCard from '@/components/ui/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
 import { Sparkles, SlidersHorizontal } from 'lucide-react';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 interface FeaturedProductsProps {
   activeCategory: ProductCategory;
@@ -17,6 +17,7 @@ export default function FeaturedProducts({
   setActiveCategory,
 }: FeaturedProductsProps) {
   const [filterTrendingOnly, setFilterTrendingOnly] = useState(false);
+  const { products: liveProducts } = useLiveProducts();
 
   // Exact order: Bags, Wears (Clothes), Shoes, Wristwatches, Jewelry
   const tabs: { id: ProductCategory; label: string }[] = [
@@ -28,9 +29,9 @@ export default function FeaturedProducts({
     { id: 'jewelry', label: 'Fine Jewelry' },
   ];
 
-  const filteredProducts = PRODUCTS.filter((product) => {
+  const filteredProducts = liveProducts.filter((product) => {
     const matchesCat = activeCategory === 'all' || product.category === activeCategory;
-    const matchesTrending = filterTrendingOnly ? product.isTrending : true;
+    const matchesTrending = filterTrendingOnly ? (product as any).isTrending : true;
     return matchesCat && matchesTrending;
   });
 
@@ -58,8 +59,8 @@ export default function FeaturedProducts({
               const isActive = activeCategory === tab.id;
               const count =
                 tab.id === 'all'
-                  ? PRODUCTS.length
-                  : PRODUCTS.filter((p) => p.category === tab.id).length;
+                  ? liveProducts.length
+                  : liveProducts.filter((p) => p.category === tab.id).length;
 
               return (
                 <button

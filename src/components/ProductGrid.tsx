@@ -2,8 +2,8 @@
 
 import ScrollReveal from './ScrollReveal';
 import ProductCard from './ui/ProductCard';
-import { PRODUCTS } from '@/data/mockData';
 import type { Product } from '@/types/store';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 interface ProductGridProps {
   products?: Product[];
@@ -19,10 +19,12 @@ interface ProductGridProps {
  * creates a wave that resets each row (4-col). Feels premium, not jarring.
  */
 export default function ProductGrid({
-  products = PRODUCTS.slice(0, 8),
+  products,
   title = 'Curated Wears',
   subtitle = 'Hand-stitched leather, silk drape & Swiss precision — revealed as you scroll.',
 }: ProductGridProps) {
+  const { products: liveProducts } = useLiveProducts();
+  const displayProducts = products ?? liveProducts.slice(0, 8);
   return (
     <section id="product-grid-demo" className="py-12 sm:py-16 lg:py-20 bg-[#0E1117] border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,7 +39,7 @@ export default function ProductGrid({
 
         {/* Grid: 2-col mobile (tight, fluid) / 4-col desktop (luxury breathing room) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-          {products.map((product, index) => {
+          {displayProducts.map((product, index) => {
             // Dynamic stagger: wave per row, resets every 4 (desktop) — 50ms steps
             const stagger = (index % 4) * 0.05; // 0, 0.05, 0.10, 0.15 → 150ms max lift per row
 

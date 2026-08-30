@@ -3,24 +3,25 @@
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
-import { PRODUCTS } from '@/data/mockData';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { Search, X, Star, ArrowRight } from 'lucide-react';
 
 export default function SearchModal() {
   const { isSearchOpen, setIsSearchOpen, setQuickViewProduct, formatPrice } = useStore();
   const [query, setQuery] = useState('');
+  const { products: liveProducts } = useLiveProducts();
 
   const filtered = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
-    return PRODUCTS.filter(
-      (p) =>
+    return liveProducts.filter(
+      (p: any) =>
         p.name.toLowerCase().includes(q) ||
-        p.categoryLabel.toLowerCase().includes(q) ||
-        p.tagline.toLowerCase().includes(q) ||
-        p.materials.some((m) => m.toLowerCase().includes(q))
+        (p.categoryLabel ?? p.categories?.name ?? '').toLowerCase().includes(q) ||
+        (p.tagline ?? p.description ?? '').toLowerCase().includes(q) ||
+        (p.materials ?? []).some((m: string) => m.toLowerCase().includes(q))
     );
-  }, [query]);
+  }, [query, liveProducts]);
 
   if (!isSearchOpen) return null;
 
@@ -105,7 +106,7 @@ export default function SearchModal() {
                     <div className="flex items-center gap-4">
                       <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-gray-800 shrink-0">
                         <Image
-                          src={item.primaryImage}
+                          src={(item as any).primaryImage ?? (item as any).images?.[0] ?? ''}
                           alt={item.name}
                           fill
                           className="object-cover"
@@ -113,21 +114,21 @@ export default function SearchModal() {
                       </div>
                       <div>
                         <span className="text-[10px] uppercase font-semibold text-[#D4AF37]">
-                          {item.categoryLabel}
+                          {(item as any).categoryLabel ?? (item as any).categories?.name ?? ''}
                         </span>
                         <h4 className="text-sm font-serif font-medium text-white group-hover:text-[#D4AF37] transition-colors">
                           {item.name}
                         </h4>
                         <div className="flex items-center gap-1 text-amber-400 text-xs mt-0.5">
                           <Star className="w-3 h-3 fill-amber-400" />
-                          <span>{item.rating.toFixed(1)}</span>
+                          <span>{(item as any).rating?.toFixed?.(1) ?? '5.0'}</span>
                         </div>
                       </div>
                     </div>
 
                     <div className="text-right">
                       <p className="text-sm font-semibold text-[#F3E5AB]">
-                        {formatPrice(item.price)}
+                        {formatPrice(Number(item.price))}
                       </p>
                       <span className="text-[11px] text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity">
                         View Item &rarr;

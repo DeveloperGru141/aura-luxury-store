@@ -2,18 +2,23 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { CATEGORIES } from '@/data/mockData';
 import { ProductCategory } from '@/types/store';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
+import { useLiveCategories } from '@/hooks/useLiveProducts';
 
 interface CategoryGridProps {
   onSelectCategory: (category: ProductCategory) => void;
 }
 
 export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
-  const [activeMobileCard, setActiveMobileCard] = useState<string | null>(CATEGORIES[0]?.id || null);
+  const liveCategories = useLiveCategories();
+  const [activeMobileCard, setActiveMobileCard] = useState<string | null>(liveCategories[0]?.id || null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  useEffect(() => {
+    if (liveCategories[0]?.id) setActiveMobileCard(liveCategories[0].id);
+  }, [liveCategories]);
 
   useEffect(() => {
     // Only engage scroll-driven active hover on mobile & touch viewports
@@ -64,7 +69,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
 
         {/* 5-Category Bento Grid — fluid gaps + scroll-driven mobile hover */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {CATEGORIES.map((cat, idx) => {
+          {liveCategories.map((cat: any, idx: number) => {
             const isFeatured = idx === 0 || idx === 3;
             const isMobileHovered = activeMobileCard === cat.id;
 

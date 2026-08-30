@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
-import { PRODUCTS } from '@/data/mockData';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 export default function HeroSection() {
   const { setQuickViewProduct, formatPrice } = useStore();
@@ -66,8 +66,9 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, [heroSlides.length]);
 
+  const { products: liveProducts } = useLiveProducts();
   const currentSlide = heroSlides[currentSlideIndex];
-  const activeProduct = PRODUCTS.find((p) => p.id === currentSlide.productId) || PRODUCTS[0];
+  const activeProduct = liveProducts.find((p) => p.id === currentSlide.productId) || liveProducts[0];
 
   const handleNext = () => {
     setCurrentSlideIndex((prev) => (prev + 1) % heroSlides.length);
@@ -231,7 +232,7 @@ export default function HeroSection() {
                 <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1">
                   <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
                     <Image
-                      src={activeProduct.primaryImage}
+                      src={(activeProduct as any).primaryImage ?? (activeProduct as any).images?.[0] ?? ''}
                       alt={activeProduct.name}
                       fill
                       className="object-cover"
@@ -243,13 +244,13 @@ export default function HeroSection() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" />
                       </span>
-                      <span className="truncate">{activeProduct.categoryLabel}</span>
+                      <span className="truncate">{(activeProduct as any).categoryLabel ?? (activeProduct as any).categories?.name ?? ''}</span>
                     </span>
                     <h3 className="text-[13px] sm:text-sm lg:text-base font-serif font-medium text-white line-clamp-1">
                       {activeProduct.name}
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-[#F3E5AB]">
-                      {formatPrice(activeProduct.price)}
+                      {formatPrice(Number(activeProduct.price))}
                     </p>
                   </div>
                 </div>

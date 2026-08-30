@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { PRODUCTS } from '@/data/mockData';
 import { useStore } from '@/context/StoreContext';
 import { Sparkles, Eye, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 export default function ShopTheLook() {
   const { setQuickViewProduct, formatPrice } = useStore();
@@ -74,8 +74,9 @@ export default function ShopTheLook() {
     return () => clearInterval(timer);
   }, [stylingSlides.length]);
 
+  const { products: liveProducts } = useLiveProducts();
   const currentSlide = stylingSlides[currentIndex];
-  const activeProduct = PRODUCTS.find((p) => p.id === currentSlide.productId) || PRODUCTS[0];
+  const activeProduct = liveProducts.find((p) => p.id === currentSlide.productId) || liveProducts[0];
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + stylingSlides.length) % stylingSlides.length);
@@ -108,7 +109,7 @@ export default function ShopTheLook() {
 
   const whatsappOrderUrl = getWhatsAppOrderUrl(
     activeProduct.name,
-    formatPrice(activeProduct.price)
+    formatPrice(Number(activeProduct.price))
   );
 
   return (
@@ -218,14 +219,16 @@ export default function ShopTheLook() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" />
                       </span>
-                      <span>{activeProduct.categoryLabel}</span>
+                      <span>{(activeProduct as any).categoryLabel ?? (activeProduct as any).categories?.name ?? ''}</span>
                     </span>
-                    <span className="text-emerald-400 font-medium text-[11px]">&bull; In Stock</span>
+                    <span className={`font-medium text-[11px] ${(activeProduct as any).stock_status === 'out_of_stock' || (activeProduct as any).inStock === false ? 'text-amber-400' : 'text-emerald-400'}`}>
+                      &bull; {(activeProduct as any).stock_status === 'out_of_stock' || (activeProduct as any).inStock === false ? 'Out of Stock' : 'In Stock'}
+                    </span>
                   </div>
 
                   <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-gray-800 mb-4 border border-white/5">
                     <Image
-                      src={activeProduct.primaryImage}
+                      src={(activeProduct as any).primaryImage ?? (activeProduct as any).images?.[0] ?? ''}
                       alt={activeProduct.name}
                       fill
                       className="object-cover"
@@ -244,7 +247,7 @@ export default function ShopTheLook() {
                   <div className="flex items-baseline justify-between mb-4 pt-3 border-t border-white/5">
                     <span className="text-xs text-gray-400">Price</span>
                     <span className="text-lg font-bold text-[#F3E5AB]">
-                      {formatPrice(activeProduct.price)}
+                      {formatPrice(Number(activeProduct.price))}
                     </span>
                   </div>
 
@@ -280,7 +283,7 @@ export default function ShopTheLook() {
               </span>
               {stylingSlides.map((slide, idx) => {
                 const isSelected = currentIndex === idx;
-                const prod = PRODUCTS.find((p) => p.id === slide.productId);
+                const prod = liveProducts.find((p) => p.id === slide.productId);
                 return (
                   <button
                     key={slide.id}
@@ -294,7 +297,7 @@ export default function ShopTheLook() {
                     <span className="truncate">{slide.title}</span>
                     {prod && (
                       <span className="text-[11px] font-semibold text-[#F3E5AB] shrink-0 ml-2">
-                        {formatPrice(prod.price)}
+                        {formatPrice(Number(prod.price))}
                       </span>
                     )}
                   </button>
