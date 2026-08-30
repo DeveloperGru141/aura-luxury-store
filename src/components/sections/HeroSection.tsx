@@ -8,50 +8,66 @@ import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 export default function HeroSection() {
   const { setQuickViewProduct, formatPrice } = useStore();
+  const { products: liveProducts } = useLiveProducts();
 
-  // Curated hero showcase featuring Bags, Wristwatches, and Wears that crossfade
-  const heroSlides = [
-    {
-      id: 'slide-1',
-      productId: 'watch-01',
-      title: 'Precision Swiss Chronographs',
-      subtitle: '18k Rose Gold & Automatic Calibre',
-      category: 'Wristwatches',
-      image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'slide-2',
-      productId: 'bag-01',
-      title: 'Hand-Burnished Italian Leather',
-      subtitle: 'Structured Croc-Embossed Calfskin',
-      category: 'Designer Bags',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'slide-3',
-      productId: 'apparel-01',
-      title: 'Mulberry Silk Architectural Wears',
-      subtitle: 'Fluid Bias-Cut Backless Silhouette',
-      category: 'Wears',
-      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'slide-4',
-      productId: 'watch-05',
-      title: 'Poe Edgar Nocturne Automatic',
-      subtitle: 'Ivory Tourbillon Dial with Gilt Numerals & Moonphase',
-      category: 'Wristwatches',
-      image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'slide-5',
-      productId: 'bag-02',
-      title: 'Sienna Chevron Quilted Chain Bag',
-      subtitle: 'Plush Nappa Lambskin in Ivory & Gold',
-      category: 'Designer Bags',
-      image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
-    },
-  ];
+  // Curated hero showcase — picks random live products from collections, fallback to mock when live empty
+  const heroSlides = React.useMemo(() => {
+    const pool = liveProducts.length > 0 ? liveProducts : [];
+    if (pool.length === 0) {
+      return [
+        {
+          id: 'slide-1',
+          productId: 'watch-01',
+          title: 'Precision Swiss Chronographs',
+          subtitle: '18k Rose Gold & Automatic Calibre',
+          category: 'Wristwatches',
+          image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'slide-2',
+          productId: 'bag-01',
+          title: 'Hand-Burnished Italian Leather',
+          subtitle: 'Structured Croc-Embossed Calfskin',
+          category: 'Designer Bags',
+          image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'slide-3',
+          productId: 'apparel-01',
+          title: 'Mulberry Silk Architectural Wears',
+          subtitle: 'Fluid Bias-Cut Backless Silhouette',
+          category: 'Wears',
+          image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'slide-4',
+          productId: 'watch-05',
+          title: 'Poe Edgar Nocturne Automatic',
+          subtitle: 'Ivory Tourbillon Dial with Gilt Numerals & Moonphase',
+          category: 'Wristwatches',
+          image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'slide-5',
+          productId: 'bag-02',
+          title: 'Sienna Chevron Quilted Chain Bag',
+          subtitle: 'Plush Nappa Lambskin in Ivory & Gold',
+          category: 'Designer Bags',
+          image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
+        },
+      ];
+    }
+    // Shuffle live products and pick up to 5
+    const shuffled = [...pool].sort(() => 0.5 - Math.random()).slice(0, 5);
+    return shuffled.map((p: any, idx: number) => ({
+      id: `slide-${p.id}`,
+      productId: p.id,
+      title: p.name,
+      subtitle: (p.tagline ?? p.description ?? '').slice(0, 60),
+      category: p.categoryLabel ?? p.categories?.name ?? p.category,
+      image: p.primaryImage ?? p.images?.[0] ?? '',
+    }));
+  }, [liveProducts]);
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
@@ -66,7 +82,6 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, [heroSlides.length]);
 
-  const { products: liveProducts } = useLiveProducts();
   const currentSlide = heroSlides[currentSlideIndex];
   const activeProduct = liveProducts.find((p) => p.id === currentSlide.productId) || liveProducts[0];
 

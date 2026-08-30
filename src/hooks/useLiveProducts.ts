@@ -22,15 +22,25 @@ function mapSupabaseToProduct(row: SupabaseProductRow): Product {
   const categorySlug = row.categories?.slug ?? 'bags';
   const categoryLabelMap: Record<string, string> = {
     clothes: 'Wears',
+    cloth: 'Wears',
     bags: 'Designer Bags',
     shoes: 'Luxury Shoes',
     wristwatches: 'Wristwatches',
+    watches: 'Wristwatches',
     jewelry: 'Fine Jewelry',
     apparel: 'Wears',
   };
-  const category: ProductCategory = (['bags', 'apparel', 'shoes', 'watches', 'jewelry'].includes(categorySlug)
-    ? (categorySlug === 'clothes' ? 'apparel' : categorySlug === 'wristwatches' ? 'watches' : (categorySlug as ProductCategory))
-    : 'bags') as ProductCategory;
+  const slugToCategory: Record<string, ProductCategory> = {
+    clothes: 'apparel',
+    cloth: 'apparel',
+    bags: 'bags',
+    shoes: 'shoes',
+    wristwatches: 'watches',
+    watches: 'watches',
+    jewelry: 'jewelry',
+    apparel: 'apparel',
+  };
+  const category: ProductCategory = slugToCategory[categorySlug] ?? 'bags';
 
   return {
     id: row.id,

@@ -9,57 +9,73 @@ import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 export default function ShopTheLook() {
   const { setQuickViewProduct, formatPrice } = useStore();
+  const { products: liveProducts } = useLiveProducts();
 
-  const stylingSlides = [
-    {
-      id: 'look-1',
-      productId: 'watch-01',
-      title: 'Chronographe Imperial Rose Gold Timepiece',
-      description: 'Handcrafted Swiss automatic movement paired with Italian emerald crocodile strap.',
-      category: 'Timepieces',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-2',
-      productId: 'bag-01',
-      title: 'Monceau Croc-Embossed Structured Satchel',
-      description: 'Hand-burnished Italian calfskin with 24k gold-plated hardware in deep noir.',
-      category: 'Designer Bags',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-3',
-      productId: 'apparel-01',
-      title: 'Aurelia Silk Crepe Backless Gown',
-      description: '22-momme pure Mulberry silk bias-cut gown draped with fluid elegance.',
-      category: 'Wears',
-      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-4',
-      productId: 'shoes-01',
-      title: 'Venice Sculpted Ankle-Strap Pumps',
-      description: 'Architectural stiletto heel wrapped in glazed Italian patent leather.',
-      category: 'Luxury Shoes',
-      image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-5',
-      productId: 'jewelry-01',
-      title: 'Lumière 18k Solitaire Diamond Choker',
-      description: '1.5 carat GIA-certified brilliant diamond suspended on solid 18k yellow gold.',
-      category: 'Fine Jewelry',
-      image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-6',
-      productId: 'bag-02',
-      title: 'Sienna Chevron Quilted Chain Bag',
-      description: 'Plush lambskin micro-quilting with sliding gold chain strap for versatile day-to-night styling.',
-      category: 'Designer Bags',
-      image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
-    },
-  ];
+  // Curated showcase — picks random live products from collections, fallback to mock when live empty
+  const stylingSlides = React.useMemo(() => {
+    const pool = liveProducts.length > 0 ? liveProducts : [];
+    if (pool.length === 0) {
+      return [
+        {
+          id: 'look-1',
+          productId: 'watch-01',
+          title: 'Chronographe Imperial Rose Gold Timepiece',
+          description: 'Handcrafted Swiss automatic movement paired with Italian emerald crocodile strap.',
+          category: 'Timepieces',
+          image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'look-2',
+          productId: 'bag-01',
+          title: 'Monceau Croc-Embossed Structured Satchel',
+          description: 'Hand-burnished Italian calfskin with 24k gold-plated hardware in deep noir.',
+          category: 'Designer Bags',
+          image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'look-3',
+          productId: 'apparel-01',
+          title: 'Aurelia Silk Crepe Backless Gown',
+          description: '22-momme pure Mulberry silk bias-cut gown draped with fluid elegance.',
+          category: 'Wears',
+          image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'look-4',
+          productId: 'shoes-01',
+          title: 'Venice Sculpted Ankle-Strap Pumps',
+          description: 'Architectural stiletto heel wrapped in glazed Italian patent leather.',
+          category: 'Luxury Shoes',
+          image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'look-5',
+          productId: 'jewelry-01',
+          title: 'Lumière 18k Solitaire Diamond Choker',
+          description: '1.5 carat GIA-certified brilliant diamond suspended on solid 18k yellow gold.',
+          category: 'Fine Jewelry',
+          image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop',
+        },
+        {
+          id: 'look-6',
+          productId: 'bag-02',
+          title: 'Sienna Chevron Quilted Chain Bag',
+          description: 'Plush lambskin micro-quilting with sliding gold chain strap for versatile day-to-night styling.',
+          category: 'Designer Bags',
+          image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1600&auto=format&fit=crop',
+        },
+      ];
+    }
+    const shuffled = [...pool].sort(() => 0.5 - Math.random()).slice(0, 6);
+    return shuffled.map((p: any) => ({
+      id: `look-${p.id}`,
+      productId: p.id,
+      title: p.name,
+      description: (p.description ?? p.tagline ?? '').slice(0, 80),
+      category: p.categoryLabel ?? p.categories?.name ?? p.category,
+      image: p.primaryImage ?? p.images?.[0] ?? '',
+    }));
+  }, [liveProducts]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -74,7 +90,6 @@ export default function ShopTheLook() {
     return () => clearInterval(timer);
   }, [stylingSlides.length]);
 
-  const { products: liveProducts } = useLiveProducts();
   const currentSlide = stylingSlides[currentIndex];
   const activeProduct = liveProducts.find((p) => p.id === currentSlide.productId) || liveProducts[0];
 

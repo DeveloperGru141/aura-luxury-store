@@ -81,7 +81,20 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                   }}
                   data-cat-id={cat.id}
                   onTouchStart={() => setActiveMobileCard(cat.id)}
-                  onClick={() => onSelectCategory(cat.id as ProductCategory)}
+                  onClick={() => {
+                    const slugToCat: Record<string, ProductCategory> = {
+                      clothes: 'apparel',
+                      cloth: 'apparel',
+                      bags: 'bags',
+                      shoes: 'shoes',
+                      wristwatches: 'watches',
+                      watches: 'watches',
+                      jewelry: 'jewelry',
+                      apparel: 'apparel',
+                    };
+                    const mapped = (slugToCat[cat.id] ?? cat.id) as ProductCategory;
+                    onSelectCategory(mapped);
+                  }}
                   className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[180px] ${
                     isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
                   } ${
