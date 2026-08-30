@@ -18,7 +18,7 @@ export default function HeroSection() {
       subtitle: '18k Rose Gold & Automatic Calibre',
       category: 'Wristwatches',
       image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Master Horology Drop',
+      badge: 'Master Timepieces Drop',
     },
     {
       id: 'slide-2',
@@ -80,6 +80,28 @@ export default function HeroSection() {
 
   const handlePrev = () => {
     setCurrentSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    // Minimum swipe threshold (40px)
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    setTouchStartX(null);
   };
 
   return (
@@ -159,9 +181,13 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: Expansive Widescreen Animation Box (Spans 8 cols on lg) — fluid aspect */}
+          {/* Right Column: Expansive Widescreen Animation Box with Touch Swipe */}
           <div className="lg:col-span-8 relative w-full min-w-0">
-            <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group">
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group touch-pan-y"
+            >
               {/* Slides Container (Fading in & out) */}
               {heroSlides.map((slide, idx) => {
                 const isActive = currentSlideIndex === idx;

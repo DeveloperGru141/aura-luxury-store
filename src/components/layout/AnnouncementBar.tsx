@@ -2,23 +2,40 @@
 
 import React, { useState } from 'react';
 import { useStore, Currency } from '@/context/StoreContext';
-import { Sparkles, Copy, Check, ChevronDown } from 'lucide-react';
+import { MessageCircle, ChevronDown } from 'lucide-react';
+import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
 
 export default function AnnouncementBar() {
-  const { currency, setCurrency, showToast } = useStore();
-  const [copied, setCopied] = useState(false);
+  const { currency, setCurrency } = useStore();
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
 
 
   const currencies: Currency[] = ['NGN', 'USD', 'GBP'];
+  const conciergeUrl = getWhatsAppConciergeUrl();
 
   return (
-    <aside aria-label="Special Offers" className="bg-[#0A0C0F] border-b border-white/5 text-gray-300 text-xs py-2 px-4 relative z-40">
+    <aside aria-label="Luxury Concierge" className="bg-[#080A0E] border-b border-white/5 text-gray-300 text-xs py-2 px-4 relative z-40">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
         {/* Left: Shipping perk */}
         <div className="hidden lg:flex items-center gap-2 text-gray-400">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-ping" />
-          <span></span>
+          <span>Complimentary express delivery on orders over ₦250,000</span>
+        </div>
+
+        {/* Center: Promo Banner */}
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse" />
+          <span className="font-medium text-gray-200">
+            Exclusive Launch &mdash; Save 15% with code
+          </span>
+          <button
+            onClick={copyPromo}
+            className="inline-flex items-center gap-1 font-mono font-bold text-[#F3E5AB] bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 px-2 py-0.5 rounded border border-[#D4AF37]/30 transition-all cursor-pointer"
+            title="Click to copy promo code"
+          >
+            <span>{promoCode}</span>
+            {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3 text-[#D4AF37]" />}
+          </button>
         </div>
 
         {/* Right: Currency Selector */}
@@ -26,7 +43,7 @@ export default function AnnouncementBar() {
           <div className="relative">
             <button
               onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-              className="flex items-center gap-1 hover:text-white transition-colors py-0.5"
+              className="flex items-center gap-1 hover:text-white transition-colors py-0.5 cursor-pointer"
             >
               <span>{currency}</span>
               <ChevronDown className="w-3 h-3" />
@@ -41,7 +58,7 @@ export default function AnnouncementBar() {
                       setCurrency(curr);
                       setIsCurrencyOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-1.5 hover:bg-white/10 transition-colors text-xs ${
+                    className={`w-full text-left px-3 py-1.5 hover:bg-white/10 transition-colors text-xs cursor-pointer ${
                       currency === curr ? 'text-[#D4AF37] font-semibold' : 'text-gray-300'
                     }`}
                   >

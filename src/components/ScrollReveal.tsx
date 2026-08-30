@@ -26,8 +26,8 @@ interface ScrollRevealProps {
 export default function ScrollReveal({
   children,
   delay = 0,
-  threshold = 0.15,
-  rootMargin = '0px 0px -10% 0px',
+  threshold = 0.05,
+  rootMargin = '0px 0px -30px 0px',
   className = '',
   as: Tag = 'div',
 }: ScrollRevealProps) {
