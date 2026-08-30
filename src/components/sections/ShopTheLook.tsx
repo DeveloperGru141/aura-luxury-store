@@ -4,57 +4,57 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { PRODUCTS } from '@/data/mockData';
 import { useStore } from '@/context/StoreContext';
-import { Eye, ShoppingBag, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, Eye, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
 export default function ShopTheLook() {
-  const { setQuickViewProduct, addToCart, formatPrice } = useStore();
+  const { setQuickViewProduct, formatPrice } = useStore();
 
-  // Multi-product animated crossfade gallery for Wristwatches, Clothes, Shoes, and Bags
   const stylingSlides = [
     {
       id: 'look-1',
       productId: 'watch-01',
-      title: 'Precision Swiss Horology',
-      description: 'Master automatic chronograph calibre framed in 18k rose gold with sunburst dial.',
-      category: 'Wristwatches',
-      badge: 'Timepiece Spotlight',
-      image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1600&auto=format&fit=crop',
+      title: 'Chronographe Imperial Rose Gold Timepiece',
+      description: 'Handcrafted Swiss automatic movement paired with Italian emerald crocodile strap.',
+      category: 'Timepieces',
+      badge: 'Masterpiece Calibre',
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop',
     },
     {
       id: 'look-2',
-      productId: 'apparel-01',
-      title: 'Mulberry Silk Bias-Cut Gown',
-      description: 'Architectural cowl-back silhouette in pure 22-momme silk crepe for evening galas.',
-      category: 'Wears',
-      badge: 'Fine Wears',
-      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-3',
-      productId: 'shoes-01',
-      title: 'Venice Sculpted Ankle-Strap Pumps',
-      description: '90mm geometric architectural heel crafted with glazed patent leather and memory-foam arch.',
-      category: 'Luxury Shoes',
-      badge: 'Footwear Collection',
-      image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1600&auto=format&fit=crop',
-    },
-    {
-      id: 'look-4',
       productId: 'bag-01',
-      title: 'Monceau Croc-Embossed Satchel',
-      description: 'Hand-burnished Italian calfskin structured satchel with 24k gold-plated turn-lock hardware.',
+      title: 'Monceau Croc-Embossed Structured Satchel',
+      description: 'Hand-burnished Italian calfskin with 24k gold-plated hardware in deep noir.',
       category: 'Designer Bags',
-      badge: 'Artisanal Leather',
+      badge: 'Atelier Signature',
       image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1600&auto=format&fit=crop',
     },
     {
+      id: 'look-3',
+      productId: 'apparel-01',
+      title: 'Aurelia Silk Crepe Backless Gown',
+      description: '22-momme pure Mulberry silk bias-cut gown draped with fluid elegance.',
+      category: 'Wears',
+      badge: 'Haute Couture',
+      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop',
+    },
+    {
+      id: 'look-4',
+      productId: 'shoes-01',
+      title: 'Venice Sculpted Ankle-Strap Pumps',
+      description: 'Architectural stiletto heel wrapped in glazed Italian patent leather.',
+      category: 'Luxury Shoes',
+      badge: 'Runway Statement',
+      image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1600&auto=format&fit=crop',
+    },
+    {
       id: 'look-5',
-      productId: 'watch-03',
-      title: 'Grand Nautique 300M Diver',
-      description: 'Zirconia ceramic bezel automatic diver watch engineered with 300-meter water resistance.',
-      category: 'Wristwatches',
-      badge: 'Horology Spotlight',
-      image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=1600&auto=format&fit=crop',
+      productId: 'jewelry-01',
+      title: 'Lumière 18k Solitaire Diamond Choker',
+      description: '1.5 carat GIA-certified brilliant diamond suspended on solid 18k yellow gold.',
+      category: 'Fine Jewelry',
+      badge: 'High Jewelry',
+      image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop',
     },
     {
       id: 'look-6',
@@ -112,6 +112,11 @@ export default function ShopTheLook() {
     setTouchStartX(null);
   };
 
+  const whatsappOrderUrl = getWhatsAppOrderUrl(
+    activeProduct.name,
+    formatPrice(activeProduct.price)
+  );
+
   return (
     <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#0A0C0F] relative overflow-hidden">
       {/* Subtle ambient light — fluid */}
@@ -130,7 +135,7 @@ export default function ShopTheLook() {
             </h2>
           </div>
           <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">
-            A seamless transition of master Swiss wristwatches, bespoke wears, luxury shoes, and handcrafted Italian leather bags.
+            A seamless transition of master Swiss timepieces, bespoke wears, luxury shoes, and handcrafted Italian leather bags.
           </p>
         </div>
 
@@ -184,7 +189,7 @@ export default function ShopTheLook() {
 
             {/* Top Badge — fluid + float animation */}
             <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/30 text-white text-[10px] sm:text-[11px] font-medium shadow-xl max-w-[70%] animate-float-slow">
-              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
+              <Sparkles className="w-3 h-3 text-[#D4AF37] shrink-0" />
               <span className="truncate">{currentSlide.badge}</span>
             </div>
 
@@ -264,14 +269,17 @@ export default function ShopTheLook() {
                       <span>Quick View</span>
                     </button>
 
-                    <button
-                      onClick={() => addToCart(activeProduct)}
+                    {/* WhatsApp Direct Order Button — Exact UI Preserved */}
+                    <a
+                      href={whatsappOrderUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="relative overflow-hidden py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] shadow-lg cursor-pointer touch-manipulation min-h-[40px]"
                     >
                       <span className="shimmer-sheen" />
-                      <ShoppingBag className="w-3.5 h-3.5 relative z-10" />
-                      <span className="relative z-10">Add to Bag</span>
-                    </button>
+                      <MessageCircle className="w-3.5 h-3.5 relative z-10" />
+                      <span className="relative z-10">Order</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -292,17 +300,12 @@ export default function ShopTheLook() {
                     className={`w-full p-2.5 rounded-xl text-left transition-all flex items-center justify-between text-xs cursor-pointer touch-manipulation ${
                       isSelected
                         ? 'bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-white font-medium'
-                        : 'bg-transparent text-gray-400 hover:text-white hover:bg-white/5'
+                        : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent'
                     }`}
                   >
-                    <div className="flex items-center gap-2 truncate">
-                      <span className="text-[10px] uppercase font-bold text-[#D4AF37] shrink-0">
-                        {slide.category.split(' ')[0]}
-                      </span>
-                      <span className="font-serif truncate">{slide.title}</span>
-                    </div>
+                    <span className="truncate">{slide.title}</span>
                     {prod && (
-                      <span className="text-[#F3E5AB] font-semibold shrink-0 ml-2">
+                      <span className="text-[11px] font-semibold text-[#F3E5AB] shrink-0 ml-2">
                         {formatPrice(prod.price)}
                       </span>
                     )}

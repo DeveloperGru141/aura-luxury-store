@@ -5,26 +5,19 @@ import Image from 'next/image';
 import { Product } from '@/types/store';
 import { useStore } from '@/context/StoreContext';
 import Badge from './Badge';
-import { Heart, Eye, ShoppingBag, Star, Check } from 'lucide-react';
+import { Heart, Eye, MessageCircle, Star } from 'lucide-react';
+import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { formatPrice, addToCart, toggleWishlist, isInWishlist, setQuickViewProduct } = useStore();
+  const { formatPrice, toggleWishlist, isInWishlist, setQuickViewProduct } = useStore();
   const [isHovered, setIsHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
-  const [justAdded, setJustAdded] = useState(false);
 
   const isWishlisted = isInWishlist(product.id);
-
-  const handleQuickAdd = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    addToCart(product, selectedColor);
-    setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 1500);
-  };
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -35,6 +28,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation();
     setQuickViewProduct(product);
   };
+
+  const whatsappOrderUrl = getWhatsAppOrderUrl(
+    product.name,
+    formatPrice(product.price),
+    selectedColor || product.colors[0]?.name
+  );
 
   return (
     <div
@@ -100,34 +99,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         >
           <button
             onClick={handleQuickView}
-            className="flex-1 py-2.5 px-2 sm:px-3 rounded-lg sm:rounded-xl bg-[#0D0F12]/90 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-gray-200 hover:text-white hover:border-[#D4AF37]/50 active:bg-[#0D0F12] transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation"
+            className="flex-1 py-2.5 px-2 sm:px-3 rounded-lg sm:rounded-xl bg-[#0D0F12]/90 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-gray-200 hover:text-white hover:border-[#D4AF37]/50 active:bg-[#0D0F12] transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation cursor-pointer"
           >
             <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
             <span>View</span>
           </button>
 
-          <button
-            onClick={handleQuickAdd}
-            disabled={justAdded}
-            className={`relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 ${
-              justAdded
-                ? 'bg-emerald-600 text-white'
-                : 'bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:brightness-95'
-            }`}
+          {/* WhatsApp Direct Order CTA — Exact UI Design Preserved */}
+          <a
+            href={whatsappOrderUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:brightness-95 cursor-pointer"
           >
-            {!justAdded && <span className="shimmer-sheen" />}
-            {justAdded ? (
-              <>
-                <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
-                <span className="relative z-10">Added</span>
-              </>
-            ) : (
-              <>
-                <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
-                <span className="relative z-10">Add</span>
-              </>
-            )}
-          </button>
+            <span className="shimmer-sheen" />
+            <MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
+            <span className="relative z-10">Order</span>
+          </a>
         </div>
       </div>
 
@@ -154,15 +143,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
 
-          {/* Tagline — fluid, hidden on smallest for space */}
+          {/* Tagline — fluid */}
           <p className="text-[11px] sm:text-xs text-gray-400 line-clamp-1 mb-2 sm:mb-3 leading-tight">
             {product.tagline}
           </p>
         </div>
 
-        {/* Bottom: Color Swatches & Price — fluid */}
+        {/* Bottom: Color Swatches & Price (No discount strikethrough) */}
         <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-auto gap-2">
-          {/* Color swatches — larger touch */}
+          {/* Color swatches */}
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             {product.colors.map((c) => (
               <button
@@ -181,14 +170,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             ))}
           </div>
 
-          {/* Price — fluid */}
+          {/* Price — Pure luxury pricing without discount badges */}
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
-            {product.originalPrice && (
-              <span className="text-[11px] sm:text-xs text-gray-500 line-through hidden sm:inline">
-                {formatPrice(product.originalPrice)}
-              </span>
-            )}
-            <span className="text-[13px] sm:text-sm font-semibold text-white tracking-tight truncate">
+            <span className="text-[13px] sm:text-sm font-semibold text-[#F3E5AB] tracking-tight truncate">
               {formatPrice(product.price)}
             </span>
           </div>

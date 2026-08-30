@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { ProductCategory } from '@/types/store';
 import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
-import CartDrawer from '@/components/layout/CartDrawer';
 import WishlistDrawer from '@/components/layout/WishlistDrawer';
 import SearchModal from '@/components/layout/SearchModal';
 import Footer from '@/components/layout/Footer';
@@ -13,9 +12,7 @@ import CategoryGrid from '@/components/sections/CategoryGrid';
 import FeaturedProducts from '@/components/sections/FeaturedProducts';
 import ShopTheLook from '@/components/sections/ShopTheLook';
 import BrandPillars from '@/components/sections/BrandPillars';
-import FlashDropBanner from '@/components/sections/FlashDropBanner';
 import CustomerReviews from '@/components/sections/CustomerReviews';
-import InstagramGallery from '@/components/sections/InstagramGallery';
 import QuickViewModal from '@/components/ui/QuickViewModal';
 import ToastNotification from '@/components/ui/ToastNotification';
 
@@ -32,7 +29,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#0D0F14] text-white selection:bg-[#D4AF37] selection:text-black">
-      {/* Top Announcement Bar — active on all screen sizes */}
+      {/* Top Announcement Bar */}
       <AnnouncementBar />
 
       {/* Navigation Header — wired to catalogue filtering */}
@@ -46,16 +43,14 @@ export default function Home() {
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
       />
+      {/* Curated Living Lookbook Section */}
       <ShopTheLook />
-      <FlashDropBanner />
       <CustomerReviews />
-      <InstagramGallery />
 
       {/* Footer */}
       <Footer />
 
-      {/* Global Drawers, Modals & Toast Notification */}
-      <CartDrawer />
+      {/* Global Modals & Toast Notification */}
       <WishlistDrawer />
       <SearchModal />
       <QuickViewModal />

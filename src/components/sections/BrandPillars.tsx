@@ -1,24 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Globe, ShieldCheck, Gem, Gift, Sparkles, Copy, Check, ChevronRight } from 'lucide-react';
-import { useStore } from '@/context/StoreContext';
+import React from 'react';
+import { Globe, ShieldCheck, Gem, Gift, Sparkles } from 'lucide-react';
 
 export default function BrandPillars() {
-  const { showToast } = useStore();
-  const [copied, setCopied] = useState(false);
-
-  const promoCode = 'TIMELESS15';
-
-  const copyPromo = () => {
-    navigator.clipboard?.writeText(promoCode);
-    setCopied(true);
-    showToast('VIP Voucher "TIMELESS15" copied! 15% off applied to your session.', 'success');
-    setTimeout(() => setCopied(false), 2200);
-  };
-
   const marqueeItems = [
-    'SWISS HOROLOGY CALIBRES',
+    'SWISS TIMEPIECES CALIBRES',
     'HAND-BURNISHED ITALIAN LEATHERS',
     'BESPOKE EVENING WEARS',
     'NATIONWIDE INSURED COURIER',
@@ -55,8 +42,8 @@ export default function BrandPillars() {
 
   return (
     <section id="heritage" className="bg-[#0B0D11] border-t border-b border-white/5 relative overflow-hidden">
-      {/* 1. Infinite Luxury Ticker Marquee Bar — Visible on all devices */}
-      <div className="py-2.5 sm:py-3 bg-gradient-to-r from-[#0E1117] via-[#151922] to-[#0E1117] border-b border-white/5 overflow-hidden flex items-center">
+      {/* 1. Infinite Luxury Ticker Marquee Bar */}
+      <div className="py-3 bg-gradient-to-r from-[#0E1117] via-[#151922] to-[#0E1117] border-b border-white/5 overflow-hidden flex items-center">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-6 sm:gap-8 text-[10px] sm:text-xs font-serif uppercase tracking-[0.22em] text-gray-300">
           {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((text, idx) => (
             <div key={idx} className="inline-flex items-center gap-2.5 sm:gap-3 shrink-0">
@@ -68,34 +55,7 @@ export default function BrandPillars() {
         </div>
       </div>
 
-      {/* 2. Interactive VIP Promotion Banner — High-contrast Mobile & Desktop */}
-      <div className="bg-[#12151D] border-b border-[#D4AF37]/20 px-4 sm:px-6 py-3 relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left">
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-200">
-            <span className="flex h-2 w-2 relative shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4AF37]" />
-            </span>
-            <span className="font-light">
-              Private Atelier Allocation &bull; <strong className="font-semibold text-white">Save 15% on your inaugural order</strong>
-            </span>
-          </div>
-
-          <button
-            onClick={copyPromo}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 active:bg-[#D4AF37]/35 border border-[#D4AF37]/40 text-[#F3E5AB] text-xs font-mono font-bold transition-all shadow-md touch-manipulation cursor-pointer group"
-          >
-            <span>Code: <span className="underline decoration-[#D4AF37]/50 underline-offset-2">{promoCode}</span></span>
-            {copied ? (
-              <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            ) : (
-              <Copy className="w-3.5 h-3.5 text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* 3. Luxury Trust Pillars — Mobile Swipeable Snap Cards & Desktop Grid */}
+      {/* 2. Luxury Trust Pillars — Mobile Swipeable Snap Cards & Desktop Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 lg:gap-8 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 snap-x snap-mandatory scrollbar-none -mx-4 sm:mx-0 px-4 sm:px-0">
           {pillars.map((item, idx) => {

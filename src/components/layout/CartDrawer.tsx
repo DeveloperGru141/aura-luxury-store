@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import confetti from 'canvas-confetti';
 import { useStore } from '@/context/StoreContext';
-import { X, Trash2, ShoppingBag, ArrowRight, Sparkles, Check, Shield, Truck } from 'lucide-react';
+import { X, Trash2, ShoppingBag, ArrowRight, Shield, Truck } from 'lucide-react';
 
 export default function CartDrawer() {
   const {
@@ -14,36 +14,18 @@ export default function CartDrawer() {
     removeFromCart,
     updateQuantity,
     subtotal,
-    discountAmount,
     shipping,
     total,
     freeShippingProgress,
     remainingForFreeShipping,
     formatPrice,
-    appliedPromo,
-    applyPromoCode,
-    removePromoCode,
     clearCart,
   } = useStore();
 
-  const [promoInput, setPromoInput] = useState('');
-  const [promoError, setPromoError] = useState('');
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
 
   if (!isCartOpen) return null;
-
-  const handleApplyPromo = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPromoError('');
-    if (!promoInput) return;
-    const res = applyPromoCode(promoInput);
-    if (!res.success) {
-      setPromoError(res.message);
-    } else {
-      setPromoInput('');
-    }
-  };
 
   const handleCheckout = () => {
     setIsCheckingOut(true);
@@ -105,7 +87,7 @@ export default function CartDrawer() {
                 </span>
               ) : (
                 <span className="text-emerald-400 font-medium flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Truck className="w-3.5 h-3.5 text-emerald-400" />
                   You&apos;ve unlocked Complimentary Worldwide Express Shipping!
                 </span>
               )}
@@ -124,7 +106,7 @@ export default function CartDrawer() {
             {orderComplete ? (
               <div className="py-12 text-center flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-emerald-950/60 border border-emerald-500/50 flex items-center justify-center text-emerald-400 mb-4 animate-bounce">
-                  <Check className="w-8 h-8" />
+                  <Shield className="w-8 h-8" />
                 </div>
                 <h3 className="font-serif text-2xl font-medium mb-2">Order Confirmed</h3>
                 <p className="text-xs text-gray-300 max-w-xs mb-6 leading-relaxed">
@@ -225,53 +207,12 @@ export default function CartDrawer() {
           {/* Footer / Checkout — fluid safe-area */}
           {cart.length > 0 && !orderComplete && (
             <div className="p-4 sm:p-6 border-t border-white/10 bg-[#0C0E12] space-y-3 sm:space-y-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-              {/* Promo Code Box */}
-              <div>
-                {appliedPromo ? (
-                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs">
-                    <span className="text-emerald-300 font-medium flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                      Code &ldquo;{appliedPromo.code}&rdquo; Applied ({appliedPromo.discountPercent}% OFF)
-                    </span>
-                    <button
-                      onClick={removePromoCode}
-                      className="text-xs text-rose-400 hover:underline"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleApplyPromo} className="flex gap-2">
-                    <input
-                      type="text"
-                      value={promoInput}
-                      onChange={(e) => setPromoInput(e.target.value)}
-                      placeholder="Promo Code (e.g. TIMELESS15)"
-                      className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 uppercase tracking-wider outline-none focus:border-[#D4AF37]"
-                    />
-                    <button
-                      type="submit"
-                      className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gray-200 transition-colors"
-                    >
-                      Apply
-                    </button>
-                  </form>
-                )}
-                {promoError && <p className="text-[11px] text-rose-400 mt-1">{promoError}</p>}
-              </div>
-
               {/* Cost Breakdown */}
               <div className="space-y-1.5 text-xs text-gray-300">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span className="text-white font-medium">{formatPrice(subtotal)}</span>
                 </div>
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-emerald-400">
-                    <span>Discount</span>
-                    <span>-{formatPrice(discountAmount)}</span>
-                  </div>
-                )}
                 <div className="flex justify-between">
                   <span>Estimated Courier Shipping</span>
                   <span className="text-white font-medium">

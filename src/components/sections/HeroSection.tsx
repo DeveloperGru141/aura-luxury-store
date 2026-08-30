@@ -18,7 +18,7 @@ export default function HeroSection() {
       subtitle: '18k Rose Gold & Automatic Calibre',
       category: 'Wristwatches',
       image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop',
-      badge: 'Master Horology Drop',
+      badge: 'Master Timepieces Drop',
     },
     {
       id: 'slide-2',
