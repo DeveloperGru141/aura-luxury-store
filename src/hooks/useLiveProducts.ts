@@ -112,13 +112,19 @@ export function useLiveCategories() {
         const { data, error } = await supabase.from('categories').select('id, name, slug, image_url').order('created_at');
         if (cancelled) return;
         if (!error && data && data.length > 0) {
-          // Map to mock shape
+          // Map to mock shape — handle slug mismatches (clothes->apparel, wristwatches->watches, cloth->apparel)
+          const slugToMockId: Record<string, string> = {
+            clothes: 'apparel',
+            cloth: 'apparel',
+            wristwatches: 'watches',
+            watches: 'watches',
+          };
           const mapped = data.map((c: any) => ({
             id: c.slug,
             name: c.name,
-            tagline: '',
+            tagline: MOCK_CATEGORIES.find((m) => m.id === (slugToMockId[c.slug] ?? c.slug))?.tagline ?? '',
             count: '',
-            image: c.image_url ?? MOCK_CATEGORIES.find((m) => m.id === c.slug)?.image ?? '',
+            image: c.image_url ?? MOCK_CATEGORIES.find((m) => m.id === (slugToMockId[c.slug] ?? c.slug))?.image ?? '',
           }));
           setCategories(mapped);
         } else {

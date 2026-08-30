@@ -37,6 +37,7 @@ interface StoreContextType {
   currency: Currency;
   appliedPromo: PromoCode | null;
   toasts: ToastInfo[];
+  isAdminLoggedIn: boolean;
 
   // Actions
   setIsCartOpen: (open: boolean) => void;
@@ -44,6 +45,7 @@ interface StoreContextType {
   setIsSearchOpen: (open: boolean) => void;
   setQuickViewProduct: (product: Product | null) => void;
   setCurrency: (curr: Currency) => void;
+  setIsAdminLoggedIn: (value: boolean) => void;
 
   addToCart: (product: Product, color?: string, size?: string, quantity?: number) => void;
   removeFromCart: (productId: string, selectedColor: string, selectedSize?: string) => void;
@@ -82,6 +84,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrency] = useState<Currency>('NGN');
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -112,6 +115,25 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       // Ignore storage errors
     }
   }, [wishlist]);
+
+  // Check for admin login from localStorage
+  useEffect(() => {
+    try {
+      const savedAdmin = localStorage.getItem('timeless_admin_logged_in');
+      if (savedAdmin === 'true') setIsAdminLoggedIn(true);
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  // Save admin login state
+  useEffect(() => {
+    try {
+      localStorage.setItem('timeless_admin_logged_in', isAdminLoggedIn.toString());
+    } catch {
+      // Ignore storage errors
+    }
+  }, [isAdminLoggedIn]);
 
   const showToast = (message: string, type: 'success' | 'info' | 'warning' = 'success') => {
     const id = Math.random().toString(36).substring(2, 9);
@@ -258,11 +280,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         currency,
         appliedPromo,
         toasts,
+        isAdminLoggedIn,
         setIsCartOpen,
         setIsWishlistOpen,
         setIsSearchOpen,
         setQuickViewProduct,
         setCurrency,
+        setIsAdminLoggedIn,
         addToCart,
         removeFromCart,
         updateQuantity,

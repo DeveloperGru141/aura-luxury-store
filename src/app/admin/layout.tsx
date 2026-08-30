@@ -1,6 +1,11 @@
+'use client';
+
 import Link from 'next/link';
+import { useStore } from '@/context/StoreContext';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const { isAdminLoggedIn } = useStore();
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="sticky top-0 z-30 border-b border-gray-200 bg-white">
@@ -15,18 +20,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/products" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
               Products
             </Link>
-            <Link href="/admin/looks" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-              Looks
-            </Link>
-            <span className="mx-1 h-4 w-px bg-gray-200" />
-            <Link href="/" className="rounded-lg px-3 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-              Storefront
-            </Link>
-            <form action="/admin/logout" method="post" className="ml-1">
-              <button type="submit" className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                Logout
-              </button>
-            </form>
+            {isAdminLoggedIn && (
+              <form action="/admin/logout" method="post" className="ml-1">
+                <button type="submit" className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                  Logout
+                </button>
+              </form>
+            )}
           </nav>
         </div>
       </header>

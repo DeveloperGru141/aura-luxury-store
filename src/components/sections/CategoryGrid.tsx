@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ProductCategory } from '@/types/store';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { useLiveCategories } from '@/hooks/useLiveProducts';
 
 interface CategoryGridProps {
@@ -12,6 +13,7 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
+  const { products: liveProducts } = useLiveProducts();
   const liveCategories = useLiveCategories();
   const [activeMobileCard, setActiveMobileCard] = useState<string | null>(liveCategories[0]?.id || null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -103,13 +105,13 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                       : 'border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60'
                   }`}
                 >
-                  {/* Background Image — zooms when scrolled into focus on mobile, and on desktop hover */}
+                  {/* Background Image — random product from live inventory per category section */}
                   <Image
-                    src={cat.image}
+src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel === cat.name)?.primaryImage ?? liveProducts[0]?.primaryImage ?? cat.image)}
                     alt={cat.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className={`mobile-category-img object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-108 ${
+                    className={`mobile-category-img object-cover object-center transition-transform duration-1000 ease-out ease-out group-hover:scale-108 ${
                       isMobileHovered ? 'scale-105 sm:scale-100 sm:group-hover:scale-108' : 'scale-100'
                     }`}
                   />
@@ -146,7 +148,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                         </span>
                       )}
                       <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] block">
-                        {cat.count}
+                        {liveProducts.filter((p: any) => p.category === cat.name || p.categories?.name === cat.name).length || cat.count}
                       </span>
                     </div>
 
@@ -166,7 +168,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                           : 'text-gray-300 opacity-90'
                       }`}
                     >
-                      {cat.tagline}
+                      {liveProducts.find((p: any) => p.category === cat.name || p.categories?.name === cat.name)?.tagline ?? cat.tagline}
                     </p>
                   </div>
                 </div>
