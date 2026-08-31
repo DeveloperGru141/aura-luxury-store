@@ -104,7 +104,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
             </span>
             <span className="text-[8px] tracking-[0.2em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
-              Lagos — worldwide insured courier
+              ILORIN — worldwide insured courier
             </span>
           </a>
         </div>

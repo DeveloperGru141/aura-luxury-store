@@ -86,7 +86,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-[13px] sm:text-sm text-gray-300 max-w-[32ch] sm:max-w-sm font-light leading-relaxed mb-5 sm:mb-6 reveal-subhead">
-              Omo Esho Signatures sources five houses — Italian calfskin bags, 22-momme silk wears, Blake-stitched shoes, Swiss automatic calibres and 18k gold — all priced in naira and shipped insured from Lagos.
+              Omo Esho Signatures sources five houses — Italian calfskin bags, 22-momme silk wears, Blake-stitched shoes, Swiss automatic calibres and 18k gold — all priced in naira and shipped insured from ILORIN.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8 reveal-cta">

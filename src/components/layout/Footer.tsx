@@ -19,7 +19,7 @@ export default function Footer() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
               </span>
               <span className="text-[9px] tracking-[0.3em] text-gray-400 font-sans -mt-1">
-                Lagos — worldwide insured courier
+                ILORIN — worldwide insured courier
               </span>
             </div>
 
