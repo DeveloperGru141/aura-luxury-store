@@ -1,10 +1,11 @@
-'use client';
-
 import Link from 'next/link';
-import { useStore } from '@/context/StoreContext';
+import { createClient } from '@/lib/supabase/server';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { isAdminLoggedIn } = useStore();
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
@@ -20,7 +21,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/products" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
               Products
             </Link>
-            {isAdminLoggedIn && (
+            {user && (
               <form action="/admin/logout" method="post" className="ml-1">
                 <button type="submit" className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
                   Logout
