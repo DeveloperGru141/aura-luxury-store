@@ -32,7 +32,7 @@ export default async function AdminProductsPage() {
               <AdminTableHead>Category</AdminTableHead>
               <AdminTableHead>Price</AdminTableHead>
               <AdminTableHead>Stock</AdminTableHead>
-              <AdminTableHead className="w-24">Actions</AdminTableHead>
+              <AdminTableHead className="w-36">Actions</AdminTableHead>
             </tr>
           </AdminTableHeader>
           <tbody>
@@ -57,7 +57,12 @@ export default async function AdminProductsPage() {
                   <ProductRowActions id={p.id} stock_status={p.stock_status} />
                 </AdminTableCell>
                 <AdminTableCell>
-                  <ProductRowActions id={p.id} stock_status={p.stock_status} variant="delete" />
+                  <div className="flex items-center gap-2">
+                    <Link href={`/admin/products/${p.id}/edit`} className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50">
+                      Edit
+                    </Link>
+                    <ProductRowActions id={p.id} stock_status={p.stock_status} variant="delete" />
+                  </div>
                 </AdminTableCell>
               </AdminTableRow>
             ))}
