@@ -38,11 +38,14 @@ export default function ProductCreateForm({ categories }: { categories: { id: st
     const supabase = createClient();
 
     // Ensure slug is unique to allow same product name for different products
-    let baseSlug = slug.trim() || slugify(name);
+    let baseSlug = slug.trim() ? slugify(slug.trim()) : slugify(name);
+    if (!baseSlug) baseSlug = `product-${Date.now().toString(36)}`;
     let finalSlug = baseSlug;
+
+    // Pre-check: if base slug exists, suffix it before insert
     const { data: existing } = await supabase.from('products').select('id').eq('slug', baseSlug).limit(1);
     if (existing && existing.length > 0) {
-      finalSlug = `${baseSlug}-${Date.now().toString(36)}`;
+      finalSlug = `${baseSlug}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 4)}`;
     }
 
     let images: string[] = [];
@@ -61,15 +64,32 @@ export default function ProductCreateForm({ categories }: { categories: { id: st
 
     const numericPrice = parseFloat(price);
 
-    const { error: insertError } = await supabase.from('products').insert({
-      name: name.trim(),
-      slug: finalSlug,
-      description: description.trim() || null,
-      price: numericPrice,
-      category_id: categoryId,
-      images,
-      stock_status: stockStatus,
-    });
+    let insertError: any = null;
+    let attemptSlug = finalSlug;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const { error } = await supabase.from('products').insert({
+        name: name.trim(),
+        slug: attemptSlug,
+        description: description.trim() || null,
+        price: numericPrice,
+        category_id: categoryId,
+        images,
+        stock_status: stockStatus,
+      });
+      if (!error) {
+        insertError = null;
+        finalSlug = attemptSlug;
+        break;
+      }
+      // If duplicate slug, retry once with new suffix
+      if (error.code === '23505' && String(error.message).includes('products_slug_key')) {
+        attemptSlug = `${baseSlug}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 4)}`;
+        insertError = error;
+        continue;
+      }
+      insertError = error;
+      break;
+    }
 
     if (insertError) {
       setError(insertError.message);
