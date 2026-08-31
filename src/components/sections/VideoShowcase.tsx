@@ -1,88 +1,57 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX, X, ExternalLink, Sparkles, Scissors, Watch, Shirt } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Volume2, VolumeX, Play, Pause, MessageCircle, Clock, ShieldCheck } from 'lucide-react';
 
 export interface VideoItem {
   id: string;
   title: string;
-  category: string;
   videoUrl: string;
   posterUrl: string;
   description: string;
   linkedProductUrl?: string;
 }
 
-const DEFAULT_VIDEOS: VideoItem[] = [
-  {
-    id: 'craft-01',
-    title: 'Hand-burnishing the edge',
-    category: 'Leather Bags',
-    videoUrl: '/craftsmanship.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
-    description: 'Ilorin atelier — 7 coats of wax, edge creasing and hand-painted finish on full-grain calfskin.',
-    linkedProductUrl: '#catalogue',
-  },
-  {
-    id: 'craft-02',
-    title: 'Calibre assembly',
-    category: 'Precision Timepieces',
-    videoUrl: '/craftsmanship.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
-    description: 'Ilorin atelier — automatic calibre, 28,800 vph, perlage and blued screws under sapphire.',
-    linkedProductUrl: '#catalogue',
-  },
-  {
-    id: 'craft-03',
-    title: 'Silk bias cut',
-    category: 'Fine Silks',
-    videoUrl: '/craftsmanship.mp4',
-    posterUrl: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
-    description: 'Ilorin atelier — bias-cut drape, French seams and invisible hemming on 22-momme mulberry.',
-    linkedProductUrl: '#catalogue',
-  },
-];
+const ROLEX_VIDEO: VideoItem = {
+  id: 'rolex-01',
+  title: 'Rolex Oyster Perpetual / Datejust Signature Showcase',
+  videoUrl: '/craftsmanship.mp4',
+  posterUrl: '/images/rolex-poster.jpg',
+  description:
+    'Featured in our private Ilorin collection: an iconic automatic movement housed in 904L Oystersteel with a sunray dial. Inspected, timed, and verified by our horological specialists for power reserve reliability and chronometric precision.',
+  linkedProductUrl:
+    'https://wa.me/2347065076565?text=Hi%20OMO%20ESHO%20SIGNATURES%2C%20I%20would%20like%20to%20make%20an%20inquiry%20regarding%20the%20featured%20Rolex%20timepiece.',
+};
 
-function useInViewPlay(videoRef: React.RefObject<HTMLVideoElement | null>, enabled: boolean) {
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el || !enabled) return;
-    // Aggressive pause when out of viewport to save battery on mobile GPUs
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
-      },
-      { threshold: [0, 0.35, 0.6], rootMargin: '0px 0px -10% 0px' }
-    );
-    io.observe(el);
-    // Pause when tab hidden
-    const onVis = () => {
-      if (document.hidden) el.pause();
-      else if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) el.play().catch(()=>{});
-    };
-    document.addEventListener('visibilitychange', onVis);
-    return () => { io.disconnect(); document.removeEventListener('visibilitychange', onVis); };
-  }, [videoRef, enabled]);
-}
-
-function VideoCard({
-  item,
-  featured,
-  onExpand,
-}: {
-  item: VideoItem;
-  featured?: boolean;
-  onExpand: (v: VideoItem) => void;
-}) {
+export default function VideoShowcase({ videos }: { videos?: VideoItem[] }) {
+  const video = videos?.[0] ?? ROLEX_VIDEO;
   const ref = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
-  useInViewPlay(ref, true);
+
+  // Battery-efficient: pause when off-screen
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.25) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: [0, 0.25, 0.5], rootMargin: '0px 0px -10% 0px' }
+    );
+    io.observe(el);
+    const onVis = () => {
+      if (document.hidden) el.pause();
+      else if (!document.hidden && el.getBoundingClientRect().top < window.innerHeight) el.play().catch(() => {});
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, []);
 
   useEffect(() => {
     if (ref.current) ref.current.muted = isMuted;
@@ -90,85 +59,19 @@ function VideoCard({
 
   const togglePlay = () => {
     if (!ref.current) return;
-    if (isPlaying) { ref.current.pause(); setIsPlaying(false); }
-    else { ref.current.play().catch(()=>{}); setIsPlaying(true); }
+    if (isPlaying) {
+      ref.current.pause();
+      setIsPlaying(false);
+    } else {
+      ref.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
   };
 
   return (
-    <div
-      className={`group relative overflow-hidden bg-[#121212] border border-[#E2DDD5] touch-manipulation active:scale-[0.97] transition-transform duration-150 ${
-        featured ? 'rounded-2xl aspect-[4/5] sm:aspect-[16/10] lg:aspect-[4/3] lg:rounded-[28px]' : 'rounded-2xl aspect-[4/5] sm:aspect-[3/4]'
-      }`}
-      onClick={() => onExpand(item)}
-    >
-      <video
-        ref={ref}
-        src={item.videoUrl}
-        poster={item.posterUrl}
-        autoPlay
-        loop
-        muted={isMuted}
-        playsInline
-        preload="metadata"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
-      {/* Unified tap overlay — single dynamic control on mobile */}
-      <button
-        onClick={(e) => { e.stopPropagation(); if (isMuted) setIsMuted(false); else onExpand(item); }}
-        className="absolute inset-0 flex items-center justify-center bg-black/0 group-active:bg-black/10 transition-colors md:hidden"
-        aria-label={isMuted ? 'Tap to unmute' : 'Tap to expand'}
-      >
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-xs font-semibold text-[#121212] shadow-lg active:scale-95 transition-transform">
-          {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
-          {isMuted ? 'Tap to Unmute' : 'Tap to Expand'}
-        </span>
-      </button>
-      {/* Tap-friendly controls — desktop */}
-      <div className="hidden md:flex absolute top-3 right-3 items-center gap-2 z-10" onClick={(e)=>e.stopPropagation()}>
-        <button
-          onClick={togglePlay}
-          className="h-9 w-9 rounded-full bg-white/90 backdrop-blur text-[#121212] flex items-center justify-center hover:bg-white active:scale-95 transition-transform min-h-[44px] min-w-[44px]"
-          aria-label={isPlaying ? 'Pause' : 'Play'}
-        >
-          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
-        </button>
-        <button
-          onClick={() => setIsMuted(!isMuted)}
-          className="h-9 w-9 rounded-full bg-[#121212]/70 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-[#121212]/90 active:scale-95 transition-transform min-h-[44px] min-w-[44px]"
-          aria-label={isMuted ? 'Unmute' : 'Mute'}
-        >
-          {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-        </button>
-      </div>
-      <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10 pointer-events-none">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#121212] mb-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#9A7B2C]" />
-          {item.category}
-        </span>
-        <h3 className="font-serif text-base sm:text-lg font-medium text-white leading-tight">{item.title}</h3>
-        <p className="text-xs text-white/80 leading-relaxed mt-1 line-clamp-2">{item.description}</p>
-      </div>
-    </div>
-  );
-}
-
-export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: VideoItem[] }) {
-  const [active, setActive] = useState<VideoItem | null>(null);
-  const featured = videos[0];
-  const previews = videos.slice(1);
-
-  // Lock scroll when modal open
-  useEffect(() => {
-    if (active) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
-  }, [active]);
-
-  return (
-    <section id="atelier" className="bg-[#FAF8F5] text-[#121212] py-10 sm:py-14 lg:py-20">
+    <section id="atelier" className="bg-[#FAF8F5] text-[#1A1918] py-10 sm:py-14 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header — warm editorial, reduced letter-spacing */}
+        {/* Eyebrow + Heading */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -176,115 +79,113 @@ export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: Vi
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl mb-8 sm:mb-10"
         >
-          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide text-[#9A7B2C] mb-2">
-            <Sparkles className="h-3.5 w-3.5" /> Atelier notes — Ilorin & partners
+          <span className="inline-flex items-center gap-2 rounded-full bg-white border border-[#E2DDD5] px-3 py-1 text-[10px] font-semibold tracking-wide text-[#8C7A5B]">
+            HOROLOGY & CRAFTSMANSHIP
           </span>
-          <h2 className="font-serif text-[28px] sm:text-3xl lg:text-[36px] font-light leading-tight tracking-tight text-[#121212]">
-            How a small run <span className="font-normal italic text-[#9A7B2C]">is made</span>
+          <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[36px] font-light leading-tight tracking-tight text-[#1A1918] mt-3">
+            Precision in Motion: <span className="italic font-normal text-[#8C7A5B]">The Swiss Automatic Calibre</span>
           </h2>
-          <p className="text-sm text-[#5A5248] leading-relaxed mt-3 max-w-2xl">
-            Three short clips from this month's run — no stock, no filters. Leather edge, calibre, silk. Each piece is cut and finished to order in runs of 25–50, then shipped insured from Ilorin.
-          </p>
         </motion.div>
 
-        {/* Desktop: 2-col split | Mobile: snap scroll */}
-        {/* Mobile snap feed */}
-        <div className="flex lg:hidden gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-none -mx-4 px-4 pb-2">
-          {[featured, ...previews].map((v) => (
-            <div key={v.id} className="snap-start shrink-0 w-[84vw] max-w-[360px]">
-              <VideoCard item={v} onExpand={setActive} />
-            </div>
-          ))}
-        </div>
-
-        {/* Desktop grid */}
-        <div className="hidden lg:grid lg:grid-cols-12 gap-6 items-stretch">
+        {/* Editorial split: 7 + 5 desktop, stacked mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+          {/* Left: Large video */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-8"
+            className="md:col-span-7"
           >
-            {featured && <VideoCard item={featured} featured onExpand={setActive} />}
-            <div className="mt-4 flex flex-wrap gap-2 text-xs text-[#5C5852]">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E2DDD5] bg-[#EFECE6] px-3 py-1.5 text-[#1A1918]"><Scissors className="h-3.5 w-3.5 text-[#8C7A5B]" /> Full-grain calfskin — Ilorin</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E2DDD5] bg-[#EFECE6] px-3 py-1.5 text-[#1A1918]"><Watch className="h-3.5 w-3.5 text-[#8C7A5B]" /> 72h power reserve — Ilorin</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E2DDD5] bg-[#EFECE6] px-3 py-1.5 text-[#1A1918]"><Shirt className="h-3.5 w-3.5 text-[#8C7A5B]" /> 22-momme silk — Ilorin</span>
+            <div className="relative overflow-hidden rounded-2xl border border-[#E2DDD5] bg-[#121212] aspect-[4/5] sm:aspect-[16/9] md:aspect-[16/9] lg:aspect-[4/3]">
+              <video
+                ref={ref}
+                src={video.videoUrl}
+                poster={video.posterUrl}
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover"
+              />
+              {/* Controls — desktop */}
+              <div className="absolute top-3 right-3 hidden sm:flex items-center gap-2">
+                <button
+                  onClick={togglePlay}
+                  className="h-9 w-9 rounded-full bg-white/90 backdrop-blur text-[#121212] flex items-center justify-center hover:bg-white active:scale-95 transition-transform min-h-[44px] min-w-[44px]"
+                  aria-label={isPlaying ? 'Pause' : 'Play'}
+                >
+                  {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
+                </button>
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="h-9 w-9 rounded-full bg-[#121212]/70 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-[#121212]/90 active:scale-95 transition-transform min-h-[44px] min-w-[44px]"
+                  aria-label={isMuted ? 'Unmute' : 'Mute'}
+                >
+                  {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                </button>
+              </div>
+              {/* Mobile tap overlay */}
+              <button
+                onClick={() => setIsMuted(!isMuted)}
+                className="absolute inset-0 flex items-center justify-center bg-black/0 active:bg-black/10 sm:hidden"
+                aria-label={isMuted ? 'Tap to unmute' : 'Tap to mute'}
+              >
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-xs font-semibold text-[#1A1918] shadow-lg">
+                  {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+                  {isMuted ? 'Tap to Unmute' : 'Tap to Mute'}
+                </span>
+              </button>
             </div>
           </motion.div>
 
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            {previews.map((v, i) => (
-              <motion.div
-                key={v.id}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.08 * (i + 1), ease: [0.16, 1, 0.3, 1] }}
-                className="flex-1"
-              >
-                <VideoCard item={v} onExpand={setActive} />
-              </motion.div>
-            ))}
-            {/* Spec callout instead of third video when only 2 previews */}
-            {previews.length < 2 && (
-              <div className="rounded-2xl border border-[#E2DDD5] bg-white p-5">
-                <p className="text-xs font-semibold tracking-wide text-[#9A7B2C]">Lot no. 042 — Ilorin</p>
-                <p className="font-serif text-base font-medium text-[#121212] mt-1">Packed for monsoon, not just photos</p>
-                <p className="text-xs text-[#5A5248] leading-relaxed mt-2">Every shipment is humidity-checked, boxed in Ilorin, and handed to DHL/FedEx with insurance to Lagos, Abuja, Port Harcourt and beyond — tracking shared on WhatsApp within 2 hours.</p>
-                <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20I%20would%20like%20to%20make%20an%20inquiry%20with%20the%20private%20client%20concierge." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-[#9A7B2C] hover:text-[#7A5F1E]">
-                  Chat with Ilorin concierge — under 15 mins <ExternalLink className="h-3 w-3" />
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
+          {/* Right: Editorial spec card */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-5 flex"
+          >
+            <div className="flex flex-col w-full rounded-2xl border border-[#E2DDD5] bg-[#EFECE6] p-5 sm:p-6">
+              <span className="text-[10px] font-semibold tracking-wide text-[#8C7A5B]">FEATURED TIMEPIECE</span>
+              <h3 className="font-serif text-lg sm:text-xl font-medium text-[#1A1918] leading-tight mt-2">{video.title}</h3>
+              <p className="text-sm text-[#5C5852] leading-relaxed mt-3">{video.description}</p>
 
-        {/* Spec callout for mobile */}
-        <div className="lg:hidden mt-4 rounded-2xl border border-[#E2DDD5] bg-white p-4">
-          <p className="text-xs font-semibold tracking-wide text-[#9A7B2C]">Lot no. 042 — Ilorin</p>
-          <p className="text-sm font-medium text-[#121212] mt-1">Small run, not mass stock</p>
-          <p className="text-xs text-[#5A5248] leading-relaxed mt-1">Cut to order, finished by hand. WhatsApp us for exact measurements, leather lot photos or calibre serial before you pay.</p>
+              <dl className="mt-5 grid grid-cols-1 gap-3 text-sm">
+                <div className="flex items-start justify-between gap-4 rounded-xl bg-white border border-[#E2DDD5] px-3.5 py-3">
+                  <dt className="text-xs font-medium text-[#7A756E]">Calibre</dt>
+                  <dd className="text-xs font-semibold text-[#1A1918] text-right">Swiss Automatic Self-Winding</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 rounded-xl bg-white border border-[#E2DDD5] px-3.5 py-3">
+                  <dt className="text-xs font-medium text-[#7A756E]">Case</dt>
+                  <dd className="text-xs font-semibold text-[#1A1918] text-right">904L Oystersteel / Fluted Bezel</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 rounded-xl bg-white border border-[#E2DDD5] px-3.5 py-3">
+                  <dt className="text-xs font-medium text-[#7A756E]">Condition</dt>
+                  <dd className="text-xs font-semibold text-[#1A1918] text-right inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#8C7A5B]" /> Verified Authentic • Atelier Certified</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 rounded-xl bg-white border border-[#E2DDD5] px-3.5 py-3">
+                  <dt className="text-xs font-medium text-[#7A756E]">Dispatch</dt>
+                  <dd className="text-xs font-semibold text-[#1A1918] text-right inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#8C7A5B]" /> Same-Day Ilorin Dispatch • Insured Nationwide Delivery</dd>
+                </div>
+              </dl>
+
+              <a
+                href={video.linkedProductUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#1A1918] text-white px-5 py-3.5 text-xs font-semibold tracking-wide hover:bg-[#2A2928] active:scale-[0.97] transition-transform min-h-[44px]"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Inquire via Concierge for Pricing & Availability
+              </a>
+              <p className="text-[11px] text-[#7A756E] mt-2.5 text-center">Private Ilorin collection • Response under 15 mins</p>
+            </div>
+          </motion.div>
         </div>
       </div>
-
-      {/* Expanded modal */}
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md"
-            onClick={() => setActive(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98, y: 8 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98, y: 8 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-3xl rounded-2xl overflow-hidden bg-[#121212] border border-white/10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button onClick={() => setActive(null)} className="absolute top-3 right-3 z-20 h-9 w-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black border border-white/10">
-                <X className="h-4 w-4" />
-              </button>
-              <video src={active.videoUrl} poster={active.posterUrl} controls autoPlay playsInline className="w-full aspect-video bg-black" />
-              <div className="p-5">
-                <span className="text-xs font-medium tracking-wide text-[#8C7A5B]">{active.category}</span>
-                <h3 className="font-serif text-lg font-medium text-white mt-1">{active.title}</h3>
-                <p className="text-sm text-white/70 leading-relaxed mt-2">{active.description}</p>
-                {active.linkedProductUrl && (
-                  <a href={active.linkedProductUrl} onClick={() => setActive(null)} className="inline-flex items-center gap-1.5 mt-4 rounded-full bg-white text-[#121212] px-4 py-2 text-xs font-medium hover:bg-[#EFECE6] transition-colors">
-                    View linked piece <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }
