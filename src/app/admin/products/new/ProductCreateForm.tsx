@@ -37,10 +37,18 @@ export default function ProductCreateForm({ categories }: { categories: { id: st
     setLoading(true);
     const supabase = createClient();
 
+    // Ensure slug is unique to allow same product name for different products
+    let baseSlug = slug.trim() || slugify(name);
+    let finalSlug = baseSlug;
+    const { data: existing } = await supabase.from('products').select('id').eq('slug', baseSlug).limit(1);
+    if (existing && existing.length > 0) {
+      finalSlug = `${baseSlug}-${Date.now().toString(36)}`;
+    }
+
     let images: string[] = [];
     if (imageFile) {
       const ext = imageFile.name.split('.').pop();
-      const path = `products/${slug}-${Date.now()}.${ext}`;
+      const path = `products/${finalSlug}-${Date.now()}.${ext}`;
       const { error: uploadError } = await supabase.storage.from('product-images').upload(path, imageFile, { cacheControl: '3600', upsert: false });
       if (uploadError) {
         setError(`Image upload failed: ${uploadError.message}`);
@@ -55,7 +63,7 @@ export default function ProductCreateForm({ categories }: { categories: { id: st
 
     const { error: insertError } = await supabase.from('products').insert({
       name: name.trim(),
-      slug: slug.trim(),
+      slug: finalSlug,
       description: description.trim() || null,
       price: numericPrice,
       category_id: categoryId,
