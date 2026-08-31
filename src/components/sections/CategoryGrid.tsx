@@ -104,9 +104,9 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                       : 'border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60'
                   }`}
                 >
-                  {/* Background Image — random product from live inventory per category section */}
+                  {/* Background Image — live product from its own category only; fallback to unsplash (no cross-category) */}
                   <Image
-src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel === cat.name)?.primaryImage ?? liveProducts[0]?.primaryImage ?? cat.image)}
+src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel === cat.name)?.primaryImage ?? cat.image)}
                     alt={cat.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"

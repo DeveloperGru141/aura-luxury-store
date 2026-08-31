@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ProductCategory } from '@/types/store';
 import ProductCard from '@/components/ui/ProductCard';
 import ScrollReveal from '@/components/ScrollReveal';
-import { Sparkles, SlidersHorizontal } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 interface FeaturedProductsProps {
@@ -16,7 +16,6 @@ export default function FeaturedProducts({
   activeCategory,
   setActiveCategory,
 }: FeaturedProductsProps) {
-  const [filterTrendingOnly, setFilterTrendingOnly] = useState(false);
   const { products: liveProducts } = useLiveProducts();
 
   // Exact order: Bags, Wears (Clothes), Shoes, Wristwatches, Jewelry
@@ -31,8 +30,7 @@ export default function FeaturedProducts({
 
   const filteredProducts = liveProducts.filter((product) => {
     const matchesCat = activeCategory === 'all' || product.category === activeCategory;
-    const matchesTrending = filterTrendingOnly ? (product as any).isTrending : true;
-    return matchesCat && matchesTrending;
+    return matchesCat;
   });
 
   return (
@@ -84,19 +82,6 @@ export default function FeaturedProducts({
               );
             })}
           </div>
-
-          {/* Quick Trending Filter Toggle — fluid */}
-          <button
-            onClick={() => setFilterTrendingOnly(!filterTrendingOnly)}
-            className={`px-3.5 py-2.5 min-h-[40px] rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-2 shrink-0 border touch-manipulation w-full sm:w-auto ${
-              filterTrendingOnly
-                ? 'bg-[#D4AF37]/20 border-[#D4AF37] text-[#F3E5AB]'
-                : 'border-white/10 text-gray-400 hover:text-white hover:border-white/20 active:bg-white/5'
-            }`}
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Trending Only</span>
-          </button>
         </div>
 
         {/* Product Grid — fluid gaps */}
