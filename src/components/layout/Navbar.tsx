@@ -99,12 +99,12 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             }}
             className="flex flex-col group cursor-pointer"
           >
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.28em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.15em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
               <span>OMO ESHO SIGNATURES</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
             </span>
-            <span className="text-[8px] tracking-[0.2em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
-              ILORIN — worldwide insured courier
+            <span className="text-[8px] tracking-[0.12em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
+              Ilorin — small runs, made to order
             </span>
           </a>
         </div>
@@ -135,15 +135,15 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             <span className="hidden md:inline text-xs text-gray-400 group-hover:text-gray-200">Search</span>
           </button>
 
-          {/* Concierge WhatsApp button */}
+          {/* Human concierge — Ilorin atelier */}
           <a
             href={conciergeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-[#D4AF37]/15 active:bg-[#D4AF37]/25 border border-white/10 hover:border-[#D4AF37]/40 text-[#F3E5AB] text-xs font-medium transition-all shadow-md touch-manipulation"
+            className="hidden sm:inline-flex flex-col items-start px-3.5 py-1.5 rounded-xl bg-[#FDFBF7] border border-[#E8DDD0] hover:border-[#C5A059]/40 text-[#121212] transition-all shadow-sm touch-manipulation"
           >
-            <MessageCircle className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>Concierge</span>
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold"><MessageCircle className="w-3.5 h-3.5 text-[#9A7B2C]" /> Chat with Ilorin atelier</span>
+            <span className="text-[10px] text-[#8A7F72]">typical response under 15 mins</span>
           </a>
         </div>
       </div>

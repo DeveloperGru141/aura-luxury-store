@@ -9,6 +9,7 @@ import SearchModal from '@/components/layout/SearchModal';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import CategoryGrid from '@/components/sections/CategoryGrid';
+import VideoShowcase from '@/components/sections/VideoShowcase';
 import FeaturedProducts from '@/components/sections/FeaturedProducts';
 import ShopTheLook from '@/components/sections/ShopTheLook';
 import BrandPillars from '@/components/sections/BrandPillars';
@@ -28,22 +29,23 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0D0F14] text-white selection:bg-[#D4AF37] selection:text-black">
+    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#D4AF37] selection:text-black">
       {/* Top Announcement Bar */}
       <AnnouncementBar />
 
       {/* Navigation Header — wired to catalogue filtering */}
       <Navbar onSelectCategory={handleSelectCategory} />
 
-      {/* Main Landing Sections */}
+      {/* Main Landing Sections — editorial flow with warm atelier break */}
       <HeroSection />
       <BrandPillars />
       <CategoryGrid onSelectCategory={handleSelectCategory} />
+      <VideoShowcase />
       <FeaturedProducts
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
       />
-      {/* Curated Living Lookbook Section */}
+      {/* Curated Living Lookbook Section — asymmetrical */}
       <ShopTheLook />
       <CustomerReviews />
 

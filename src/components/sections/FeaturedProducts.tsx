@@ -78,12 +78,12 @@ export default function FeaturedProducts({
           </div>
         </div>
 
-        {/* Product Grid — denser mobile: 2 cols, tighter gaps, 3:4 cards */}
+        {/* Product Grid — asymmetrical editorial, warm skeleton */}
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-3 sm:gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-white/5 bg-[#13161C]">
-                <div className="aspect-[3/4] w-full skeleton-shimmer" />
+              <div key={i} className={`rounded-xl sm:rounded-2xl overflow-hidden border border-[#E8DDD0] bg-white ${i===0 ? 'lg:col-span-7 lg:row-span-2' : i===1 ? 'lg:col-span-5' : 'lg:col-span-4'}`}>
+                <div className="aspect-[3/4] w-full skeleton-shimmer bg-[#FDFBF7]" />
                 <div className="p-2.5 sm:p-3 space-y-2">
                   <div className="h-3 w-2/3 rounded skeleton-shimmer" />
                   <div className="h-3 w-1/2 rounded skeleton-shimmer" />
@@ -93,13 +93,17 @@ export default function FeaturedProducts({
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-12 sm:py-20 text-center text-gray-400">
-            <p className="text-sm font-medium">No items found matching the selected filter.</p>
+          <div className="py-12 sm:py-16 text-center border border-[#E8DDD0] rounded-2xl bg-[#FDFBF7] px-6">
+            <p className="font-serif text-base font-light text-[#121212]">Next small-run drop releasing soon</p>
+            <p className="text-xs text-[#5A5248] mt-2 mb-4">This category is in production in Florence/Como. Join the waitlist and our Ilorin concierge will message you lot photos first.</p>
+            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium">Join concierge waitlist</a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-3 sm:gap-4 auto-rows-fr">
+            {filteredProducts.map((product, idx) => (
+              <div key={product.id} className={`${idx===0 ? 'lg:col-span-7 lg:row-span-2' : idx===1 ? 'lg:col-span-5' : 'lg:col-span-3'} ${idx===0 ? 'sm:col-span-2 lg:col-span-7' : ''}`}>
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         )}

@@ -68,19 +68,18 @@ export default function ShopTheLook() {
 
   if (stylingSlides.length === 0) {
     return (
-      <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#0A0C0F] relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
+      <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#FDFBF7] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
             <div className="min-w-0">
-              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">Curated <span className="italic font-normal gold-gradient-text">lookbook</span></h2>
+              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-[#121212] leading-tight">Curated <span className="italic font-normal text-[#9A7B2C]">lookbook</span></h2>
             </div>
-            <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">Styled sets from the current inventory — each item links directly to its product detail and WhatsApp order.</p>
+            <p className="text-[13px] sm:text-sm text-[#5A5248] max-w-md font-light leading-relaxed">Next small-run drop releasing soon — join the concierge waitlist for early access to fittings in Ilorin.</p>
           </div>
-          <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#14171E] p-10 sm:p-14 text-center">
-            <div className="mx-auto w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-4"><Sparkles className="w-7 h-7 text-[#D4AF37]" /></div>
-            <p className="text-sm font-medium text-white mb-1">Lookbook coming soon</p>
-            <p className="text-xs text-gray-400">Add products in the admin dashboard to populate the curated showcase.</p>
+          <div className="rounded-2xl sm:rounded-3xl border border-[#E8DDD0] bg-white p-10 sm:p-14 text-center">
+            <p className="font-serif text-lg font-light text-[#121212] mb-2">Next small-run drop releasing soon</p>
+            <p className="text-xs text-[#5A5248] mb-4">Leather and silk are in finishing. Get a WhatsApp heads-up with lot photos before we list.</p>
+            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20lookbook%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-5 py-2.5 text-xs font-medium hover:bg-[#1E1E1E] transition-colors">Join concierge waitlist — Ilorin atelier</a>
           </div>
         </div>
       </section>

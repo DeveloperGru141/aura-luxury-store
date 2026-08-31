@@ -71,9 +71,8 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative overflow-hidden pt-6 sm:pt-8 pb-8 sm:pb-12 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
-      <div className="absolute top-10 right-10 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-amber-900/10 rounded-full blur-[100px] sm:blur-[140px] pointer-events-none" />
+    <section id="home" className="relative overflow-hidden pt-6 sm:pt-8 pb-8 sm:pb-12 lg:py-16 bg-[#121212]">
+      {/* Warm matte, no synthetic orbs */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
@@ -126,12 +125,10 @@ export default function HeroSection() {
               className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group touch-pan-y"
             >
               {heroSlides.length === 0 ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0D0F14] p-8 text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-4">
-                    <Sparkles className="w-7 h-7 text-[#D4AF37]" />
-                  </div>
-                  <p className="text-sm font-medium text-white mb-1">Curated collection coming soon</p>
-                  <p className="text-xs text-gray-400 max-w-xs">Add products in the admin dashboard to populate the hero showcase.</p>
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#FDFBF7] p-8 text-center">
+                  <p className="font-serif text-lg font-light text-[#121212] mb-2">Next small-run drop releasing soon</p>
+                  <p className="text-xs text-[#5A5248] max-w-xs leading-relaxed mb-4">Leather from Florence and silk from Como are in finishing. Join the concierge waitlist for early access and exact measurements.</p>
+                  <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist%20for%20the%20next%20drop." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium hover:bg-[#1E1E1E] transition-colors">Join concierge waitlist — Ilorin atelier</a>
                 </div>
               ) : (
                 heroSlides.map((slide, idx) => {
