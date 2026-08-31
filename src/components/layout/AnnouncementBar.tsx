@@ -44,7 +44,7 @@ export default function AnnouncementBar() {
           <div className="relative">
             <button
               onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-              className="flex items-center gap-1 hover:text-white transition-colors py-0.5 cursor-pointer min-h-[28px] px-1"
+              className="flex items-center gap-1 hover:text-white transition-colors py-0.5 cursor-pointer min-h-[44px] px-2 touch-manipulation active:scale-95 transition-transform"
               aria-haspopup="listbox"
               aria-expanded={isCurrencyOpen}
             >

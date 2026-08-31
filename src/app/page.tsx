@@ -16,6 +16,7 @@ import BrandPillars from '@/components/sections/BrandPillars';
 import CustomerReviews from '@/components/sections/CustomerReviews';
 import QuickViewModal from '@/components/ui/QuickViewModal';
 import ToastNotification from '@/components/ui/ToastNotification';
+import MobileBottomBar from '@/components/layout/MobileBottomBar';
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory>('all');
@@ -29,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#D4AF37] selection:text-black">
+    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#D4AF37] selection:text-black overflow-x-hidden pb-[84px] md:pb-0">
       {/* Top Announcement Bar */}
       <AnnouncementBar />
 
@@ -57,6 +58,7 @@ export default function Home() {
       <SearchModal />
       <QuickViewModal />
       <ToastNotification />
+      <MobileBottomBar onFilterTap={() => handleSelectCategory(activeCategory)} />
     </main>
   );
 }

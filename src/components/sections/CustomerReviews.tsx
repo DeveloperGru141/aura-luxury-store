@@ -66,12 +66,12 @@ export default function CustomerReviews() {
           </div>
         </div>
 
-        {/* Review Cards Grid — fluid gaps */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        {/* Review Cards — snap carousel on mobile with peek, grid on desktop */}
+        <div className="flex lg:grid lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 overflow-x-auto lg:overflow-visible snap-x snap-mandatory scrollbar-none -mx-4 lg:mx-0 px-4 lg:px-0 pb-1 lg:pb-0 overscroll-x-contain">
           {CUSTOMER_REVIEWS.map((rev) => (
             <div
               key={rev.id}
-              className="flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.99] transition-all duration-300 group touch-manipulation relative"
+              className="snap-start shrink-0 w-[84vw] max-w-[320px] lg:w-auto lg:max-w-none flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.97] transition-all duration-150 group touch-manipulation relative"
             >
               <div>
                 {/* Quote Icon & Stars */}

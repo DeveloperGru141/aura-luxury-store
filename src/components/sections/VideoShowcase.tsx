@@ -48,18 +48,25 @@ function useInViewPlay(videoRef: React.RefObject<HTMLVideoElement | null>, enabl
   useEffect(() => {
     const el = videoRef.current;
     if (!el || !enabled) return;
+    // Aggressive pause when out of viewport to save battery on mobile GPUs
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
           el.play().catch(() => {});
         } else {
           el.pause();
         }
       },
-      { threshold: 0.35 }
+      { threshold: [0, 0.35, 0.6], rootMargin: '0px 0px -10% 0px' }
     );
     io.observe(el);
-    return () => io.disconnect();
+    // Pause when tab hidden
+    const onVis = () => {
+      if (document.hidden) el.pause();
+      else if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) el.play().catch(()=>{});
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => { io.disconnect(); document.removeEventListener('visibilitychange', onVis); };
   }, [videoRef, enabled]);
 }
 
@@ -89,8 +96,8 @@ function VideoCard({
 
   return (
     <div
-      className={`group relative overflow-hidden bg-[#121212] border border-[#E8DDD0] touch-manipulation ${
-        featured ? 'rounded-[20px] lg:rounded-[28px] aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3]' : 'rounded-2xl aspect-[4/3] sm:aspect-[3/4]'
+      className={`group relative overflow-hidden bg-[#121212] border border-[#E8DDD0] touch-manipulation active:scale-[0.97] transition-transform duration-150 ${
+        featured ? 'rounded-2xl aspect-[4/5] sm:aspect-[16/10] lg:aspect-[4/3] lg:rounded-[28px]' : 'rounded-2xl aspect-[4/5] sm:aspect-[3/4]'
       }`}
       onClick={() => onExpand(item)}
     >
@@ -106,24 +113,35 @@ function VideoCard({
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
-      {/* Tap-friendly controls */}
-      <div className="absolute top-3 right-3 flex items-center gap-2 z-10" onClick={(e)=>e.stopPropagation()}>
+      {/* Unified tap overlay — single dynamic control on mobile */}
+      <button
+        onClick={(e) => { e.stopPropagation(); if (isMuted) setIsMuted(false); else onExpand(item); }}
+        className="absolute inset-0 flex items-center justify-center bg-black/0 group-active:bg-black/10 transition-colors md:hidden"
+        aria-label={isMuted ? 'Tap to unmute' : 'Tap to expand'}
+      >
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-xs font-semibold text-[#121212] shadow-lg active:scale-95 transition-transform">
+          {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+          {isMuted ? 'Tap to Unmute' : 'Tap to Expand'}
+        </span>
+      </button>
+      {/* Tap-friendly controls — desktop */}
+      <div className="hidden md:flex absolute top-3 right-3 items-center gap-2 z-10" onClick={(e)=>e.stopPropagation()}>
         <button
           onClick={togglePlay}
-          className="h-9 w-9 rounded-full bg-white/90 backdrop-blur text-[#121212] flex items-center justify-center hover:bg-white active:scale-[0.97] transition-all"
+          className="h-9 w-9 rounded-full bg-white/90 backdrop-blur text-[#121212] flex items-center justify-center hover:bg-white active:scale-95 transition-transform min-h-[44px] min-w-[44px]"
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
         </button>
         <button
           onClick={() => setIsMuted(!isMuted)}
-          className="h-9 w-9 rounded-full bg-[#121212]/70 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-[#121212]/90 active:scale-[0.97] transition-all"
+          className="h-9 w-9 rounded-full bg-[#121212]/70 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-[#121212]/90 active:scale-95 transition-transform min-h-[44px] min-w-[44px]"
           aria-label={isMuted ? 'Unmute' : 'Mute'}
         >
           {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
         </button>
       </div>
-      <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10">
+      <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10 pointer-events-none">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#121212] mb-2">
           <span className="h-1.5 w-1.5 rounded-full bg-[#9A7B2C]" />
           {item.category}

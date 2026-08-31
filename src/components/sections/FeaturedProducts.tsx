@@ -58,7 +58,7 @@ export default function FeaturedProducts({
                 <button
                   key={tab.id}
                   onClick={() => setActiveCategory(tab.id)}
-                  className={`snap-start px-3.5 sm:px-4 py-2.5 min-h-[40px] rounded-xl text-[11px] sm:text-xs font-medium uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation ${
+                  className={`snap-start px-3.5 sm:px-4 py-2.5 min-h-[44px] rounded-xl text-[11px] sm:text-xs font-medium uppercase tracking-wider transition-[transform,background-color] duration-150 whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
                     isActive
                       ? 'bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-bold shadow-lg shadow-[#D4AF37]/10'
                       : 'bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 active:bg-white/15'
@@ -99,13 +99,24 @@ export default function FeaturedProducts({
             <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium">Join concierge waitlist</a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-3 sm:gap-4 auto-rows-fr">
-            {filteredProducts.map((product, idx) => (
-              <div key={product.id} className={`${idx===0 ? 'lg:col-span-7 lg:row-span-2' : idx===1 ? 'lg:col-span-5' : 'lg:col-span-3'} ${idx===0 ? 'sm:col-span-2 lg:col-span-7' : ''}`}>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
+          <>
+            {/* Mobile: snap carousel with peek */}
+            <div className="flex lg:hidden gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-none -mx-4 px-4 pb-1 overscroll-x-contain">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="snap-start shrink-0 w-[84vw] max-w-[280px]">
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+            {/* Desktop: asymmetrical grid */}
+            <div className="hidden lg:grid lg:grid-cols-12 gap-4 auto-rows-fr">
+              {filteredProducts.map((product, idx) => (
+                <div key={product.id} className={`${idx===0 ? 'lg:col-span-7 lg:row-span-2' : idx===1 ? 'lg:col-span-5' : 'lg:col-span-3'}`}>
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </section>

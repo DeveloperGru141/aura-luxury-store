@@ -87,10 +87,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        {/* Wishlist Button — fluid 44px */}
+        {/* Wishlist Button — 44px */}
         <button
           onClick={handleWishlistToggle}
-          className={`absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 p-2.5 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full transition-all duration-300 backdrop-blur-md touch-manipulation ${
+          className={`absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full transition-[transform,background-color] duration-150 backdrop-blur-md touch-manipulation active:scale-95 ${
             isWishlisted
               ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
               : 'bg-black/40 text-gray-300 hover:text-white border border-white/10 hover:bg-black/70 active:bg-black/80'
@@ -108,13 +108,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         >
           <button
             onClick={handleQuickView}
-            className="flex-1 py-2.5 px-2 sm:px-3 rounded-lg sm:rounded-xl bg-[#0D0F12]/90 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-gray-200 hover:text-white hover:border-[#D4AF37]/50 active:bg-[#0D0F12] transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation cursor-pointer"
+            className="flex-1 py-2.5 px-2 sm:px-3 rounded-lg sm:rounded-xl bg-[#0D0F12]/90 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-gray-200 hover:text-white hover:border-[#D4AF37]/50 active:bg-[#0D0F12] active:scale-95 transition-[transform,background-color] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[44px] touch-manipulation cursor-pointer"
           >
             <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
             <span>View</span>
           </button>
 
-          {/* WhatsApp CTA — brief transitional state on tap, transform+opacity only */}
+          {/* WhatsApp CTA — 44px, haptic */}
           <a
             href={whatsappOrderUrl}
             target="_blank"
@@ -124,7 +124,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               setIsOpeningWhatsApp(true);
               setTimeout(() => setIsOpeningWhatsApp(false), 1400);
             }}
-            className="relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-[transform,filter] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:scale-[0.97] active:brightness-95 cursor-pointer"
+            className="relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-[transform,filter] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[44px] touch-manipulation shrink-0 bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:scale-95 active:brightness-95 cursor-pointer"
           >
             <span className="shimmer-sheen" />
             <MessageCircle className={`w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10 transition-transform duration-150 ${isOpeningWhatsApp ? 'animate-pulse' : ''}`} />

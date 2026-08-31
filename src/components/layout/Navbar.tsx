@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@/context/StoreContext';
-import { Search, Menu, X, Sparkles, MessageCircle } from 'lucide-react';
+import { Search, Menu, X, MessageCircle, Clock, MapPin, Phone } from 'lucide-react';
 import type { ProductCategory } from '@/types/store';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
 
@@ -99,9 +100,9 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             }}
             className="flex flex-col group cursor-pointer"
           >
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.15em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
-              <span>OMO ESHO SIGNATURES</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+            <span className="font-serif text-lg sm:text-xl lg:text-2xl font-bold tracking-[0.12em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+              <span className="truncate">OMO ESHO SIGNATURES</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0" />
             </span>
             <span className="text-[8px] tracking-[0.12em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
               Ilorin — small runs, made to order
@@ -148,35 +149,71 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-[#0D0F14]/98 backdrop-blur-2xl px-4 sm:px-6 py-5 sm:py-6 animate-slide-down max-h-[calc(100dvh-68px)] overflow-y-auto overscroll-contain pb-[max(1.5rem,env(safe-area-inset-bottom))] touch-manipulation">
-          <nav className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link)}
-                className="text-[15px] font-medium tracking-wide text-gray-200 hover:text-[#D4AF37] active:text-[#D4AF37] transition-colors py-3.5 min-h-[44px] flex items-center justify-between touch-manipulation"
-              >
-                <span>{link.label}</span>
-                <span className="text-[#D4AF37] text-xs">&rarr;</span>
-              </a>
-            ))}
-            <div className="pt-4 mt-2 border-t border-white/10 flex flex-col gap-3">
-              <a
-                href={conciergeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3.5 min-h-[44px] rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Chat with Concierge</span>
-              </a>
-            </div>
-          </nav>
-        </div>
-      )}
+      {/* Mobile Navigation Drawer — Framer Motion slide-over */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-hidden
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+              className="lg:hidden fixed top-0 right-0 z-50 h-[100dvh] w-[88vw] max-w-[360px] bg-[#121212] border-l border-white/10 shadow-2xl flex flex-col overflow-hidden"
+            >
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-white/10 shrink-0">
+                <span className="font-serif text-sm font-bold tracking-[0.15em] text-white">OMO ESHO</span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="h-10 w-10 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center active:scale-95 transition-transform"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <nav className="flex-1 overflow-y-auto px-4 py-4 overscroll-contain">
+                <div className="flex flex-col gap-1">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link)}
+                      className="min-h-[44px] flex items-center justify-between py-3.5 px-3 rounded-xl text-[15px] font-medium tracking-wide text-gray-200 hover:text-white hover:bg-white/5 active:bg-white/10 active:scale-[0.98] transition-all"
+                    >
+                      <span>{link.label}</span>
+                      <span className="text-[#D4AF37] text-xs">→</span>
+                    </a>
+                  ))}
+                </div>
+              </nav>
+              <div className="shrink-0 border-t border-white/10 bg-white/[0.03] p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+                <a
+                  href={conciergeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[44px] rounded-xl bg-white text-[#121212] text-xs font-bold tracking-wide flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                >
+                  <MessageCircle className="h-4 w-4 text-[#9A7B2C]" />
+                  <span>Chat with Ilorin atelier — under 15 mins</span>
+                </a>
+                <div className="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-400">
+                  <a href="tel:+2347065076565" className="inline-flex items-center gap-1.5 min-h-[44px] hover:text-white"><Phone className="h-3.5 w-3.5 text-[#D4AF37]" /> +234 706 507 6565</a>
+                  <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#D4AF37]" /> Mon–Sat 9am–6pm WAT</span>
+                  <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#D4AF37]" /> Ilorin Atelier • Nationwide courier</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
