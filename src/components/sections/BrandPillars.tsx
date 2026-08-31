@@ -8,22 +8,22 @@ export default function BrandPillars() {
     {
       icon: Globe,
       title: 'Insured courier',
-      description: 'Free insured delivery over ₦250,000. Next-day delivery in Ilorin; 2–3 days nationwide across Nigeria.',
+      description: 'Free insured delivery over ₦250,000. ILORIN next-day, rest of Nigeria 2–3 days, signature required.',
     },
     {
       icon: ShieldCheck,
       title: 'Certificates included',
-      description: 'Every piece ships with its atelier card and material certificate issued directly from our Ilorin atelier.',
+      description: 'Each piece ships with its atelier card and material certificate — calibre, leather lot or gold weight noted.',
     },
     {
       icon: Gem,
       title: 'Small-run ateliers',
-      description: 'Crafted in small batches of 25–50 pieces, ensuring strict quality control and exclusivity.',
+      description: 'Bags from Ilorin, wears from Ilorin, shoes from Marche, calibres from Ilorin — made in runs of 25–50.',
     },
     {
       icon: Gift,
-      title: 'Gifting packaging',
-      description: 'Monogrammed rigid box, dust bag, and ribbon. Add a personalized handwritten note via WhatsApp concierge.',
+      title: 'Boxed for gifting',
+      description: 'Monogrammed rigid box, dust bag and ribbon. Add a handwritten note at checkout via WhatsApp.',
     },
   ];
 
@@ -36,9 +36,9 @@ export default function BrandPillars() {
             return (
               <div
                 key={idx}
-                className="snap-start shrink-0 w-[260px] sm:w-auto flex flex-col items-center text-center p-4 sm:p-5 lg:p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#8C7A5B]/40 active:border-[#8C7A5B]/60 transition-all group touch-manipulation relative overflow-hidden shadow-lg active:scale-[0.97]"
+                className="snap-start shrink-0 w-[260px] sm:w-auto flex flex-col items-center text-center p-4 sm:p-5 lg:p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60 transition-all group touch-manipulation relative overflow-hidden shadow-lg active:scale-[0.97]"
               >
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#8C7A5B]/10 border border-[#8C7A5B]/30 text-[#8C7A5B] flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 group-hover:bg-[#8C7A5B] group-hover:text-black transition-all shadow-md">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 group-hover:bg-[#D4AF37] group-hover:text-black transition-all shadow-md">
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <h3 className="font-serif text-[15px] sm:text-base font-medium text-white mb-1.5 leading-tight">

@@ -61,7 +61,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
             </h2>
           </div>
           <p className="text-[13px] sm:text-sm text-gray-400 max-w-md leading-relaxed">
-            Five houses curated in Ilorin — leather, silk, shoes, timepieces and 18k gold, each restocked in small runs of 25–50.
+            Five houses: leather bags stitched in Ilorin, silk wears cut in Ilorin, shoes lasted in Marche, Ilorin calibres from Ilorin, and 18k jewelry — each restocked in small runs.
           </p>
         </div>
 
@@ -96,8 +96,8 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
                   } ${
                     isMobileHovered
-                      ? 'border border-[#8C7A5B]/75 shadow-2xl shadow-[#8C7A5B]/15 ring-1 ring-[#8C7A5B]/30 sm:ring-0 sm:shadow-none sm:border-white/10 sm:hover:border-[#8C7A5B]/40'
-                      : 'border border-white/10 hover:border-[#8C7A5B]/40 active:border-[#8C7A5B]/60'
+                      ? 'border border-[#D4AF37]/75 shadow-2xl shadow-[#D4AF37]/15 ring-1 ring-[#D4AF37]/30 sm:ring-0 sm:shadow-none sm:border-white/10 sm:hover:border-[#D4AF37]/40'
+                      : 'border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60'
                   }`}
                 >
                   {/* Background Image — live product from its own category only; fallback to unsplash (no cross-category) */}
@@ -123,9 +123,9 @@ src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel =
                   {/* Card Top Action Pill */}
                   <div className="absolute top-4 right-4 z-10">
                     <div
-                      className={`w-9 h-9 rounded-full backdrop-blur-md border transition-all flex items-center justify-center group-hover:bg-[#8C7A5B] group-hover:text-black group-active:scale-90 ${
+                      className={`w-9 h-9 rounded-full backdrop-blur-md border transition-all flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black group-active:scale-90 ${
                         isMobileHovered
-                          ? 'bg-[#8C7A5B] text-black border-[#8C7A5B] scale-105 shadow-lg shadow-[#8C7A5B]/30 sm:bg-black/50 sm:text-white sm:border-white/10 sm:scale-100 sm:group-hover:bg-[#8C7A5B] sm:group-hover:text-black'
+                          ? 'bg-[#D4AF37] text-black border-[#D4AF37] scale-105 shadow-lg shadow-[#D4AF37]/30 sm:bg-black/50 sm:text-white sm:border-white/10 sm:scale-100 sm:group-hover:bg-[#D4AF37] sm:group-hover:text-black'
                           : 'bg-black/50 border-white/10 text-white'
                       }`}
                     >
@@ -138,11 +138,11 @@ src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel =
                     <div className="flex items-center gap-1.5 mb-1">
                       {isMobileHovered && (
                         <span className="relative flex h-1.5 w-1.5 shrink-0 sm:hidden">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8C7A5B] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#8C7A5B]" />
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" />
                         </span>
                       )}
-                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#8C7A5B] block">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] block">
                         {liveProducts.filter((p: any) => p.category === cat.name || p.categories?.name === cat.name).length || cat.count}
                       </span>
                     </div>
@@ -150,8 +150,8 @@ src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel =
                     <h3
                       className={`font-serif text-base sm:text-xl lg:text-2xl font-medium transition-colors mb-0.5 sm:mb-1 ${
                         isMobileHovered
-                          ? 'text-[#EFECE6] sm:text-white sm:group-hover:text-[#EFECE6]'
-                          : 'text-white group-hover:text-[#EFECE6]'
+                          ? 'text-[#F3E5AB] sm:text-white sm:group-hover:text-[#F3E5AB]'
+                          : 'text-white group-hover:text-[#F3E5AB]'
                       }`}
                     >
                       {cat.name}

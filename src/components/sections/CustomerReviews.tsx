@@ -5,8 +5,8 @@ import { Star, CheckCircle2, Quote } from 'lucide-react';
 const CUSTOMER_REVIEWS = [
   {
     id: 'rev-1',
-    author: 'Aisha Bello',
-    location: 'Abuja, FCT',
+    author: 'Genevieve Du Pont',
+    location: 'Ilorin, Nigeria',
     rating: 5,
     title: 'Unrivaled craftsmanship in leather and finishing',
     comment: 'The Monceau croc satchel exceeded all my expectations. The leather texture, weight of the gold hardware, and the hand-burnished edges are immaculate. I receive compliments every single day.',
@@ -17,8 +17,8 @@ const CUSTOMER_REVIEWS = [
   },
   {
     id: 'rev-2',
-    author: 'Chiamaka Okoro',
-    location: 'Lekki, Lagos',
+    author: 'Alexander Sterling',
+    location: 'Ilorin, Nigeria',
     rating: 5,
     title: 'The chronograph mechanism is a true work of horological art',
     comment: 'As a long-time timepieces collector, I was astonished by the build quality and finishing on the Chronographe Imperial. The 68-hour power reserve is rock solid and the dial depth is stunning in natural sunlight.',
@@ -29,8 +29,8 @@ const CUSTOMER_REVIEWS = [
   },
   {
     id: 'rev-3',
-    author: 'Tolu Adeyemi',
-    location: 'Ibadan, Oyo',
+    author: 'Elena Rostova',
+    location: 'Ilorin, Nigeria',
     rating: 5,
     title: 'Bespoke packaging and exquisite diamond brilliance',
     comment: 'Ordered the Lumière 18k choker for our anniversary. It arrived in a stunning velvet monogrammed box with full authenticity documentation. The sparkle is radiant and it sits perfectly on the collarbone.',
@@ -66,12 +66,12 @@ export default function CustomerReviews() {
           </div>
         </div>
 
-        {/* Review Cards — snap carousel on mobile with peek, grid on desktop */}
-        <div className="flex lg:grid lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 overflow-x-auto lg:overflow-visible snap-x snap-mandatory scrollbar-none -mx-4 lg:mx-0 px-4 lg:px-0 pb-1 lg:pb-0 overscroll-x-contain">
+        {/* Review Cards Grid — fluid gaps */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {CUSTOMER_REVIEWS.map((rev) => (
             <div
               key={rev.id}
-              className="snap-start shrink-0 w-[84vw] max-w-[320px] lg:w-auto lg:max-w-none flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#8C7A5B]/35 active:border-[#8C7A5B]/50 active:scale-[0.97] transition-all duration-150 group touch-manipulation relative"
+              className="flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.99] transition-all duration-300 group touch-manipulation relative"
             >
               <div>
                 {/* Quote Icon & Stars */}
@@ -81,7 +81,7 @@ export default function CustomerReviews() {
                       <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
                     ))}
                   </div>
-                  <Quote className="w-6 h-6 text-gray-600 group-hover:text-[#8C7A5B] transition-colors opacity-40" />
+                  <Quote className="w-6 h-6 text-gray-600 group-hover:text-[#D4AF37] transition-colors opacity-40" />
                 </div>
 
                 {/* Review Headline & Text */}
@@ -107,7 +107,7 @@ export default function CustomerReviews() {
                   <div>
                     <h4 className="text-xs font-semibold text-white flex items-center gap-1">
                       <span>{rev.author}</span>
-                      {rev.verified && <CheckCircle2 className="w-3 h-3 text-[#8C7A5B]" />}
+                      {rev.verified && <CheckCircle2 className="w-3 h-3 text-[#D4AF37]" />}
                     </h4>
                     <p className="text-[10px] text-gray-400">{rev.location}</p>
                   </div>

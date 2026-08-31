@@ -7,7 +7,7 @@ const INSTAGRAM_POSTS = [
     id: 'ig-1',
     handle: '@clara.vogue',
     image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop',
-    caption: 'Carrying the iconic Monceau croc leather satchel on the streets of Paris ✨👜',
+    caption: 'Carrying the iconic Monceau croc leather satchel on the streets of Ilorin ✨👜',
     productTag: 'Monceau Croc Satchel',
   },
   {
@@ -58,7 +58,7 @@ export default function InstagramGallery() {
         {/* Header — fluid */}
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10 lg:mb-12 px-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-gray-300 text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
-            <InstagramIcon className="w-3.5 h-3.5 text-[#8C7A5B] shrink-0" />
+            <InstagramIcon className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
             <span>@OMO ESHO SIGNATURESLuxury</span>
           </div>
           <h2 className="font-serif text-[24px] sm:text-3xl lg:text-4xl font-light text-white mb-2 leading-tight">
@@ -74,7 +74,7 @@ export default function InstagramGallery() {
           {INSTAGRAM_POSTS.map((post) => (
             <div
               key={post.id}
-              className="group relative aspect-square rounded-2xl overflow-hidden bg-gray-900 border border-white/5 hover:border-[#8C7A5B]/40 active:scale-[0.98] transition-all cursor-pointer touch-manipulation"
+              className="group relative aspect-square rounded-2xl overflow-hidden bg-gray-900 border border-white/5 hover:border-[#D4AF37]/40 active:scale-[0.98] transition-all cursor-pointer touch-manipulation"
             >
               <Image
                 src={post.image}
@@ -88,7 +88,7 @@ export default function InstagramGallery() {
               <div className="absolute inset-x-2 bottom-2 z-10 sm:hidden flex flex-col gap-1 pointer-events-none">
                 <div className="p-2 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 shadow-lg">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="font-semibold text-[#8C7A5B] truncate">{post.handle}</span>
+                    <span className="font-semibold text-[#D4AF37] truncate">{post.handle}</span>
                     <ArrowUpRight className="w-3 h-3 text-white/80 shrink-0" />
                   </div>
                   <span className="text-[9px] text-gray-300 truncate block mt-0.5 font-light">
@@ -100,8 +100,8 @@ export default function InstagramGallery() {
               {/* Desktop Full Hover Overlay */}
               <div className="hidden sm:flex absolute inset-0 bg-black/80 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex-col justify-between text-white">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-semibold text-[#8C7A5B]">{post.handle}</span>
-                  <div className="p-1.5 rounded-full bg-white/10 text-white group-hover:bg-[#8C7A5B] group-hover:text-black transition-colors">
+                  <span className="text-xs font-semibold text-[#D4AF37]">{post.handle}</span>
+                  <div className="p-1.5 rounded-full bg-white/10 text-white group-hover:bg-[#D4AF37] group-hover:text-black transition-colors">
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </div>
                 </div>
@@ -110,7 +110,7 @@ export default function InstagramGallery() {
                   <p className="text-[11px] text-gray-300 line-clamp-2 mb-2 font-light">
                     {post.caption}
                   </p>
-                  <span className="inline-block px-2 py-0.5 rounded-md bg-[#8C7A5B]/20 border border-[#8C7A5B]/30 text-[#EFECE6] text-[10px] font-semibold">
+                  <span className="inline-block px-2 py-0.5 rounded-md bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-[#F3E5AB] text-[10px] font-semibold">
                     Shop {post.productTag}
                   </span>
                 </div>

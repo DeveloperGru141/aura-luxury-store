@@ -71,27 +71,28 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative overflow-hidden pt-6 sm:pt-8 pb-8 sm:pb-12 lg:py-16 bg-[#121212]">
-      {/* Warm matte, no synthetic orbs */}
+    <section id="home" className="relative overflow-hidden pt-6 sm:pt-8 pb-8 sm:pb-12 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 right-10 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-amber-900/10 rounded-full blur-[100px] sm:blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
           <div className="lg:col-span-4 flex flex-col items-start text-left w-full min-w-0">
-            <p className="inline-flex items-center gap-1.5 rounded-full bg-[#FAF8F5] border border-[#E2DDD5] px-3 py-1 text-[10px] font-semibold tracking-wide text-[#1A1918] mb-3 sm:mb-4 reveal-subhead">ILORIN ATELIER • Insured Nationwide & Global Delivery</p>
+            <p className="text-xs font-medium tracking-wide text-[#D4AF37] mb-3 sm:mb-4 reveal-subhead">Bags, wears and wristwatches — made in small runs</p>
 
             <h1 className="font-serif text-[clamp(28px,7vw,36px)] sm:text-5xl lg:text-[42px] xl:text-5xl font-light text-white tracking-tight leading-[1.12] sm:leading-[1.14] mb-3 sm:mb-4 w-full reveal-headline">
-              Crafted in Ilorin, <br />
-              <span className="italic font-normal gold-gradient-text">designed for distinction.</span>
+              Leather stitched in Ilorin, <br />
+              <span className="italic font-normal gold-gradient-text">silk cut in Ilorin.</span>
             </h1>
 
             <p className="text-[13px] sm:text-sm text-gray-300 max-w-[32ch] sm:max-w-sm font-light leading-relaxed mb-5 sm:mb-6 reveal-subhead">
-              Omo Esho Signatures brings together small-run leatherwork, fine silks, precision timepieces, and 18k gold—curated locally in Ilorin and delivered worldwide with insured courier care.
+              Omo Esho Signatures sources five houses — Ilorin calfskin bags, 22-momme silk wears, Blake-stitched shoes, Ilorin automatic calibres and 18k gold — all priced in naira and shipped insured from Ilorin.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8 reveal-cta">
               <a
                 href="#categories"
-                className="relative overflow-hidden py-3.5 sm:py-3 px-6 rounded-xl bg-gradient-to-r from-[#8C7A5B] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] transition-all shadow-xl shadow-[#8C7A5B]/15 min-h-[44px] touch-manipulation group/cta"
+                className="relative overflow-hidden py-3.5 sm:py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] transition-all shadow-xl shadow-[#D4AF37]/15 min-h-[44px] touch-manipulation group/cta"
               >
                 <span className="shimmer-sheen" />
                 <span className="relative z-10">Explore Collections</span>
@@ -112,7 +113,7 @@ export default function HeroSection() {
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5 leading-tight">Authentic</p>
               </div>
               <div className="min-w-0">
-                <div className="flex items-center gap-1 text-[#8C7A5B] font-serif text-base sm:text-lg font-bold"><span>4.9★</span></div>
+                <div className="flex items-center gap-1 text-[#D4AF37] font-serif text-base sm:text-lg font-bold"><span>4.9★</span></div>
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5 leading-tight">Rating</p>
               </div>
             </div>
@@ -125,10 +126,12 @@ export default function HeroSection() {
               className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[340px] sm:min-h-[420px] lg:min-h-[500px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#161922] group touch-pan-y"
             >
               {heroSlides.length === 0 ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#FAF8F5] p-8 text-center">
-                  <p className="font-serif text-base font-light text-[#1A1918] mb-2">Next Small-Run Drop Releasing Soon • Chat with Concierge to Reserve</p>
-                  <p className="text-xs text-[#5C5852] max-w-xs leading-relaxed mb-4">Small-batch leatherwork and silks are in finishing at the Ilorin atelier. Message for lot photos and early access.</p>
-                  <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist%20for%20the%20next%20drop." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium hover:bg-[#1A1918] transition-colors">Chat with Concierge to Reserve</a>
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0D0F14] p-8 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-4">
+                    <Sparkles className="w-7 h-7 text-[#D4AF37]" />
+                  </div>
+                  <p className="text-sm font-medium text-white mb-1">Curated collection coming soon</p>
+                  <p className="text-xs text-gray-400 max-w-xs">Add products in the admin dashboard to populate the hero showcase.</p>
                 </div>
               ) : (
                 heroSlides.map((slide, idx) => {
@@ -157,21 +160,21 @@ export default function HeroSection() {
               )}
 
               {activeProduct && (
-                <div onClick={() => setQuickViewProduct(activeProduct)} className="absolute bottom-10 sm:bottom-12 inset-x-3 sm:inset-x-4 lg:inset-x-8 z-20 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl glass-panel text-white cursor-pointer border border-[#8C7A5B]/30 hover:border-[#8C7A5B]/60 active:scale-[0.98] transition-all flex items-center justify-between gap-2 sm:gap-3 group/card shadow-2xl touch-manipulation min-h-[72px] animate-gold-pulse">
+                <div onClick={() => setQuickViewProduct(activeProduct)} className="absolute bottom-10 sm:bottom-12 inset-x-3 sm:inset-x-4 lg:inset-x-8 z-20 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl glass-panel text-white cursor-pointer border border-[#D4AF37]/30 hover:border-[#D4AF37]/60 active:scale-[0.98] transition-all flex items-center justify-between gap-2 sm:gap-3 group/card shadow-2xl touch-manipulation min-h-[72px] animate-gold-pulse">
                   <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1">
                     <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl overflow-hidden bg-gray-800 shrink-0 border border-white/10">
                       <Image src={(activeProduct as any).primaryImage ?? (activeProduct as any).images?.[0] ?? ''} alt={activeProduct.name} fill className="object-cover" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#8C7A5B] mb-0.5">
-                        <span className="relative flex h-1.5 w-1.5 shrink-0"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8C7A5B] opacity-75" /><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#8C7A5B]" /></span>
+                      <span className="flex items-center gap-1.5 text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] mb-0.5">
+                        <span className="relative flex h-1.5 w-1.5 shrink-0"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" /><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" /></span>
                         <span className="truncate">{(activeProduct as any).categoryLabel ?? (activeProduct as any).categories?.name ?? ''}</span>
                       </span>
                       <h3 className="text-[13px] sm:text-sm lg:text-base font-serif font-medium text-white line-clamp-1">{activeProduct.name}</h3>
-                      <p className="text-xs sm:text-sm font-semibold text-[#EFECE6]">{formatPrice(Number(activeProduct.price))}</p>
+                      <p className="text-xs sm:text-sm font-semibold text-[#F3E5AB]">{formatPrice(Number(activeProduct.price))}</p>
                     </div>
                   </div>
-                  <div className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-white/10 group-hover/card:bg-[#8C7A5B] group-hover/card:text-black transition-colors shrink-0 flex items-center gap-1 text-xs font-semibold min-h-[36px] min-w-[36px] justify-center">
+                  <div className="p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-white/10 group-hover/card:bg-[#D4AF37] group-hover/card:text-black transition-colors shrink-0 flex items-center gap-1 text-xs font-semibold min-h-[36px] min-w-[36px] justify-center">
                     <span className="hidden sm:inline">Inspect</span>
                     <ArrowRight className="w-4 h-4" />
                   </div>
@@ -181,12 +184,12 @@ export default function HeroSection() {
               {heroSlides.length > 0 && (
                 <div className="absolute bottom-3 sm:bottom-4 inset-x-0 z-20 flex justify-center items-center gap-1.5 sm:gap-2">
                   {heroSlides.map((_, idx) => (
-                    <button key={idx} onClick={() => setCurrentSlideIndex(idx)} className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer touch-manipulation min-h-[8px] min-w-[8px] ${currentSlideIndex === idx ? 'w-6 sm:w-8 bg-[#8C7A5B]' : 'w-1.5 sm:w-2 bg-white/40 hover:bg-white/70'}`} aria-label={`Go to slide ${idx + 1}`} />
+                    <button key={idx} onClick={() => setCurrentSlideIndex(idx)} className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer touch-manipulation min-h-[8px] min-w-[8px] ${currentSlideIndex === idx ? 'w-6 sm:w-8 bg-[#D4AF37]' : 'w-1.5 sm:w-2 bg-white/40 hover:bg-white/70'}`} aria-label={`Go to slide ${idx + 1}`} />
                   ))}
                 </div>
               )}
             </div>
-            <div className="hidden sm:block absolute -bottom-3 -right-3 -z-10 w-full h-full rounded-3xl border border-[#8C7A5B]/20" />
+            <div className="hidden sm:block absolute -bottom-3 -right-3 -z-10 w-full h-full rounded-3xl border border-[#D4AF37]/20" />
           </div>
         </div>
       </div>

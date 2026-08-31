@@ -24,22 +24,23 @@ const serif = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "OMO ESHO SIGNATURES | Ilorin Atelier — Small-Run Leather, Silk & 18k Gold",
+  title: "OMO ESHO SIGNATURES | Designer Bags, Wears, Shoes, Wristwatches & Fine Jewelry",
   description:
-    "Omo Esho Signatures brings together small-run leatherwork, fine silks, precision timepieces and 18k gold — curated locally in Ilorin and delivered worldwide with insured courier care.",
+    "Discover handcrafted Ilorin leather bags, bespoke wears, luxury shoes, Ilorin automatic wristwatches, and certified 18k fine jewelry.",
   keywords: [
-    "Ilorin atelier",
-    "Small-run luxury",
-    "Omo Esho Signatures",
-    "Nigerian luxury",
-    "Leatherwork Ilorin",
-    "18k gold",
-    "Insured courier Nigeria",
+    "Luxury fashion",
+    "Designer bags",
+    "Fine wears",
+    "Wristwatches",
+    "Luxury timepieces",
+    "Fine jewelry",
+    "Luxury shoes",
+    "Ilorin leather",
   ],
   openGraph: {
-    title: "OMO ESHO SIGNATURES | Ilorin Atelier — Small-Run Leather, Silk & 18k Gold",
+    title: "OMO ESHO SIGNATURES | Designer Bags, Wears, Wristwatches & Fine Jewelry",
     description:
-      "Small-run leatherwork, fine silks, precision timepieces and 18k gold — curated in Ilorin and delivered worldwide.",
+      "Handcrafted Ilorin leather bags, bespoke wears, Ilorin automatic wristwatches, and 18k fine jewelry.",
     type: "website",
   },
 };
@@ -51,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} scroll-smooth dark`}>
-      <body className="font-sans antialiased bg-[#FAF8F5] text-[#1A1918] min-h-screen">
+      <body className="font-sans antialiased bg-[#0D0F14] text-white min-h-screen">
         <StoreProvider>{children}</StoreProvider>
       </body>
     </html>

@@ -16,7 +16,7 @@ export default function Footer() {
             <div className="flex flex-col">
               <span className="font-serif text-2xl font-bold tracking-[0.28em] text-white flex items-center gap-1.5">
                 <span>OMO ESHO SIGNATURES</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8C7A5B]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
               </span>
               <span className="text-[9px] tracking-[0.3em] text-gray-400 font-sans -mt-1">
                 ILORIN — worldwide insured courier
@@ -24,7 +24,7 @@ export default function Footer() {
             </div>
 
             <p className="text-gray-400 text-xs font-light max-w-md leading-relaxed">
-              Curated in Ilorin — small-run leatherwork, fine silks, precision timepieces and 18k gold, delivered worldwide with insured care.
+              Five houses from Ilorin, Ilorin, Marche and Ilorin — leather bags, silk wears, stitched shoes, automatic calibres and 18k gold, priced in naira.
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export default function Footer() {
             <ul className="grid grid-cols-2 gap-2.5">
               {['Designer Bags', 'Wears', 'Luxury Shoes', 'Wristwatches', 'Fine Jewelry', 'Lookbook'].map((item) => (
                 <li key={item}>
-                  <a href={item === 'Lookbook' ? '#lookbook' : '#categories'} className="hover:text-[#8C7A5B] transition-colors">
+                  <a href={item === 'Lookbook' ? '#lookbook' : '#categories'} className="hover:text-[#D4AF37] transition-colors">
                     {item}
                   </a>
                 </li>
@@ -48,7 +48,7 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-400 text-center sm:text-left">
-            <span>&copy; {new Date().getFullYear()} Omo Esho Signatures. All rights reserved. Ilorin, Nigeria.</span>
+            <span>&copy; {new Date().getFullYear()} Omo Esho Signatures. All rights reserved.</span>
             <span className="hidden sm:inline">&bull;</span>
             <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
             <span>&bull;</span>
@@ -60,7 +60,7 @@ export default function Footer() {
           {/* Back to Top */}
           <button
             onClick={scrollToTop}
-            className="p-2 rounded-xl bg-white/5 hover:bg-[#8C7A5B] hover:text-black transition-all border border-white/10 text-gray-300 flex items-center gap-2 text-xs"
+            className="p-2 rounded-xl bg-white/5 hover:bg-[#D4AF37] hover:text-black transition-all border border-white/10 text-gray-300 flex items-center gap-2 text-xs"
             aria-label="Scroll to top"
           >
             <span>Back to top</span>

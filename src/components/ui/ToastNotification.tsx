@@ -14,11 +14,11 @@ export default function ToastNotification() {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className="pointer-events-auto flex items-center justify-between gap-3 p-4 rounded-xl bg-[#181B22] border border-[#8C7A5B]/30 text-white shadow-2xl backdrop-blur-lg transform transition-all duration-300 animate-slide-in"
+          className="pointer-events-auto flex items-center justify-between gap-3 p-4 rounded-xl bg-[#181B22] border border-[#D4AF37]/30 text-white shadow-2xl backdrop-blur-lg transform transition-all duration-300 animate-slide-in"
           role="alert"
         >
           <div className="flex items-center gap-3">
-            {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#8C7A5B] shrink-0" />}
+            {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#D4AF37] shrink-0" />}
             {toast.type === 'warning' && <AlertCircle className="w-5 h-5 text-amber-400 shrink-0" />}
             {toast.type === 'info' && <Info className="w-5 h-5 text-sky-400 shrink-0" />}
             <p className="text-sm font-medium text-gray-200">{toast.message}</p>

@@ -29,10 +29,10 @@ export default function SearchModal() {
     <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-20 px-0 sm:px-4 pb-0 sm:pb-4 bg-black/85 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
-      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#8C7A5B]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
+      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#D4AF37]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
         {/* Search Header — fluid */}
         <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-white/10">
-          <Search className="w-5 h-5 text-[#8C7A5B] shrink-0" />
+          <Search className="w-5 h-5 text-[#D4AF37] shrink-0" />
           <input
             type="text"
             value={query}
@@ -69,10 +69,10 @@ export default function SearchModal() {
                   <button
                     key={term}
                     onClick={() => setQuery(term)}
-                    className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#8C7A5B]/15 hover:border-[#8C7A5B]/40 border border-white/5 text-xs text-gray-300 transition-all flex items-center gap-1.5"
+                    className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#D4AF37]/15 hover:border-[#D4AF37]/40 border border-white/5 text-xs text-gray-300 transition-all flex items-center gap-1.5"
                   >
                     <span>{term}</span>
-                    <ArrowRight className="w-3 h-3 text-[#8C7A5B]" />
+                    <ArrowRight className="w-3 h-3 text-[#D4AF37]" />
                   </button>
                 )
               )}
@@ -101,7 +101,7 @@ export default function SearchModal() {
                       setIsSearchOpen(false);
                       setQuickViewProduct(item);
                     }}
-                    className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#8C7A5B]/30 transition-all cursor-pointer"
+                    className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#D4AF37]/30 transition-all cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
                       <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-gray-800 shrink-0">
@@ -113,10 +113,10 @@ export default function SearchModal() {
                         />
                       </div>
                       <div>
-                        <span className="text-[10px] uppercase font-semibold text-[#8C7A5B]">
+                        <span className="text-[10px] uppercase font-semibold text-[#D4AF37]">
                           {(item as any).categoryLabel ?? (item as any).categories?.name ?? ''}
                         </span>
-                        <h4 className="text-sm font-serif font-medium text-white group-hover:text-[#8C7A5B] transition-colors">
+                        <h4 className="text-sm font-serif font-medium text-white group-hover:text-[#D4AF37] transition-colors">
                           {item.name}
                         </h4>
                         <div className="flex items-center gap-1 text-amber-400 text-xs mt-0.5">
@@ -127,10 +127,10 @@ export default function SearchModal() {
                     </div>
 
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-[#EFECE6]">
+                      <p className="text-sm font-semibold text-[#F3E5AB]">
                         {formatPrice(Number(item.price))}
                       </p>
-                      <span className="text-[11px] text-[#8C7A5B] opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[11px] text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity">
                         View Item &rarr;
                       </span>
                     </div>

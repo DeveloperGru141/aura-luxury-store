@@ -33,7 +33,7 @@ export default function CartDrawer() {
       particleCount: 120,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ['#8C7A5B', '#EFECE6', '#ffffff', '#AA7C11'],
+      colors: ['#D4AF37', '#F3E5AB', '#ffffff', '#AA7C11'],
     });
 
     setTimeout(() => {
@@ -59,7 +59,7 @@ export default function CartDrawer() {
           {/* Header — fluid */}
           <div className="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 min-w-0">
-              <ShoppingBag className="w-5 h-5 text-[#8C7A5B] shrink-0" />
+              <ShoppingBag className="w-5 h-5 text-[#D4AF37] shrink-0" />
               <h2 className="font-serif text-base sm:text-lg font-medium truncate">Shopping Bag</h2>
               <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-gray-300 shrink-0">
                 {cart.reduce((sum, i) => sum + i.quantity, 0)}
@@ -82,8 +82,8 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between text-xs mb-1.5">
               {remainingForFreeShipping > 0 ? (
                 <span className="text-gray-300 flex items-center gap-1.5">
-                  <Truck className="w-3.5 h-3.5 text-[#8C7A5B]" />
-                  Add <strong className="text-[#EFECE6]">{formatPrice(remainingForFreeShipping)}</strong> for Complimentary Express Shipping
+                  <Truck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  Add <strong className="text-[#F3E5AB]">{formatPrice(remainingForFreeShipping)}</strong> for Complimentary Express Shipping
                 </span>
               ) : (
                 <span className="text-emerald-400 font-medium flex items-center gap-1.5">
@@ -95,7 +95,7 @@ export default function CartDrawer() {
             </div>
             <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#8C7A5B] to-[#E2C366] transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-[#D4AF37] to-[#E2C366] transition-all duration-500 rounded-full"
                 style={{ width: `${freeShippingProgress}%` }}
               />
             </div>
@@ -133,7 +133,7 @@ export default function CartDrawer() {
                 </p>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#8C7A5B] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider"
                 >
                   Explore Collections
                 </button>
@@ -194,7 +194,7 @@ export default function CartDrawer() {
                       </div>
 
                       {/* Price */}
-                      <span className="text-sm font-semibold text-[#EFECE6]">
+                      <span className="text-sm font-semibold text-[#F3E5AB]">
                         {formatPrice(item.product.price * item.quantity)}
                       </span>
                     </div>
@@ -221,7 +221,7 @@ export default function CartDrawer() {
                 </div>
                 <div className="flex justify-between text-sm font-semibold text-white pt-2 border-t border-white/10">
                   <span>Total Due</span>
-                  <span className="text-base font-bold text-[#EFECE6]">{formatPrice(total)}</span>
+                  <span className="text-base font-bold text-[#F3E5AB]">{formatPrice(total)}</span>
                 </div>
               </div>
 
@@ -229,7 +229,7 @@ export default function CartDrawer() {
               <button
                 onClick={handleCheckout}
                 disabled={isCheckingOut}
-                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#8C7A5B] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-xl shadow-[#8C7A5B]/10"
+                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-xl shadow-[#D4AF37]/10"
               >
                 {isCheckingOut ? (
                   <span>Processing Secure Payment...</span>
@@ -242,7 +242,7 @@ export default function CartDrawer() {
               </button>
 
               <div className="flex items-center justify-center gap-2 text-[10px] text-gray-500">
-                <Shield className="w-3.5 h-3.5 text-[#8C7A5B]" />
+                <Shield className="w-3.5 h-3.5 text-[#D4AF37]" />
                 <span>256-Bit Encrypted Checkout &bull; Maison Verified Guarantee</span>
               </div>
             </div>

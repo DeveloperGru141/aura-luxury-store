@@ -23,7 +23,7 @@ const CATEGORY_META: Record<string, { tagline: string; image: string }> = {
     image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
   },
   bags: {
-    tagline: 'Hand-stitched Full-Grain Italian Leathers & Satchels',
+    tagline: 'Hand-stitched Full-Grain Ilorin Leathers & Satchels',
     image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
   },
   shoes: {
@@ -31,11 +31,11 @@ const CATEGORY_META: Record<string, { tagline: string; image: string }> = {
     image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1000&auto=format&fit=crop',
   },
   wristwatches: {
-    tagline: 'Swiss Automatic Calibres & Master Chronometers',
+    tagline: 'Ilorin Automatic Calibres & Master Chronometers',
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
   },
   watches: {
-    tagline: 'Swiss Automatic Calibres & Master Chronometers',
+    tagline: 'Ilorin Automatic Calibres & Master Chronometers',
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
   },
   jewelry: {

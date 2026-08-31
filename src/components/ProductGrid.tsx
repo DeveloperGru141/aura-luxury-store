@@ -21,7 +21,7 @@ interface ProductGridProps {
 export default function ProductGrid({
   products,
   title = 'Curated Wears',
-  subtitle = 'Hand-stitched leather, silk drape & Swiss precision — revealed as you scroll.',
+  subtitle = 'Hand-stitched leather, silk drape & Ilorin precision — revealed as you scroll.',
 }: ProductGridProps) {
   const { products: liveProducts } = useLiveProducts();
   const displayProducts = products ?? liveProducts.slice(0, 8);

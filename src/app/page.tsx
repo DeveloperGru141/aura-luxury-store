@@ -9,14 +9,11 @@ import SearchModal from '@/components/layout/SearchModal';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import CategoryGrid from '@/components/sections/CategoryGrid';
-import VideoShowcase from '@/components/sections/VideoShowcase';
 import FeaturedProducts from '@/components/sections/FeaturedProducts';
 import ShopTheLook from '@/components/sections/ShopTheLook';
-import BrandPillars from '@/components/sections/BrandPillars';
 import CustomerReviews from '@/components/sections/CustomerReviews';
 import QuickViewModal from '@/components/ui/QuickViewModal';
 import ToastNotification from '@/components/ui/ToastNotification';
-import MobileBottomBar from '@/components/layout/MobileBottomBar';
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory>('all');
@@ -30,23 +27,21 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#8C7A5B] selection:text-black overflow-x-hidden pb-[84px] md:pb-0">
+    <main className="min-h-screen bg-[#0D0F14] text-white selection:bg-[#D4AF37] selection:text-black">
       {/* Top Announcement Bar */}
       <AnnouncementBar />
 
       {/* Navigation Header — wired to catalogue filtering */}
       <Navbar onSelectCategory={handleSelectCategory} />
 
-      {/* Main Landing Sections — editorial flow with warm atelier break */}
+      {/* Main Landing Sections */}
       <HeroSection />
-      <BrandPillars />
       <CategoryGrid onSelectCategory={handleSelectCategory} />
-      <VideoShowcase />
       <FeaturedProducts
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
       />
-      {/* Curated Living Lookbook Section — asymmetrical */}
+      {/* Curated Living Lookbook Section */}
       <ShopTheLook />
       <CustomerReviews />
 
@@ -58,7 +53,6 @@ export default function Home() {
       <SearchModal />
       <QuickViewModal />
       <ToastNotification />
-      <MobileBottomBar onFilterTap={() => handleSelectCategory(activeCategory)} />
     </main>
   );
 }

@@ -67,7 +67,7 @@ export default function WishlistDrawer() {
               wishlist.map(({ product }) => (
                 <div
                   key={product.id}
-                  className="flex gap-4 p-3 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-[#8C7A5B]/20 transition-all"
+                  className="flex gap-4 p-3 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-[#D4AF37]/20 transition-all"
                 >
                   {/* Image */}
                   <div
@@ -84,7 +84,7 @@ export default function WishlistDrawer() {
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start">
-                        <span className="text-[10px] uppercase tracking-wider font-semibold text-[#8C7A5B]">
+                        <span className="text-[10px] uppercase tracking-wider font-semibold text-[#D4AF37]">
                           {product.categoryLabel}
                         </span>
                         <button
@@ -100,7 +100,7 @@ export default function WishlistDrawer() {
                           setIsWishlistOpen(false);
                           setQuickViewProduct(product);
                         }}
-                        className="font-serif text-sm font-medium text-white hover:text-[#8C7A5B] transition-colors cursor-pointer line-clamp-1"
+                        className="font-serif text-sm font-medium text-white hover:text-[#D4AF37] transition-colors cursor-pointer line-clamp-1"
                       >
                         {product.name}
                       </h4>
@@ -111,7 +111,7 @@ export default function WishlistDrawer() {
                     </div>
 
                     <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/5">
-                      <span className="text-sm font-semibold text-[#EFECE6]">
+                      <span className="text-sm font-semibold text-[#F3E5AB]">
                         {formatPrice(product.price)}
                       </span>
                       <button
@@ -119,7 +119,7 @@ export default function WishlistDrawer() {
                           addToCart(product);
                           toggleWishlist(product);
                         }}
-                        className="py-1.5 px-3 rounded-lg bg-[#8C7A5B]/15 hover:bg-[#8C7A5B]/30 border border-[#8C7A5B]/40 text-[#EFECE6] text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                        className="py-1.5 px-3 rounded-lg bg-[#D4AF37]/15 hover:bg-[#D4AF37]/30 border border-[#D4AF37]/40 text-[#F3E5AB] text-xs font-semibold flex items-center gap-1.5 transition-colors"
                       >
                         <ShoppingBag className="w-3 h-3" />
                         <span>Move to Bag</span>

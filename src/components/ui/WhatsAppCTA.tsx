@@ -42,7 +42,7 @@ export default function WhatsAppCTA({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`relative overflow-hidden rounded-xl bg-gradient-to-r from-[#8C7A5B] via-[#E2C366] to-[#B38F24] text-black font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] shadow-lg min-h-[40px] touch-manipulation group ${sizeClasses} ${
+      className={`relative overflow-hidden rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] shadow-lg min-h-[40px] touch-manipulation group ${sizeClasses} ${
         fullWidth ? 'w-full' : ''
       } ${className}`}
       onClick={(e) => e.stopPropagation()}

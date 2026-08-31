@@ -68,18 +68,19 @@ export default function ShopTheLook() {
 
   if (stylingSlides.length === 0) {
     return (
-      <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#FAF8F5] relative overflow-hidden">
+      <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#0A0C0F] relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
             <div className="min-w-0">
-              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-[#121212] leading-tight">Curated <span className="italic font-normal text-[#9A7B2C]">lookbook</span></h2>
+              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">Curated <span className="italic font-normal gold-gradient-text">lookbook</span></h2>
             </div>
-            <p className="text-[13px] sm:text-sm text-[#5A5248] max-w-md font-light leading-relaxed">Next small-run drop releasing soon — join the concierge waitlist for early access to fittings in Ilorin.</p>
+            <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">Styled sets from the current inventory — each item links directly to its product detail and WhatsApp order.</p>
           </div>
-          <div className="rounded-2xl sm:rounded-3xl border border-[#E2DDD5] bg-[#EFECE6] p-10 sm:p-14 text-center">
-            <p className="font-serif text-base font-light text-[#1A1918] mb-2">Next Small-Run Drop Releasing Soon • Chat with Concierge to Reserve</p>
-            <p className="text-xs text-[#5C5852] mb-4">Lookbook sets from the Ilorin atelier are being styled. Message for early access.</p>
-            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20lookbook%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-5 py-2.5 text-xs font-medium hover:bg-[#1A1918] transition-colors">Chat with Concierge to Reserve</a>
+          <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#14171E] p-10 sm:p-14 text-center">
+            <div className="mx-auto w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-4"><Sparkles className="w-7 h-7 text-[#D4AF37]" /></div>
+            <p className="text-sm font-medium text-white mb-1">Lookbook coming soon</p>
+            <p className="text-xs text-gray-400">Add products in the admin dashboard to populate the curated showcase.</p>
           </div>
         </div>
       </section>
@@ -88,7 +89,7 @@ export default function ShopTheLook() {
 
   return (
     <section id="lookbook" className="py-12 sm:py-16 lg:py-24 bg-[#0A0C0F] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-[#8C7A5B]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
@@ -115,25 +116,25 @@ export default function ShopTheLook() {
 
             {currentSlide && (
               <div className="absolute bottom-5 sm:bottom-6 inset-x-4 sm:inset-x-6 z-20 hidden sm:block pointer-events-none">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#8C7A5B] block mb-1">{currentSlide.category}</span>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] block mb-1">{currentSlide.category}</span>
                 <h3 className="font-serif text-xl lg:text-2xl font-light text-white line-clamp-1">{currentSlide.title}</h3>
               </div>
             )}
 
             <div className="absolute bottom-3 sm:bottom-4 inset-x-0 z-20 flex justify-center items-center gap-1.5 sm:gap-2">
               {stylingSlides.map((_, idx) => (
-                <button key={idx} onClick={() => setCurrentIndex(idx)} className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer touch-manipulation min-h-[8px] min-w-[8px] ${currentIndex === idx ? 'w-6 sm:w-8 bg-[#8C7A5B]' : 'w-1.5 sm:w-2 bg-white/40 hover:bg-white/70'}`} aria-label={`Go to look ${idx + 1}`} />
+                <button key={idx} onClick={() => setCurrentIndex(idx)} className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer touch-manipulation min-h-[8px] min-w-[8px] ${currentIndex === idx ? 'w-6 sm:w-8 bg-[#D4AF37]' : 'w-1.5 sm:w-2 bg-white/40 hover:bg-white/70'}`} aria-label={`Go to look ${idx + 1}`} />
               ))}
             </div>
           </div>
 
           <div className="lg:col-span-4 flex flex-col gap-3 sm:gap-4">
             {activeProduct && (
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#13161D] border border-[#8C7A5B]/40 shadow-2xl flex flex-col justify-between animate-gold-pulse">
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#13161D] border border-[#D4AF37]/40 shadow-2xl flex flex-col justify-between animate-gold-pulse">
                 <div>
                   <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                    <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#8C7A5B]">
-                      <span className="relative flex h-1.5 w-1.5 shrink-0"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8C7A5B] opacity-75" /><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#8C7A5B]" /></span>
+                    <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
+                      <span className="relative flex h-1.5 w-1.5 shrink-0"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" /><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" /></span>
                       <span>{(activeProduct as any).categoryLabel ?? (activeProduct as any).categories?.name ?? ''}</span>
                     </span>
                     <span className={`font-medium text-[11px] ${(activeProduct as any).stock_status === 'out_of_stock' || (activeProduct as any).inStock === false ? 'text-amber-400' : 'text-emerald-400'}`}>&bull; {(activeProduct as any).stock_status === 'out_of_stock' || (activeProduct as any).inStock === false ? 'Out of Stock' : 'In Stock'}</span>
@@ -146,11 +147,11 @@ export default function ShopTheLook() {
                 </div>
                 <div>
                   <div className="flex items-baseline justify-between mb-4 pt-3 border-t border-white/5">
-                    <span className="text-xs text-gray-400">Price</span><span className="text-lg font-bold text-[#EFECE6]">{formatPrice(Number(activeProduct.price))}</span>
+                    <span className="text-xs text-gray-400">Price</span><span className="text-lg font-bold text-[#F3E5AB]">{formatPrice(Number(activeProduct.price))}</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <button onClick={() => setQuickViewProduct(activeProduct)} className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-xs font-medium text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation min-h-[40px]"><Eye className="w-3.5 h-3.5 text-[#8C7A5B]" /><span>Quick View</span></button>
-                    <a href={whatsappOrderUrl} target="_blank" rel="noopener noreferrer" className="relative overflow-hidden py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#8C7A5B] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] shadow-lg cursor-pointer touch-manipulation min-h-[40px]"><span className="shimmer-sheen" /><MessageCircle className="w-3.5 h-3.5 relative z-10" /><span className="relative z-10">Order</span></a>
+                    <button onClick={() => setQuickViewProduct(activeProduct)} className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-xs font-medium text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation min-h-[40px]"><Eye className="w-3.5 h-3.5 text-[#D4AF37]" /><span>Quick View</span></button>
+                    <a href={whatsappOrderUrl} target="_blank" rel="noopener noreferrer" className="relative overflow-hidden py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 hover:brightness-110 active:scale-[0.98] shadow-lg cursor-pointer touch-manipulation min-h-[40px]"><span className="shimmer-sheen" /><MessageCircle className="w-3.5 h-3.5 relative z-10" /><span className="relative z-10">Order</span></a>
                   </div>
                 </div>
               </div>
@@ -162,9 +163,9 @@ export default function ShopTheLook() {
                 const isSelected = currentIndex === idx;
                 const prod = liveProducts.find((p) => p.id === slide.productId);
                 return (
-                  <button key={slide.id} onClick={() => setCurrentIndex(idx)} className={`w-full p-2.5 rounded-xl text-left transition-all flex items-center justify-between text-xs cursor-pointer touch-manipulation ${isSelected ? 'bg-[#8C7A5B]/15 border border-[#8C7A5B]/40 text-white font-medium' : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent'}`}>
+                  <button key={slide.id} onClick={() => setCurrentIndex(idx)} className={`w-full p-2.5 rounded-xl text-left transition-all flex items-center justify-between text-xs cursor-pointer touch-manipulation ${isSelected ? 'bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-white font-medium' : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent'}`}>
                     <span className="truncate">{slide.title}</span>
-                    {prod && <span className="text-[11px] font-semibold text-[#EFECE6] shrink-0 ml-2">{formatPrice(Number(prod.price))}</span>}
+                    {prod && <span className="text-[11px] font-semibold text-[#F3E5AB] shrink-0 ml-2">{formatPrice(Number(prod.price))}</span>}
                   </button>
                 );
               })}
