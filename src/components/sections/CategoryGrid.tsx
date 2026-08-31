@@ -17,6 +17,32 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   const [activeMobileCard, setActiveMobileCard] = useState<string | null>(liveCategories[0]?.id || null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
+  // Mock category images for fallback until live products are uploaded
+  const CATEGORY_MOCK_IMAGES: Record<string, string> = {
+    bags: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
+    apparel: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
+    shoes: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1000&auto=format&fit=crop',
+    watches: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
+    jewelry: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1000&auto=format&fit=crop',
+  };
+
+  const getCategorySlug = (cat: any) => cat.id || cat.slug || '';
+
+  const findProductForCategory = (cat: any) => {
+    const catSlug = getCategorySlug(cat).toLowerCase();
+    const catName = cat.name?.toLowerCase() || '';
+    return liveProducts.find((p: any) => {
+      const pCategory = p.category?.toLowerCase() || '';
+      const pCategoryLabel = p.categoryLabel?.toLowerCase() || '';
+      const pCategoriesName = p.categories?.name?.toLowerCase() || '';
+      return pCategory === catSlug || 
+             pCategory === catName ||
+             pCategoryLabel === catName ||
+             pCategoriesName === catName ||
+             pCategoriesName === catSlug;
+    });
+  };
+
   useEffect(() => {
     if (liveCategories[0]?.id) setActiveMobileCard(liveCategories[0].id);
   }, [liveCategories]);
@@ -100,9 +126,9 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                       : 'border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60'
                   }`}
                 >
-                  {/* Background Image — live product from its own category only; fallback to unsplash (no cross-category) */}
+                  {/* Background Image — live product from its own category; fallback to category mock image */}
                   <Image
-src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel === cat.name)?.primaryImage ?? cat.image)}
+src={findProductForCategory(cat)?.primaryImage ?? CATEGORY_MOCK_IMAGES[getCategorySlug(cat)] ?? cat.image}
                     alt={cat.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
