@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [emailInput, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -39,8 +37,10 @@ export default function AdminLoginPage() {
       return;
     }
 
-    router.push('/admin');
-    router.refresh();
+    // Hard navigation ensures the Supabase auth cookie is sent to the server
+    // before middleware checks `getUser()`. router.push + router.refresh alone
+    // can leave the session invisible until a manual refresh.
+    window.location.assign('/admin');
   };
 
   return (
