@@ -3,8 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ProductCategory } from '@/types/store';
-import { ArrowUpRight, Sparkles } from 'lucide-react';
-import ScrollReveal from '@/components/ScrollReveal';
+import { ArrowUpRight } from 'lucide-react';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { useLiveCategories } from '@/hooks/useLiveProducts';
 
@@ -54,30 +53,27 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   return (
     <section id="categories" className="py-12 sm:py-16 lg:py-20 bg-[#0D0F14] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header — fluid */}
+        {/* Section Header — concrete, no decorative eyebrow */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
           <div className="min-w-0">
-            <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-[#D4AF37] block mb-1.5 sm:mb-2">
-              Curated Collections
-            </span>
             <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">
-              Explore By <span className="italic font-normal gold-gradient-text">Category</span>
+              Explore by <span className="italic font-normal gold-gradient-text">category</span>
             </h2>
           </div>
           <p className="text-[13px] sm:text-sm text-gray-400 max-w-md leading-relaxed">
-            From handcrafted Italian leather bags to Swiss automatic timepieces, discover statement pieces designed to endure generations.
+            Five houses: leather bags stitched in Florence, silk wears cut in Como, shoes lasted in Marche, Swiss calibres from Geneva, and 18k jewelry — each restocked in small runs.
           </p>
         </div>
 
-        {/* 5-Category Bento Grid — fluid gaps + scroll-driven mobile hover */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* 5-Category Bento Grid — denser mobile: 2 cols, tighter gaps */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
           {liveCategories.map((cat: any, idx: number) => {
             const isFeatured = idx === 0 || idx === 3;
             const isMobileHovered = activeMobileCard === cat.id;
 
             return (
-              <ScrollReveal key={cat.id} delay={idx * 0.07} className="h-full">
                 <div
+                  key={cat.id}
                   ref={(el) => {
                     cardRefs.current[cat.id] = el;
                   }}
@@ -96,7 +92,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     const mapped = (slugToCat[cat.id] ?? cat.id) as ProductCategory;
                     onSelectCategory(mapped);
                   }}
-                  className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[180px] ${
+                  className={`group relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden cursor-pointer transition-all duration-150 active:scale-[0.97] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[140px] sm:min-h-[160px] lg:min-h-[180px] ${
                     isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
                   } ${
                     isMobileHovered
@@ -137,8 +133,8 @@ src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel =
                     </div>
                   </div>
 
-                  {/* Card Info Bottom */}
-                  <div className="absolute inset-x-6 bottom-6 z-10">
+                  {/* Card Info Bottom — denser mobile padding */}
+                  <div className="absolute inset-x-3 sm:inset-x-6 bottom-3 sm:bottom-6 z-10">
                     <div className="flex items-center gap-1.5 mb-1">
                       {isMobileHovered && (
                         <span className="relative flex h-1.5 w-1.5 shrink-0 sm:hidden">
@@ -152,7 +148,7 @@ src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel =
                     </div>
 
                     <h3
-                      className={`font-serif text-2xl font-medium transition-colors mb-1 ${
+                      className={`font-serif text-base sm:text-xl lg:text-2xl font-medium transition-colors mb-0.5 sm:mb-1 ${
                         isMobileHovered
                           ? 'text-[#F3E5AB] sm:text-white sm:group-hover:text-[#F3E5AB]'
                           : 'text-white group-hover:text-[#F3E5AB]'
@@ -171,7 +167,6 @@ src={(liveProducts.find((p: any) => p.category === cat.name || p.categoryLabel =
                     </p>
                   </div>
                 </div>
-              </ScrollReveal>
             );
           })}
         </div>

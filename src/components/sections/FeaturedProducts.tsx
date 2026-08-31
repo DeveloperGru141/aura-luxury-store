@@ -3,8 +3,6 @@
 import React from 'react';
 import { ProductCategory } from '@/types/store';
 import ProductCard from '@/components/ui/ProductCard';
-import ScrollReveal from '@/components/ScrollReveal';
-import { Sparkles } from 'lucide-react';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 
 interface FeaturedProductsProps {
@@ -16,7 +14,7 @@ export default function FeaturedProducts({
   activeCategory,
   setActiveCategory,
 }: FeaturedProductsProps) {
-  const { products: liveProducts } = useLiveProducts();
+  const { products: liveProducts, loading } = useLiveProducts();
 
   // Exact order: Bags, Wears (Clothes), Shoes, Wristwatches, Jewelry
   const tabs: { id: ProductCategory; label: string }[] = [
@@ -36,17 +34,13 @@ export default function FeaturedProducts({
   return (
     <section id="catalogue" className="py-12 sm:py-16 lg:py-20 bg-[#0E1117] border-t border-b border-white/5 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title — fluid */}
+        {/* Section Title — concrete, no decorative eyebrow */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 px-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-            <span>Curated Showcase</span>
-          </div>
           <h2 className="font-serif text-[28px] sm:text-4xl lg:text-5xl font-light text-white mb-3 sm:mb-4 leading-tight">
-            The <span className="italic font-normal gold-gradient-text">Catalogue</span>
+            The <span className="italic font-normal gold-gradient-text">catalogue</span>
           </h2>
           <p className="text-[13px] sm:text-sm text-gray-400 font-light leading-relaxed">
-            Explore our curated inventory of leather bags, fine wears, shoes, luxury chronographs, and certified jewelry.
+            Filter by house — every piece lists its atelier, material and price in naira, with live stock from Supabase.
           </p>
         </div>
 
@@ -84,17 +78,28 @@ export default function FeaturedProducts({
           </div>
         </div>
 
-        {/* Product Grid — fluid gaps */}
-        {filteredProducts.length === 0 ? (
+        {/* Product Grid — denser mobile: 2 cols, tighter gaps, 3:4 cards */}
+        {loading ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-white/5 bg-[#13161C]">
+                <div className="aspect-[3/4] w-full skeleton-shimmer" />
+                <div className="p-2.5 sm:p-3 space-y-2">
+                  <div className="h-3 w-2/3 rounded skeleton-shimmer" />
+                  <div className="h-3 w-1/2 rounded skeleton-shimmer" />
+                  <div className="h-8 w-full rounded-lg skeleton-shimmer" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredProducts.length === 0 ? (
           <div className="py-12 sm:py-20 text-center text-gray-400">
             <p className="text-sm font-medium">No items found matching the selected filter.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {filteredProducts.map((product, index) => (
-              <ScrollReveal key={product.id} delay={(index % 4) * 0.05} className="h-full">
-                <ProductCard product={product} />
-              </ScrollReveal>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}

@@ -26,10 +26,10 @@ export default function SearchModal() {
   if (!isSearchOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[max(1rem,env(safe-area-inset-top))] sm:pt-20 px-3 sm:px-4 bg-black/85 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-20 px-0 sm:px-4 pb-0 sm:pb-4 bg-black/85 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
-      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-none bg-[#12151B] border border-[#D4AF37]/30 rounded-2xl shadow-2xl p-4 sm:p-6 text-white overflow-hidden flex flex-col animate-scale-in">
+      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#D4AF37]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
         {/* Search Header — fluid */}
         <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-white/10">
           <Search className="w-5 h-5 text-[#D4AF37] shrink-0" />

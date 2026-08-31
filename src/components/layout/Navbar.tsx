@@ -15,14 +15,25 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const lastScrollY = React.useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentY = window.scrollY;
+      setIsScrolled(currentY > 20);
+      // Hide on scroll-down, reveal on scroll-up — only on small viewports, respect reduced-motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setIsHidden(false);
+      } else if (!isMobileMenuOpen) {
+        if (currentY > 120 && currentY > lastScrollY.current) setIsHidden(true);
+        else if (currentY < lastScrollY.current) setIsHidden(false);
+      }
+      lastScrollY.current = currentY;
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobileMenuOpen]);
 
   // Exact navigation routes mapped to sections & categories
   const navLinks: { label: string; href: string; category?: ProductCategory }[] = [
@@ -63,11 +74,9 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#0D0F14]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-3.5'
-          : 'bg-[#0D0F14]/70 backdrop-blur-md border-b border-white/5 py-4'
-      }`}
+      className={`sticky top-0 z-40 transition-[transform,background-color,border-color,padding] duration-300 will-change-transform ${
+        isHidden ? '-translate-y-full' : 'translate-y-0'
+      } ${isScrolled ? 'bg-[#0D0F14]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-3.5' : 'bg-[#0D0F14]/70 backdrop-blur-md border-b border-white/5 py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Left: Mobile Menu Toggle & Brand Logo */}
@@ -91,11 +100,11 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             className="flex flex-col group cursor-pointer"
           >
             <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.28em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
-              <span>TIMELESS</span>
+              <span>OMO ESHO SIGNATURES</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
             </span>
-            <span className="text-[8px] uppercase tracking-[0.4em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
-              Fine Goods &bull; Timepieces
+            <span className="text-[8px] tracking-[0.2em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
+              Lagos — worldwide insured courier
             </span>
           </a>
         </div>

@@ -16,7 +16,7 @@ interface ScrollRevealProps {
 }
 
 /**
- * TIMELESS ScrollReveal — ultra-premium, performant, once-only reveal
+ * OMO ESHO SIGNATURES ScrollReveal — ultra-premium, performant, once-only reveal
  * - IntersectionObserver (no scroll listeners) → 60fps on mobile GPUs
  * - Animates ONCE: observer.unobserve() on intersect → no reverse on scroll up
  * - Minimal lift: translate-y-6 (24px) + opacity-0 → opacity-100

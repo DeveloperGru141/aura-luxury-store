@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem, WishlistItem, PromoCode } from '@/types/store';
 
 const PROMO_CODES: PromoCode[] = [
-  { code: 'TIMELESS15', discountPercent: 15, description: '15% Off Your Entire Order' },
+  { code: 'OMOESHO15', discountPercent: 15, description: '15% Off Your Entire Order' },
   { code: 'WELCOME10', discountPercent: 10, description: '10% Off For First-Time Shoppers' },
   { code: 'VIP20', discountPercent: 20, description: '20% Off Orders Above ₦500,000', minSpend: 500000 },
 ];
@@ -94,10 +94,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem('timeless_cart');
+      const savedCart = localStorage.getItem('omo_esho_signatures_cart');
       if (savedCart) setCart(JSON.parse(savedCart));
 
-      const savedWishlist = localStorage.getItem('timeless_wishlist');
+      const savedWishlist = localStorage.getItem('omo_esho_signatures_wishlist');
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
     } catch {
       // Ignore parse errors
@@ -107,7 +107,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Save to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('timeless_cart', JSON.stringify(cart));
+      localStorage.setItem('omo_esho_signatures_cart', JSON.stringify(cart));
     } catch {
       // Ignore storage errors
     }
@@ -115,7 +115,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('timeless_wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('omo_esho_signatures_wishlist', JSON.stringify(wishlist));
     } catch {
       // Ignore storage errors
     }
@@ -124,7 +124,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Check for admin login from localStorage
   useEffect(() => {
     try {
-      const savedAdmin = localStorage.getItem('timeless_admin_logged_in');
+      const savedAdmin = localStorage.getItem('omo_esho_signatures_admin_logged_in');
       if (savedAdmin === 'true') setIsAdminLoggedIn(true);
     } catch {
       // Ignore storage errors
@@ -134,7 +134,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Save admin login state
   useEffect(() => {
     try {
-      localStorage.setItem('timeless_admin_logged_in', isAdminLoggedIn.toString());
+      localStorage.setItem('omo_esho_signatures_admin_logged_in', isAdminLoggedIn.toString());
     } catch {
       // Ignore storage errors
     }
@@ -232,7 +232,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const found = PROMO_CODES.find((p) => p.code === trimmed);
 
     if (!found) {
-      return { success: false, message: 'Invalid promo code. Try "TIMELESS15" or "WELCOME10"' };
+      return { success: false, message: 'Invalid promo code. Try "OMOESHO15" or "WELCOME10"' };
     }
 
     if (found.minSpend && subtotal < found.minSpend) {

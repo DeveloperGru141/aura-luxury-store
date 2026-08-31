@@ -59,13 +59,13 @@ export default function InstagramGallery() {
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10 lg:mb-12 px-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-gray-300 text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
             <InstagramIcon className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-            <span>@TimelessLuxury</span>
+            <span>@OMO ESHO SIGNATURESLuxury</span>
           </div>
           <h2 className="font-serif text-[24px] sm:text-3xl lg:text-4xl font-light text-white mb-2 leading-tight">
             The Living <span className="italic font-normal gold-gradient-text">Lookbook</span>
           </h2>
           <p className="text-[13px] sm:text-xs text-gray-400 font-light leading-relaxed">
-            Tag #TimelessLuxury on Instagram for an opportunity to be featured in our seasonal global lookbook.
+            Tag #OMO ESHO SIGNATURESLuxury on Instagram for an opportunity to be featured in our seasonal global lookbook.
           </p>
         </div>
 

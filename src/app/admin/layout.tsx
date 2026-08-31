@@ -11,7 +11,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <header className="sticky top-0 z-30 border-b border-gray-200 bg-white">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
           <Link href="/admin" className="text-sm font-semibold tracking-tight text-gray-900">
-            Admin<span className="font-normal text-gray-500"> — Timeless</span>
+            Admin<span className="font-normal text-gray-500"> — OMO ESHO SIGNATURES</span>
           </Link>
           <nav className="flex items-center gap-1 text-sm">
             <Link href="/admin/categories" className="rounded-lg px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">

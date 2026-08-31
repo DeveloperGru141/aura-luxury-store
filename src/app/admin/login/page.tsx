@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
       <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
         <h1 className="text-xl font-semibold tracking-tight text-gray-900">Sign in</h1>
-        <p className="mt-1 text-sm text-gray-500">Admin access — Timeless</p>
+        <p className="mt-1 text-sm text-gray-500">Admin access — OMO ESHO SIGNATURES</p>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-4" noValidate>
           <div>

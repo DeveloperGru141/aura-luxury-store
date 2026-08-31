@@ -24,7 +24,7 @@ const serif = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "TIMELESS | Designer Bags, Wears, Shoes, Wristwatches & Fine Jewelry",
+  title: "OMO ESHO SIGNATURES | Designer Bags, Wears, Shoes, Wristwatches & Fine Jewelry",
   description:
     "Discover handcrafted Italian leather bags, bespoke wears, luxury shoes, Swiss automatic wristwatches, and certified 18k fine jewelry.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "Italian leather",
   ],
   openGraph: {
-    title: "TIMELESS | Designer Bags, Wears, Wristwatches & Fine Jewelry",
+    title: "OMO ESHO SIGNATURES | Designer Bags, Wears, Wristwatches & Fine Jewelry",
     description:
       "Handcrafted Italian leather bags, bespoke wears, Swiss automatic wristwatches, and 18k fine jewelry.",
     type: "website",

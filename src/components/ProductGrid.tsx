@@ -12,7 +12,7 @@ interface ProductGridProps {
 }
 
 /**
- * TIMELESS ProductGrid — 2-col mobile / 4-col desktop, staggered ScrollReveal
+ * OMO ESHO SIGNATURES ProductGrid — 2-col mobile / 4-col desktop, staggered ScrollReveal
  * Layout: mobile-first fluid gaps, luxury spacing, snap wave entry
  *
  * Stagger math: (index % 4) * 0.05 → 0s, 0.05s, 0.10s, 0.15s per row

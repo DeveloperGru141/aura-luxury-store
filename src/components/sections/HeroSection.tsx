@@ -78,21 +78,18 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
           <div className="lg:col-span-4 flex flex-col items-start text-left w-full min-w-0">
-            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/35 text-[#F3E5AB] text-[11px] sm:text-xs font-medium mb-4 sm:mb-5 backdrop-blur-md max-w-full animate-float-slow shadow-lg shadow-[#D4AF37]/5">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-              <span className="tracking-wide truncate">Bags &bull; Wears &bull; Wristwatches</span>
-            </div>
+            <p className="text-xs font-medium tracking-wide text-[#D4AF37] mb-3 sm:mb-4 reveal-subhead">Bags, wears and wristwatches — made in small runs</p>
 
-            <h1 className="font-serif text-[clamp(28px,7vw,36px)] sm:text-5xl lg:text-[42px] xl:text-5xl font-light text-white tracking-tight leading-[1.12] sm:leading-[1.14] mb-3 sm:mb-4 w-full">
-              Elegance That Is <br />
-              <span className="italic font-normal gold-gradient-text">Truly Timeless</span>.
+            <h1 className="font-serif text-[clamp(28px,7vw,36px)] sm:text-5xl lg:text-[42px] xl:text-5xl font-light text-white tracking-tight leading-[1.12] sm:leading-[1.14] mb-3 sm:mb-4 w-full reveal-headline">
+              Leather stitched in Florence, <br />
+              <span className="italic font-normal gold-gradient-text">silk cut in Como.</span>
             </h1>
 
-            <p className="text-[13px] sm:text-sm text-gray-300 max-w-[32ch] sm:max-w-sm font-light leading-relaxed mb-5 sm:mb-6">
-              Explore an extraordinary curation of hand-stitched Italian leather bags, bespoke wears, sculpted footwear, Swiss automatic wristwatches, and fine jewelry.
+            <p className="text-[13px] sm:text-sm text-gray-300 max-w-[32ch] sm:max-w-sm font-light leading-relaxed mb-5 sm:mb-6 reveal-subhead">
+              Omo Esho Signatures sources five houses — Italian calfskin bags, 22-momme silk wears, Blake-stitched shoes, Swiss automatic calibres and 18k gold — all priced in naira and shipped insured from Lagos.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8 reveal-cta">
               <a
                 href="#categories"
                 className="relative overflow-hidden py-3.5 sm:py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 active:brightness-95 active:scale-[0.98] transition-all shadow-xl shadow-[#D4AF37]/15 min-h-[44px] touch-manipulation group/cta"
@@ -146,9 +143,9 @@ export default function HeroSection() {
                   return (
                     <div
                       key={slide.id}
-                      className={`absolute inset-0 transition-[opacity,transform] duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 pointer-events-none scale-105'}`}
+                      className={`absolute inset-0 transition-[opacity] duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
                     >
-                      <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className="object-cover object-center" />
+                      <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-cover object-center ${isActive ? 'animate-hero-drift' : ''}`} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/30" />
                     </div>
                   );

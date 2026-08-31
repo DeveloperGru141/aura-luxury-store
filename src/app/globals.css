@@ -73,6 +73,17 @@
   }
 }
 
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -136,6 +147,27 @@
   }
 }
 
+@keyframes heroDrift {
+  0% { transform: scale(1) translate3d(0, 0, 0); }
+  50% { transform: scale(1.05) translate3d(0, 0, 0); }
+  100% { transform: scale(1) translate3d(0, 0, 0); }
+}
+
+@keyframes staggeredReveal {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes skeletonShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes badgeFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @keyframes mobileKenBurns {
   0% {
     transform: scale(1) translate3d(0, 0, 0);
@@ -176,6 +208,10 @@
   animation: slideIn 350ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.animate-slide-up {
+  animation: slideUp 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .animate-slide-down {
   animation: slideDown 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -190,6 +226,34 @@
 
 .animate-gold-pulse {
   animation: goldGlowPulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-hero-drift {
+    animation: heroDrift 9s ease-in-out infinite;
+    will-change: transform;
+  }
+  .reveal-headline { animation: staggeredReveal 500ms cubic-bezier(0.16,1,0.3,1) both; }
+  .reveal-subhead { animation: staggeredReveal 500ms cubic-bezier(0.16,1,0.3,1) 120ms both; }
+  .reveal-cta { animation: staggeredReveal 500ms cubic-bezier(0.16,1,0.3,1) 240ms both; }
+  .badge-fade { animation: badgeFadeIn 250ms ease-out both; }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #1A1E26;
+}
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer::after { animation: none; }
 }
 
 .animate-marquee {
@@ -304,7 +368,7 @@ html, body {
   }
 }
 
-/* TIMELESS ScrollReveal — luxury motion, but fully accessible */
+/* OMO ESHO SIGNATURES ScrollReveal — luxury motion, but fully accessible */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

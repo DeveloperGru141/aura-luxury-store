@@ -73,10 +73,9 @@ export default function ShopTheLook() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
             <div className="min-w-0">
-              <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3"><Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /><span>Living Showcase</span></div>
-              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">Curated <span className="italic font-normal gold-gradient-text">Lookbook</span></h2>
+              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">Curated <span className="italic font-normal gold-gradient-text">lookbook</span></h2>
             </div>
-            <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">A seamless transition of master Swiss timepieces, bespoke wears, luxury shoes, and handcrafted Italian leather bags.</p>
+            <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">Styled sets from the current inventory — each item links directly to its product detail and WhatsApp order.</p>
           </div>
           <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#14171E] p-10 sm:p-14 text-center">
             <div className="mx-auto w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-4"><Sparkles className="w-7 h-7 text-[#D4AF37]" /></div>
@@ -95,12 +94,9 @@ export default function ShopTheLook() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
           <div className="min-w-0">
-            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1 rounded-full bg-[#D4AF37]/10 text-[#F3E5AB] text-[11px] sm:text-xs font-semibold uppercase tracking-widest mb-2 sm:mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /><span>Living Showcase</span>
-            </div>
-            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">Curated <span className="italic font-normal gold-gradient-text">Lookbook</span></h2>
+            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">Curated <span className="italic font-normal gold-gradient-text">lookbook</span></h2>
           </div>
-          <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">A seamless transition of master Swiss timepieces, bespoke wears, luxury shoes, and handcrafted Italian leather bags.</p>
+          <p className="text-[13px] sm:text-sm text-gray-400 max-w-md font-light leading-relaxed">Styled sets from the current inventory — each item links directly to its product detail and WhatsApp order.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">

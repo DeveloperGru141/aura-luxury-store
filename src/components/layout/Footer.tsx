@@ -15,16 +15,16 @@ export default function Footer() {
           <div className="md:col-span-8 space-y-4">
             <div className="flex flex-col">
               <span className="font-serif text-2xl font-bold tracking-[0.28em] text-white flex items-center gap-1.5">
-                <span>TIMELESS</span>
+                <span>OMO ESHO SIGNATURES</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
               </span>
-              <span className="text-[9px] uppercase tracking-[0.38em] text-gray-400 font-sans -mt-1">
-                Fine Goods &bull; Wristwatches &bull; Jewelry
+              <span className="text-[9px] tracking-[0.3em] text-gray-400 font-sans -mt-1">
+                Lagos — worldwide insured courier
               </span>
             </div>
 
             <p className="text-gray-400 text-xs font-light max-w-md leading-relaxed">
-              Curating the finest handcrafted leather bags, bespoke wears, high-precision Swiss wristwatches, and certified fine jewelry for discerning patrons.
+              Five houses from Florence, Como, Marche and Geneva — leather bags, silk wears, stitched shoes, automatic calibres and 18k gold, priced in naira.
             </p>
           </div>
 
@@ -48,7 +48,7 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-gray-400 text-center sm:text-left">
-            <span>&copy; {new Date().getFullYear()} TIMELESS Luxury Collective. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} Omo Esho Signatures. All rights reserved.</span>
             <span className="hidden sm:inline">&bull;</span>
             <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
             <span>&bull;</span>

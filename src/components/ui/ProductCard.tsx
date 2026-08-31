@@ -15,6 +15,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { formatPrice, toggleWishlist, isInWishlist, setQuickViewProduct } = useStore();
   const [isHovered, setIsHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState((product as any).colors?.[0]?.name || '');
+  const [isOpeningWhatsApp, setIsOpeningWhatsApp] = useState(false);
 
   const isWishlisted = isInWishlist(product.id);
   // Supabase product shape has stock_status and images[]; mock has primaryImage/secondaryImage and inStock
@@ -43,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-all duration-500 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
+      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-[transform,border-color,box-shadow] duration-150 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.97] hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={(event) => {
@@ -79,9 +80,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
         )}
 
-        {/* Out-of-stock badge — never hide product, per spec */}
+        {/* Out-of-stock badge — fade in, transform+opacity only */}
         {isOutOfStock && (
-          <div className="absolute top-3 left-3 z-10 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border backdrop-blur-md bg-amber-950/80 border-amber-500/40 text-amber-300">
+          <div className="absolute top-3 left-3 z-10 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border backdrop-blur-md bg-amber-950/80 border-amber-500/40 text-amber-300 badge-fade">
             Out of Stock
           </div>
         )}
@@ -113,23 +114,27 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span>View</span>
           </button>
 
-          {/* WhatsApp Direct Order CTA — Exact UI Design Preserved */}
+          {/* WhatsApp CTA — brief transitional state on tap, transform+opacity only */}
           <a
             href={whatsappOrderUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:brightness-95 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpeningWhatsApp(true);
+              setTimeout(() => setIsOpeningWhatsApp(false), 1400);
+            }}
+            className="relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-[transform,filter] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:scale-[0.97] active:brightness-95 cursor-pointer"
           >
             <span className="shimmer-sheen" />
-            <MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10" />
-            <span className="relative z-10">Order</span>
+            <MessageCircle className={`w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10 transition-transform duration-150 ${isOpeningWhatsApp ? 'animate-pulse' : ''}`} />
+            <span className="relative z-10">{isOpeningWhatsApp ? 'Opening…' : 'Order'}</span>
           </a>
         </div>
       </div>
 
-      {/* Product Information — fluid */}
-      <div className="flex flex-col p-3 sm:p-4 flex-1 justify-between gap-1">
+      {/* Product Information — denser mobile */}
+      <div className="flex flex-col p-2.5 sm:p-3 lg:p-4 flex-1 justify-between gap-1">
         <div>
           {/* Category & Star Rating — supports both mock and Supabase shapes */}
           <div className="flex items-center justify-between text-xs text-gray-400 mb-1 sm:mb-1.5 gap-2">
@@ -143,16 +148,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           </div>
 
-          {/* Product Name — fluid */}
+          {/* Product Name — denser mobile */}
           <h3
             onClick={handleQuickView}
-            className="font-serif text-[13px] sm:text-base font-medium text-gray-100 hover:text-[#D4AF37] active:text-[#D4AF37] transition-colors cursor-pointer line-clamp-1 mb-0.5 sm:mb-1 leading-tight"
+            className="font-serif text-xs sm:text-sm lg:text-base font-medium text-gray-100 hover:text-[#D4AF37] active:text-[#D4AF37] transition-colors cursor-pointer line-clamp-1 mb-0.5 leading-tight"
           >
             {product.name}
           </h3>
 
-          {/* Tagline — fluid, fallback to description for Supabase shape */}
-          <p className="text-[11px] sm:text-xs text-gray-400 line-clamp-1 mb-2 sm:mb-3 leading-tight">
+          {/* Tagline — denser mobile */}
+          <p className="text-[10px] sm:text-xs text-gray-400 line-clamp-1 mb-1.5 sm:mb-2 leading-tight">
             {(product as any).tagline ?? (anyProduct.description ? String(anyProduct.description).slice(0, 60) : '')}
           </p>
         </div>
@@ -178,9 +183,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             ))}
           </div>
 
-          {/* Price — Pure luxury pricing without discount badges */}
+          {/* Price — denser mobile */}
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
-            <span className="text-[13px] sm:text-sm font-semibold text-[#F3E5AB] tracking-tight truncate">
+            <span className="text-xs sm:text-sm font-semibold text-[#F3E5AB] tracking-tight truncate">
               {formatPrice(Number(product.price))}
             </span>
           </div>
