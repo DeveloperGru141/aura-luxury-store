@@ -66,7 +66,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
         </div>
 
         {/* 5-Category Bento Grid — denser mobile: 2 cols, tighter gaps */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
           {liveCategories.map((cat: any, idx: number) => {
             const isFeatured = idx === 0 || idx === 3;
             const isMobileHovered = activeMobileCard === cat.id;
@@ -92,7 +92,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     const mapped = (slugToCat[cat.id] ?? cat.id) as ProductCategory;
                     onSelectCategory(mapped);
                   }}
-                  className={`group relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden cursor-pointer transition-all duration-150 active:scale-[0.97] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[140px] sm:min-h-[160px] lg:min-h-[180px] ${
+                  className={`group relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden cursor-pointer transition-all duration-150 active:scale-[0.97] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[120px] sm:min-h-[140px] lg:min-h-[160px] ${
                     isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
                   } ${
                     isMobileHovered

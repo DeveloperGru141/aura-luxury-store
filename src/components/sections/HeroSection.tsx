@@ -78,15 +78,15 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
           <div className="lg:col-span-4 flex flex-col items-start text-left w-full min-w-0">
-            <p className="text-xs font-medium tracking-wide text-[#D4AF37] mb-3 sm:mb-4 reveal-subhead">Bags, wears and wristwatches — made in small runs</p>
+            <p className="text-xs font-medium tracking-wide text-[#D4AF37] mb-3 sm:mb-4 reveal-subhead">Leather, silk & leather goods — handcrafted in Ilorin; wristwatches Swiss-made</p>
 
             <h1 className="font-serif text-[clamp(28px,7vw,36px)] sm:text-5xl lg:text-[42px] xl:text-5xl font-light text-white tracking-tight leading-[1.12] sm:leading-[1.14] mb-3 sm:mb-4 w-full reveal-headline">
-              Leather stitched in Ilorin, <br />
-              <span className="italic font-normal gold-gradient-text">silk cut in Ilorin.</span>
+              Leather & silk <span className="italic font-normal gold-gradient-text">crafted in Ilorin.</span><br />
+              <span className="text-base font-normal text-gray-400">Timepieces Swiss-made.</span>
             </h1>
 
             <p className="text-[13px] sm:text-sm text-gray-300 max-w-[32ch] sm:max-w-sm font-light leading-relaxed mb-5 sm:mb-6 reveal-subhead">
-              Omo Esho Signatures sources five houses — Ilorin calfskin bags, 22-momme silk wears, Blake-stitched shoes, Ilorin automatic calibres and 18k gold — all priced in naira and shipped insured from Ilorin.
+              Handcrafted leather bags, fine silks & leather goods made in our Ilorin atelier. Wristwatches sourced from Swiss manufacture — all curated, inspected & dispatched from Ilorin with insured delivery.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8 reveal-cta">

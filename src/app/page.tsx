@@ -11,7 +11,6 @@ import HeroSection from '@/components/sections/HeroSection';
 import CategoryGrid from '@/components/sections/CategoryGrid';
 import FeaturedProducts from '@/components/sections/FeaturedProducts';
 import ShopTheLook from '@/components/sections/ShopTheLook';
-import CustomerReviews from '@/components/sections/CustomerReviews';
 import QuickViewModal from '@/components/ui/QuickViewModal';
 import ToastNotification from '@/components/ui/ToastNotification';
 
@@ -43,7 +42,6 @@ export default function Home() {
       />
       {/* Curated Living Lookbook Section */}
       <ShopTheLook />
-      <CustomerReviews />
 
       {/* Footer */}
       <Footer />

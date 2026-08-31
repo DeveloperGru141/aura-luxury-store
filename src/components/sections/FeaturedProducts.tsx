@@ -80,24 +80,26 @@ export default function FeaturedProducts({
 
         {/* Product Grid — denser mobile: 2 cols, tighter gaps, 3:4 cards */}
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-white/5 bg-[#13161C]">
                 <div className="aspect-[3/4] w-full skeleton-shimmer" />
-                <div className="p-2.5 sm:p-3 space-y-2">
+                <div className="p-2 sm:p-3 space-y-1.5">
                   <div className="h-3 w-2/3 rounded skeleton-shimmer" />
                   <div className="h-3 w-1/2 rounded skeleton-shimmer" />
-                  <div className="h-8 w-full rounded-lg skeleton-shimmer" />
+                  <div className="h-6 w-full rounded-lg skeleton-shimmer" />
                 </div>
               </div>
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-12 sm:py-20 text-center text-gray-400">
-            <p className="text-sm font-medium">No items found matching the selected filter.</p>
+          <div className="py-12 sm:py-16 text-center border border-[#E2DDD5] rounded-2xl bg-[#FAF8F5] px-6">
+            <p className="font-serif text-base font-light text-[#1A1918]">Next small-run drop releasing soon</p>
+            <p className="text-xs text-[#5C5852] mt-2 mb-4">This category is in production at the Ilorin atelier. Message for lot photos and early access.</p>
+            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium hover:bg-[#1A1918] transition-colors">Chat with Concierge to Reserve</a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
