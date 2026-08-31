@@ -13,11 +13,11 @@ export default function AnnouncementBar() {
   const conciergeUrl = getWhatsAppConciergeUrl();
 
   return (
-    <aside aria-label="Luxury Concierge" className="bg-[#FDFBF7] border-b border-[#E8DDD0] text-[#5A5248] text-xs py-2.5 px-4 relative z-50">
+    <aside aria-label="Luxury Concierge" className="bg-[#FAF8F5] border-b border-[#E2DDD5] text-[#5A5248] text-xs py-2.5 px-4 relative z-50">
       <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-2 sm:gap-4">
         {/* Left: Human concierge — Ilorin atelier */}
         <div className="flex items-center gap-2 min-w-0">
-          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E8DDD0] px-2.5 py-1">
+          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E2DDD5] px-2.5 py-1">
             <MessageCircle className="w-3 h-3 text-[#9A7B2C] shrink-0" />
             <span className="font-medium text-[#121212]">Chat directly with our Ilorin atelier concierge</span>
             <span className="text-[#9A7B2C]">— typical response under 15 mins</span>
@@ -38,7 +38,7 @@ export default function AnnouncementBar() {
         {/* Right: Currency + local trust — Ilorin · Lagos · Abuja · PH */}
         <div className="hidden sm:flex items-center gap-2 text-[11px] text-[#8A7F72] shrink-0">
           <span>Ilorin · Lagos · Abuja · Port Harcourt — insured courier</span>
-          <span className="h-3 w-px bg-[#E8DDD0] mx-1" />
+          <span className="h-3 w-px bg-[#E2DDD5] mx-1" />
         </div>
         <div className="flex items-center gap-4 text-[#5A5248] relative shrink-0">
           <div className="relative">
@@ -62,7 +62,7 @@ export default function AnnouncementBar() {
                       setIsCurrencyOpen(false);
                     }}
                     className={`w-full text-left px-3 py-2 hover:bg-white/10 transition-colors text-xs cursor-pointer flex items-center justify-between ${
-                      currency === curr ? 'text-[#D4AF37] font-semibold bg-[#D4AF37]/10' : 'text-gray-300'
+                      currency === curr ? 'text-[#8C7A5B] font-semibold bg-[#8C7A5B]/10' : 'text-gray-300'
                     }`}
                   >
                     <span>{curr}</span>

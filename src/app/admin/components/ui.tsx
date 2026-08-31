@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Design system: neutral base (slate/gray), indigo accent (distinct from storefront gold #D4AF37),
+// Design system: neutral base (slate/gray), indigo accent (distinct from storefront gold #8C7A5B),
 // semantic green for in-stock, muted gray for out-of-stock, red only for destructive.
 
 export function AdminButton({

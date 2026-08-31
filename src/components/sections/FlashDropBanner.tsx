@@ -43,9 +43,9 @@ export default function FlashDropBanner() {
   return (
     <section id="flash-drop" className="py-16 bg-[#0E1117] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden border border-[#D4AF37]/30 bg-gradient-to-r from-[#141720] via-[#1B1E28] to-[#141720] p-8 sm:p-12 shadow-2xl">
+        <div className="relative rounded-3xl overflow-hidden border border-[#8C7A5B]/30 bg-gradient-to-r from-[#141720] via-[#1B1E28] to-[#141720] p-8 sm:p-12 shadow-2xl">
           {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#8C7A5B]/10 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* Left Info & Timer */}
@@ -66,25 +66,25 @@ export default function FlashDropBanner() {
               {/* Countdown Digits */}
               <div className="flex items-center gap-3 sm:gap-4 mb-8">
                 <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-black/50 border border-white/10 text-white">
-                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#F3E5AB]">
+                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#EFECE6]">
                     {String(timeLeft.hours).padStart(2, '0')}
                   </span>
                   <span className="text-[9px] uppercase tracking-wider text-gray-400">Hours</span>
                 </div>
 
-                <span className="text-2xl font-serif text-[#D4AF37]">:</span>
+                <span className="text-2xl font-serif text-[#8C7A5B]">:</span>
 
                 <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-black/50 border border-white/10 text-white">
-                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#F3E5AB]">
+                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#EFECE6]">
                     {String(timeLeft.minutes).padStart(2, '0')}
                   </span>
                   <span className="text-[9px] uppercase tracking-wider text-gray-400">Mins</span>
                 </div>
 
-                <span className="text-2xl font-serif text-[#D4AF37]">:</span>
+                <span className="text-2xl font-serif text-[#8C7A5B]">:</span>
 
                 <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-black/50 border border-white/10 text-white">
-                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#F3E5AB]">
+                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#EFECE6]">
                     {String(timeLeft.seconds).padStart(2, '0')}
                   </span>
                   <span className="text-[9px] uppercase tracking-wider text-gray-400">Secs</span>
@@ -95,18 +95,18 @@ export default function FlashDropBanner() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                 <button
                   onClick={copyVipCode}
-                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-black/60 border border-[#D4AF37]/50 text-xs font-mono font-bold text-[#F3E5AB] hover:bg-black/90 transition-all cursor-pointer"
+                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-black/60 border border-[#8C7A5B]/50 text-xs font-mono font-bold text-[#EFECE6] hover:bg-black/90 transition-all cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#8C7A5B]" />
                     <span>USE CODE: VIP20</span>
                   </div>
-                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#D4AF37]" />}
+                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-[#8C7A5B]" />}
                 </button>
 
                 <a
                   href="#catalogue"
-                  className="py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-110 transition-all"
+                  className="py-3 px-6 rounded-xl bg-gradient-to-r from-[#8C7A5B] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-110 transition-all"
                 >
                   <span>Explore Vault Pieces</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -124,9 +124,9 @@ export default function FlashDropBanner() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 text-left">
-                <span className="text-[10px] uppercase font-bold text-[#D4AF37] block">Reserve Allocation</span>
+                <span className="text-[10px] uppercase font-bold text-[#8C7A5B] block">Reserve Allocation</span>
                 <p className="font-serif text-sm text-white font-medium">Astral Diamond Skeleton Dial</p>
-                <p className="text-xs font-semibold text-[#F3E5AB]">{formatPrice(1850000)} &bull; Swiss Certified</p>
+                <p className="text-xs font-semibold text-[#EFECE6]">{formatPrice(1850000)} &bull; Swiss Certified</p>
               </div>
             </div>
           </div>

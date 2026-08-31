@@ -7,13 +7,13 @@
 
 @layer base {
   :root {
-    --background: #0D0F12;
-    --foreground: #F5F5F7;
-    --card-bg: #14171D;
-    --border-subtle: #242933;
-    --gold: #D4AF37;
-    --gold-light: #F3E5AB;
-    --champagne: #C5A059;
+    --background: #FAF8F5;
+    --foreground: #1A1918;
+    --card-bg: #EFECE6;
+    --border-subtle: #E2DDD5;
+    --gold: #8C7A5B;
+    --gold-light: #EFECE6;
+    --champagne: #8C7A5B;
   }
 
   html {
@@ -41,19 +41,19 @@
     touch-action: manipulation;
   }
 
-  /* Custom luxury gold scrollbar */
+  /* Warm neutral scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0d0f12;
+    background: #FAF8F5;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2a2e39;
+    background: #8C7A5B;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #c5a059;
+    background: #7A756E;
   }
 }
 
@@ -324,13 +324,13 @@
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #FFF0D0 0%, #D4AF37 50%, #AA7C11 100%);
+  background: linear-gradient(135deg, #FFF0D0 0%, #8C7A5B 50%, #AA7C11 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-border {
-  border-image: linear-gradient(to right, #D4AF37, #F3E5AB, #9A7B2C) 1;
+  border-image: linear-gradient(to right, #8C7A5B, #EFECE6, #9A7B2C) 1;
 }
 
 /* Mobile fluidity utilities */
@@ -363,7 +363,7 @@ html, body {
 /* Improve focus visibility on mobile */
 @media (max-width: 640px) {
   :focus-visible {
-    outline: 2px solid #D4AF37;
+    outline: 2px solid #8C7A5B;
     outline-offset: 2px;
   }
 }

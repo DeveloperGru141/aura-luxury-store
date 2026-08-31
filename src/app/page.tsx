@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#D4AF37] selection:text-black overflow-x-hidden pb-[84px] md:pb-0">
+    <main className="min-h-screen bg-[#121212] text-white selection:bg-[#8C7A5B] selection:text-black overflow-x-hidden pb-[84px] md:pb-0">
       {/* Top Announcement Bar */}
       <AnnouncementBar />
 

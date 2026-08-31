@@ -60,7 +60,7 @@ export default function FeaturedProducts({
                   onClick={() => setActiveCategory(tab.id)}
                   className={`snap-start px-3.5 sm:px-4 py-2.5 min-h-[44px] rounded-xl text-[11px] sm:text-xs font-medium uppercase tracking-wider transition-[transform,background-color] duration-150 whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-bold shadow-lg shadow-[#D4AF37]/10'
+                      ? 'bg-gradient-to-r from-[#8C7A5B] to-[#B38F24] text-black font-bold shadow-lg shadow-[#8C7A5B]/10'
                       : 'bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 active:bg-white/15'
                   }`}
                 >
@@ -82,8 +82,8 @@ export default function FeaturedProducts({
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-3 sm:gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className={`rounded-xl sm:rounded-2xl overflow-hidden border border-[#E8DDD0] bg-white ${i===0 ? 'lg:col-span-7 lg:row-span-2' : i===1 ? 'lg:col-span-5' : 'lg:col-span-4'}`}>
-                <div className="aspect-[3/4] w-full skeleton-shimmer bg-[#FDFBF7]" />
+              <div key={i} className={`rounded-xl sm:rounded-2xl overflow-hidden border border-[#E2DDD5] bg-white ${i===0 ? 'lg:col-span-7 lg:row-span-2' : i===1 ? 'lg:col-span-5' : 'lg:col-span-4'}`}>
+                <div className="aspect-[3/4] w-full skeleton-shimmer bg-[#FAF8F5]" />
                 <div className="p-2.5 sm:p-3 space-y-2">
                   <div className="h-3 w-2/3 rounded skeleton-shimmer" />
                   <div className="h-3 w-1/2 rounded skeleton-shimmer" />
@@ -93,10 +93,10 @@ export default function FeaturedProducts({
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-12 sm:py-16 text-center border border-[#E8DDD0] rounded-2xl bg-[#FDFBF7] px-6">
-            <p className="font-serif text-base font-light text-[#121212]">Next small-run drop releasing soon</p>
-            <p className="text-xs text-[#5A5248] mt-2 mb-4">This category is in production in Florence/Como. Join the waitlist and our Ilorin concierge will message you lot photos first.</p>
-            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium">Join concierge waitlist</a>
+          <div className="py-12 sm:py-16 text-center border border-[#E2DDD5] rounded-2xl bg-[#FAF8F5] px-6">
+            <p className="font-serif text-base font-light text-[#1A1918]">Next Small-Run Drop Releasing Soon • Chat with Concierge to Reserve</p>
+            <p className="text-xs text-[#5C5852] mt-2 mb-4">This category is in production at the Ilorin atelier. Message for lot photos and early access.</p>
+            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium hover:bg-[#1A1918] transition-colors">Chat with Concierge to Reserve</a>
           </div>
         ) : (
           <>

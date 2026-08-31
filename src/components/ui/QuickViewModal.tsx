@@ -91,7 +91,7 @@ export default function QuickViewModal() {
                   onClick={() => setSelectedImageIndex(idx)}
                   className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl overflow-hidden border-2 transition-all shrink-0 touch-manipulation cursor-pointer ${
                     selectedImageIndex === idx
-                      ? 'border-[#D4AF37] scale-95 shadow-md'
+                      ? 'border-[#8C7A5B] scale-95 shadow-md'
                       : 'border-white/10 opacity-70 hover:opacity-100'
                   }`}
                 >
@@ -107,7 +107,7 @@ export default function QuickViewModal() {
           <div>
             {/* Category & Rating */}
             <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-              <span className="uppercase tracking-widest text-[10px] font-bold text-[#D4AF37]">
+              <span className="uppercase tracking-widest text-[10px] font-bold text-[#8C7A5B]">
                 {quickViewProduct.categoryLabel}
               </span>
               <div className="flex items-center gap-1.5 text-amber-400">
@@ -129,7 +129,7 @@ export default function QuickViewModal() {
 
             {/* Price (Clean without discount strikethrough) */}
             <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-2xl font-bold text-[#F3E5AB]">
+              <span className="text-2xl font-bold text-[#EFECE6]">
                 {formatPrice(quickViewProduct.price)}
               </span>
             </div>
@@ -152,7 +152,7 @@ export default function QuickViewModal() {
                       onClick={() => setSelectedColor(c.name)}
                       className={`group flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs transition-all touch-manipulation cursor-pointer ${
                         activeColor === c.name
-                          ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-white'
+                          ? 'border-[#8C7A5B] bg-[#8C7A5B]/10 text-white'
                           : 'border-white/10 text-gray-400 hover:border-white/30'
                       }`}
                     >
@@ -172,7 +172,7 @@ export default function QuickViewModal() {
               <div className="mb-6">
                 <div className="flex justify-between text-xs font-medium text-gray-300 mb-2">
                   <span>Select Size</span>
-                  <span className="text-[#D4AF37] cursor-pointer hover:underline text-[11px]">Size Guide</span>
+                  <span className="text-[#8C7A5B] cursor-pointer hover:underline text-[11px]">Size Guide</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {quickViewProduct.sizes.map((s) => (
@@ -181,7 +181,7 @@ export default function QuickViewModal() {
                       onClick={() => setSelectedSize(s)}
                       className={`px-3.5 py-1.5 rounded-lg border text-xs font-medium transition-all touch-manipulation cursor-pointer ${
                         activeSize === s
-                          ? 'border-[#D4AF37] bg-[#D4AF37] text-black font-semibold'
+                          ? 'border-[#8C7A5B] bg-[#8C7A5B] text-black font-semibold'
                           : 'border-white/10 text-gray-300 hover:border-white/30'
                       }`}
                     >
@@ -229,7 +229,7 @@ export default function QuickViewModal() {
                   href={whatsappOrderUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative overflow-hidden flex-1 py-3.5 sm:py-3 px-4 sm:px-6 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg min-h-[44px] touch-manipulation bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black hover:brightness-110 active:brightness-95 active:scale-[0.98] shadow-[#D4AF37]/10 cursor-pointer"
+                  className="relative overflow-hidden flex-1 py-3.5 sm:py-3 px-4 sm:px-6 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg min-h-[44px] touch-manipulation bg-gradient-to-r from-[#8C7A5B] via-[#E2C366] to-[#B38F24] text-black hover:brightness-110 active:brightness-95 active:scale-[0.98] shadow-[#8C7A5B]/10 cursor-pointer"
                 >
                   <span className="shimmer-sheen" />
                   <MessageCircle className="w-4 h-4 shrink-0 relative z-10" />
@@ -254,13 +254,13 @@ export default function QuickViewModal() {
             {/* Value Highlights */}
             <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-400 pt-3 border-t border-white/5">
               <span className="flex items-center gap-1">
-                <Truck className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /> Free Insured Delivery
+                <Truck className="w-3.5 h-3.5 text-[#8C7A5B] shrink-0" /> Free Insured Delivery
               </span>
               <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /> 100% Certified Authentic
+                <ShieldCheck className="w-3.5 h-3.5 text-[#8C7A5B] shrink-0" /> 100% Certified Authentic
               </span>
               <span className="flex items-center gap-1">
-                <RotateCcw className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" /> Private Concierge Support
+                <RotateCcw className="w-3.5 h-3.5 text-[#8C7A5B] shrink-0" /> Private Concierge Support
               </span>
             </div>
           </div>

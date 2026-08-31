@@ -100,9 +100,9 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             }}
             className="flex flex-col group cursor-pointer"
           >
-            <span className="font-serif text-lg sm:text-xl lg:text-2xl font-bold tracking-[0.12em] text-white group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+            <span className="font-serif text-lg sm:text-xl lg:text-2xl font-bold tracking-[0.12em] text-white group-hover:text-[#8C7A5B] transition-colors flex items-center gap-1.5">
               <span className="truncate">OMO ESHO SIGNATURES</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8C7A5B] shrink-0" />
             </span>
             <span className="text-[8px] tracking-[0.12em] text-gray-400 font-sans -mt-0.5 group-hover:text-gray-200 transition-colors">
               Ilorin — small runs, made to order
@@ -117,7 +117,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
               key={link.label}
               href={link.href}
               onClick={(e) => handleNavClick(e, link)}
-              className="text-[11px] xl:text-xs font-medium uppercase tracking-wider text-gray-300 hover:text-[#D4AF37] transition-colors relative py-2 touch-manipulation after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#D4AF37] hover:after:w-full after:transition-all after:duration-300"
+              className="text-[11px] xl:text-xs font-medium uppercase tracking-wider text-gray-300 hover:text-[#8C7A5B] transition-colors relative py-2 touch-manipulation after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-[#8C7A5B] hover:after:w-full after:transition-all after:duration-300"
             >
               {link.label}
             </a>
@@ -132,7 +132,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             className="min-h-[44px] min-w-[44px] p-2.5 sm:p-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 active:bg-white/10 transition-colors flex items-center justify-center gap-2 group border border-transparent hover:border-white/10 touch-manipulation cursor-pointer"
             aria-label="Search catalogue"
           >
-            <Search className="w-4.5 h-4.5 sm:w-4 sm:h-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
+            <Search className="w-4.5 h-4.5 sm:w-4 sm:h-4 text-gray-300 group-hover:text-[#8C7A5B] transition-colors" />
             <span className="hidden md:inline text-xs text-gray-400 group-hover:text-gray-200">Search</span>
           </button>
 
@@ -141,7 +141,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             href={conciergeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex flex-col items-start px-3.5 py-1.5 rounded-xl bg-[#FDFBF7] border border-[#E8DDD0] hover:border-[#C5A059]/40 text-[#121212] transition-all shadow-sm touch-manipulation"
+            className="hidden sm:inline-flex flex-col items-start px-3.5 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E2DDD5] hover:border-[#C5A059]/40 text-[#121212] transition-all shadow-sm touch-manipulation"
           >
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold"><MessageCircle className="w-3.5 h-3.5 text-[#9A7B2C]" /> Chat with Ilorin atelier</span>
             <span className="text-[10px] text-[#8A7F72]">typical response under 15 mins</span>
@@ -189,7 +189,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
                       className="min-h-[44px] flex items-center justify-between py-3.5 px-3 rounded-xl text-[15px] font-medium tracking-wide text-gray-200 hover:text-white hover:bg-white/5 active:bg-white/10 active:scale-[0.98] transition-all"
                     >
                       <span>{link.label}</span>
-                      <span className="text-[#D4AF37] text-xs">→</span>
+                      <span className="text-[#8C7A5B] text-xs">→</span>
                     </a>
                   ))}
                 </div>
@@ -205,9 +205,9 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
                   <span>Chat with Ilorin atelier — under 15 mins</span>
                 </a>
                 <div className="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-400">
-                  <a href="tel:+2347065076565" className="inline-flex items-center gap-1.5 min-h-[44px] hover:text-white"><Phone className="h-3.5 w-3.5 text-[#D4AF37]" /> +234 706 507 6565</a>
-                  <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#D4AF37]" /> Mon–Sat 9am–6pm WAT</span>
-                  <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#D4AF37]" /> Ilorin Atelier • Nationwide courier</span>
+                  <a href="tel:+2347065076565" className="inline-flex items-center gap-1.5 min-h-[44px] hover:text-white"><Phone className="h-3.5 w-3.5 text-[#8C7A5B]" /> +234 706 507 6565</a>
+                  <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#8C7A5B]" /> Mon–Sat 9am–6pm WAT</span>
+                  <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#8C7A5B]" /> Ilorin Atelier • Nationwide courier</span>
                 </div>
               </div>
             </motion.div>

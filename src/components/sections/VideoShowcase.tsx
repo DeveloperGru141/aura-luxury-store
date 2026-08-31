@@ -21,25 +21,25 @@ const DEFAULT_VIDEOS: VideoItem[] = [
     category: 'Leather Bags',
     videoUrl: '/craftsmanship.mp4',
     posterUrl: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
-    description: 'Florence atelier — 7 coats of wax, edge creasing and hand-painted finish on full-grain calfskin.',
+    description: 'Ilorin atelier — 7 coats of wax, edge creasing and hand-painted finish on full-grain calfskin.',
     linkedProductUrl: '#catalogue',
   },
   {
     id: 'craft-02',
     title: 'Calibre assembly',
-    category: 'Swiss Wristwatches',
+    category: 'Precision Timepieces',
     videoUrl: '/craftsmanship.mp4',
     posterUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
-    description: 'Geneva — automatic calibre, 28,800 vph, perlage and blued screws under sapphire.',
+    description: 'Ilorin atelier — automatic calibre, 28,800 vph, perlage and blued screws under sapphire.',
     linkedProductUrl: '#catalogue',
   },
   {
     id: 'craft-03',
     title: 'Silk bias cut',
-    category: 'Wears — Como',
+    category: 'Fine Silks',
     videoUrl: '/craftsmanship.mp4',
     posterUrl: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
-    description: 'Como silk — bias-cut drape, French seams and invisible hemming on 22-momme mulberry.',
+    description: 'Ilorin atelier — bias-cut drape, French seams and invisible hemming on 22-momme mulberry.',
     linkedProductUrl: '#catalogue',
   },
 ];
@@ -96,7 +96,7 @@ function VideoCard({
 
   return (
     <div
-      className={`group relative overflow-hidden bg-[#121212] border border-[#E8DDD0] touch-manipulation active:scale-[0.97] transition-transform duration-150 ${
+      className={`group relative overflow-hidden bg-[#121212] border border-[#E2DDD5] touch-manipulation active:scale-[0.97] transition-transform duration-150 ${
         featured ? 'rounded-2xl aspect-[4/5] sm:aspect-[16/10] lg:aspect-[4/3] lg:rounded-[28px]' : 'rounded-2xl aspect-[4/5] sm:aspect-[3/4]'
       }`}
       onClick={() => onExpand(item)}
@@ -166,7 +166,7 @@ export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: Vi
   }, [active]);
 
   return (
-    <section id="atelier" className="bg-[#FDFBF7] text-[#121212] py-10 sm:py-14 lg:py-20">
+    <section id="atelier" className="bg-[#FAF8F5] text-[#121212] py-10 sm:py-14 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header — warm editorial, reduced letter-spacing */}
         <motion.div
@@ -207,10 +207,10 @@ export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: Vi
             className="lg:col-span-8"
           >
             {featured && <VideoCard item={featured} featured onExpand={setActive} />}
-            <div className="mt-4 flex flex-wrap gap-2 text-xs text-[#5A5248]">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E8DDD0] bg-white px-3 py-1.5"><Scissors className="h-3.5 w-3.5 text-[#9A7B2C]" /> Full-grain calfskin — Florence</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E8DDD0] bg-white px-3 py-1.5"><Watch className="h-3.5 w-3.5 text-[#9A7B2C]" /> 72h power reserve — Geneva</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E8DDD0] bg-white px-3 py-1.5"><Shirt className="h-3.5 w-3.5 text-[#9A7B2C]" /> 22-momme silk — Como</span>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs text-[#5C5852]">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E2DDD5] bg-[#EFECE6] px-3 py-1.5 text-[#1A1918]"><Scissors className="h-3.5 w-3.5 text-[#8C7A5B]" /> Full-grain calfskin — Ilorin</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E2DDD5] bg-[#EFECE6] px-3 py-1.5 text-[#1A1918]"><Watch className="h-3.5 w-3.5 text-[#8C7A5B]" /> 72h power reserve — Ilorin</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E2DDD5] bg-[#EFECE6] px-3 py-1.5 text-[#1A1918]"><Shirt className="h-3.5 w-3.5 text-[#8C7A5B]" /> 22-momme silk — Ilorin</span>
             </div>
           </motion.div>
 
@@ -229,7 +229,7 @@ export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: Vi
             ))}
             {/* Spec callout instead of third video when only 2 previews */}
             {previews.length < 2 && (
-              <div className="rounded-2xl border border-[#E8DDD0] bg-white p-5">
+              <div className="rounded-2xl border border-[#E2DDD5] bg-white p-5">
                 <p className="text-xs font-semibold tracking-wide text-[#9A7B2C]">Lot no. 042 — Ilorin</p>
                 <p className="font-serif text-base font-medium text-[#121212] mt-1">Packed for monsoon, not just photos</p>
                 <p className="text-xs text-[#5A5248] leading-relaxed mt-2">Every shipment is humidity-checked, boxed in Ilorin, and handed to DHL/FedEx with insurance to Lagos, Abuja, Port Harcourt and beyond — tracking shared on WhatsApp within 2 hours.</p>
@@ -242,7 +242,7 @@ export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: Vi
         </div>
 
         {/* Spec callout for mobile */}
-        <div className="lg:hidden mt-4 rounded-2xl border border-[#E8DDD0] bg-white p-4">
+        <div className="lg:hidden mt-4 rounded-2xl border border-[#E2DDD5] bg-white p-4">
           <p className="text-xs font-semibold tracking-wide text-[#9A7B2C]">Lot no. 042 — Ilorin</p>
           <p className="text-sm font-medium text-[#121212] mt-1">Small run, not mass stock</p>
           <p className="text-xs text-[#5A5248] leading-relaxed mt-1">Cut to order, finished by hand. WhatsApp us for exact measurements, leather lot photos or calibre serial before you pay.</p>
@@ -272,11 +272,11 @@ export default function VideoShowcase({ videos = DEFAULT_VIDEOS }: { videos?: Vi
               </button>
               <video src={active.videoUrl} poster={active.posterUrl} controls autoPlay playsInline className="w-full aspect-video bg-black" />
               <div className="p-5">
-                <span className="text-xs font-medium tracking-wide text-[#D4AF37]">{active.category}</span>
+                <span className="text-xs font-medium tracking-wide text-[#8C7A5B]">{active.category}</span>
                 <h3 className="font-serif text-lg font-medium text-white mt-1">{active.title}</h3>
                 <p className="text-sm text-white/70 leading-relaxed mt-2">{active.description}</p>
                 {active.linkedProductUrl && (
-                  <a href={active.linkedProductUrl} onClick={() => setActive(null)} className="inline-flex items-center gap-1.5 mt-4 rounded-full bg-white text-[#121212] px-4 py-2 text-xs font-medium hover:bg-[#F3E5AB] transition-colors">
+                  <a href={active.linkedProductUrl} onClick={() => setActive(null)} className="inline-flex items-center gap-1.5 mt-4 rounded-full bg-white text-[#121212] px-4 py-2 text-xs font-medium hover:bg-[#EFECE6] transition-colors">
                     View linked piece <ExternalLink className="h-3.5 w-3.5" />
                   </a>
                 )}
