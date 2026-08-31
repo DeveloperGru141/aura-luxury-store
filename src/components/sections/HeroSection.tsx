@@ -86,7 +86,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-[13px] sm:text-sm text-gray-300 max-w-[32ch] sm:max-w-sm font-light leading-relaxed mb-5 sm:mb-6 reveal-subhead">
-              Omo Esho Signatures sources five houses — Italian calfskin bags, 22-momme silk wears, Blake-stitched shoes, Swiss automatic calibres and 18k gold — all priced in naira and shipped insured from ILORIN.
+              Omo Esho Signatures sources five houses — Italian calfskin bags, 22-momme silk wears, Blake-stitched shoes, Swiss automatic calibres and 18k gold — all priced in naira and shipped insured from Ilorin.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mb-6 sm:mb-8 reveal-cta">
@@ -107,11 +107,7 @@ export default function HeroSection() {
               </a>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-5 sm:pt-6 border-t border-white/10 w-full max-w-[320px] sm:max-w-sm text-left">
-              <div className="min-w-0">
-                <div className="flex items-center gap-1 text-white font-serif text-base sm:text-lg font-bold"><span>50k+</span></div>
-                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5 leading-tight">Clients</p>
-              </div>
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-5 sm:pt-6 border-t border-white/10 w-full max-w-[320px] sm:max-w-sm text-left">
               <div className="min-w-0">
                 <div className="flex items-center gap-1 text-white font-serif text-base sm:text-lg font-bold"><span>100%</span></div>
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mt-0.5 leading-tight">Authentic</p>
