@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { headers } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import { Product } from '@/types/store';
 
@@ -73,6 +74,13 @@ async function getProduct(slug: string): Promise<Product | null> {
   } as Product;
 }
 
+async function getSiteUrl(): Promise<string> {
+  const headersList = await headers();
+  const host = headersList.get('host');
+  const protocol = headersList.get('x-forwarded-proto') || 'https';
+  return host ? `${protocol}://${host}` : 'https://omosesho.com';
+}
+
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProduct(slug);
@@ -83,7 +91,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://omosesho.com';
+  const baseUrl = await getSiteUrl();
   const productUrl = `${baseUrl}/product/${slug}`;
   const imageUrl = product.primaryImage.startsWith('http') ? product.primaryImage : `${baseUrl}${product.primaryImage}`;
 
@@ -127,10 +135,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const baseUrl = await getSiteUrl();
+  const productUrl = `${baseUrl}/product/${slug}`;
+  const whatsappMessage = `Hi OMO ESHO SIGNATURES, I would like to inquire about this product:\n\nProduct: ${product.name}\nPrice: ${product.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 })}\n\n${productUrl}\n\nCould you please share more details regarding availability and how to proceed?`;
+
   return (
     <html lang="en">
       <head>
-        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://omosesho.com'}/product/${slug}`} />
+        <link rel="canonical" href={productUrl} />
       </head>
       <body>
         <main className="min-h-screen bg-[#0D0F14] text-white">
@@ -158,9 +170,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                   <p className="text-gray-400 font-light leading-relaxed mb-8">{product.description}</p>
                   <a
-                    href={`https://wa.me/2347065076565?text=${encodeURIComponent(
-                      `Hi OMO ESHO SIGNATURES, I would like to inquire about this product:\n\nProduct: ${product.name}\nPrice: ${product.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 })}\n\n${process.env.NEXT_PUBLIC_SITE_URL || 'https://omosesho.com'}/product/${slug}\n\nCould you please share more details regarding availability and how to proceed?`
-                    )}`}
+                    href={`https://wa.me/2347065076565?text=${encodeURIComponent(whatsappMessage)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-semibold text-sm uppercase tracking-wider hover:brightness-110 transition-all min-h-[44px]"
