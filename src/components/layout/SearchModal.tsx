@@ -1,19 +1,48 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
-import { Search, X, Star, ArrowRight } from 'lucide-react';
+import { Search, X, Star, ArrowRight, Loader2 } from 'lucide-react';
+import ProductCard from '@/components/ui/ProductCard';
 
 export default function SearchModal() {
   const { isSearchOpen, setIsSearchOpen, setQuickViewProduct, formatPrice } = useStore();
   const [query, setQuery] = useState('');
-  const { products: liveProducts } = useLiveProducts();
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const { products: liveProducts, loading: productsLoading } = useLiveProducts();
+  const [isSearching, setIsSearching] = useState(false);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Debounce the search query
+  useEffect(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      setDebouncedQuery(query);
+      setIsSearching(false);
+    }, 300);
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, [query]);
+
+  // Trigger loading state when query changes (after debounce)
+  useEffect(() => {
+    if (debouncedQuery.trim()) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [debouncedQuery]);
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
+    if (!debouncedQuery.trim()) return [];
+    const q = debouncedQuery.toLowerCase();
     return liveProducts.filter(
       (p: any) =>
         p.name.toLowerCase().includes(q) ||
@@ -21,7 +50,7 @@ export default function SearchModal() {
         (p.tagline ?? p.description ?? '').toLowerCase().includes(q) ||
         (p.materials ?? []).some((m: string) => m.toLowerCase().includes(q))
     );
-  }, [query, liveProducts]);
+  }, [debouncedQuery, liveProducts]);
 
   if (!isSearchOpen) return null;
 
@@ -29,10 +58,10 @@ export default function SearchModal() {
     <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-20 px-0 sm:px-4 pb-0 sm:pb-4 bg-black/85 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
-      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#D4AF37]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
+      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#8C7A5B]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
         {/* Search Header — fluid */}
         <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-white/10">
-          <Search className="w-5 h-5 text-[#D4AF37] shrink-0" />
+          <Search className="w-5 h-5 text-[#8C7A5B] shrink-0" />
           <input
             type="text"
             value={query}
@@ -58,7 +87,7 @@ export default function SearchModal() {
         </div>
 
         {/* Quick Suggestion Pills */}
-        {!query && (
+        {!debouncedQuery && (
           <div className="py-6">
             <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">
               Popular Searches
@@ -69,10 +98,10 @@ export default function SearchModal() {
                   <button
                     key={term}
                     onClick={() => setQuery(term)}
-                    className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#D4AF37]/15 hover:border-[#D4AF37]/40 border border-white/5 text-xs text-gray-300 transition-all flex items-center gap-1.5"
+                    className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#8C7A5B]/15 hover:border-[#8C7A5B]/40 border border-white/5 text-xs text-gray-300 transition-all flex items-center gap-1.5"
                   >
                     <span>{term}</span>
-                    <ArrowRight className="w-3 h-3 text-[#D4AF37]" />
+                    <ArrowRight className="w-3 h-3 text-[#8C7A5B]" />
                   </button>
                 )
               )}
@@ -81,62 +110,44 @@ export default function SearchModal() {
         )}
 
         {/* Results View */}
-        {query && (
+        {debouncedQuery && (
           <div className="py-4 max-h-[60vh] overflow-y-auto">
-            <p className="text-xs font-medium text-gray-400 mb-3">
-              Found {filtered.length} {filtered.length === 1 ? 'item' : 'items'} matching &ldquo;{query}&rdquo;
-            </p>
-
-            {filtered.length === 0 ? (
-              <div className="py-12 text-center text-gray-400">
-                <p className="text-sm font-medium">No luxury items match your criteria.</p>
-                <p className="text-xs mt-1 text-gray-500">Try searching for &quot;Watches&quot;, &quot;Silk&quot;, &quot;Gold&quot;, or &quot;Satchel&quot;</p>
+            {/* Loading indicator */}
+            {isSearching && (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="w-6 h-6 text-[#8C7A5B] animate-spin" />
+                <span className="ml-2 text-xs text-gray-400">Searching...</span>
               </div>
-            ) : (
-              <div className="space-y-3">
-                {filtered.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => {
-                      setIsSearchOpen(false);
-                      setQuickViewProduct(item);
-                    }}
-                    className="group flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#D4AF37]/30 transition-all cursor-pointer"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-gray-800 shrink-0">
-                        <Image
-                          src={(item as any).primaryImage ?? (item as any).images?.[0] ?? ''}
-                          alt={item.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <span className="text-[10px] uppercase font-semibold text-[#D4AF37]">
-                          {(item as any).categoryLabel ?? (item as any).categories?.name ?? ''}
-                        </span>
-                        <h4 className="text-sm font-serif font-medium text-white group-hover:text-[#D4AF37] transition-colors">
-                          {item.name}
-                        </h4>
-                        <div className="flex items-center gap-1 text-amber-400 text-xs mt-0.5">
-                          <Star className="w-3 h-3 fill-amber-400" />
-                          <span>{(item as any).rating?.toFixed?.(1) ?? '5.0'}</span>
-                        </div>
-                      </div>
-                    </div>
+            )}
 
-                    <div className="text-right">
-                      <p className="text-sm font-semibold text-[#F3E5AB]">
-                        {formatPrice(Number(item.price))}
-                      </p>
-                      <span className="text-[11px] text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity">
-                        View Item &rarr;
-                      </span>
-                    </div>
+            {!isSearching && (
+              <>
+                <p className="text-xs font-medium text-gray-400 mb-3">
+                  Found {filtered.length} {filtered.length === 1 ? 'item' : 'items'} matching &ldquo;{debouncedQuery}&rdquo;
+                </p>
+
+                {filtered.length === 0 ? (
+                  <div className="py-12 text-center text-gray-400">
+                    <p className="text-sm font-medium">No luxury items match your criteria.</p>
+                    <p className="text-xs mt-1 text-gray-500">Try searching for "Watches", "Silk", "Gold", or "Satchel"</p>
                   </div>
-                ))}
-              </div>
+                ) : (
+                  <div className="space-y-3">
+                    {filtered.map((item) => (
+                      <div
+                        key={item.id}
+                        onClick={() => {
+                          setIsSearchOpen(false);
+                          setQuickViewProduct(item);
+                        }}
+                        className="group flex flex-col rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#8C7A5B]/30 transition-all cursor-pointer"
+                      >
+                        <ProductCard product={item} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
