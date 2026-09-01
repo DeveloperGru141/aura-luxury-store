@@ -1,18 +1,17 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
-import { Search, X, Star, ArrowRight, Loader2 } from 'lucide-react';
+import { Search, X, ArrowRight, Loader2 } from 'lucide-react';
 import ProductCard from '@/components/ui/ProductCard';
+import type { Product } from '@/types/store';
 
 export default function SearchModal() {
-  const { isSearchOpen, setIsSearchOpen, setQuickViewProduct, formatPrice } = useStore();
+  const { isSearchOpen, setIsSearchOpen, setQuickViewProduct } = useStore();
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const { products: liveProducts, loading: productsLoading } = useLiveProducts();
-  const [isSearching, setIsSearching] = useState(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   // Debounce the search query
@@ -22,7 +21,6 @@ export default function SearchModal() {
     }
     debounceRef.current = setTimeout(() => {
       setDebouncedQuery(query);
-      setIsSearching(false);
     }, 300);
     return () => {
       if (debounceRef.current) {
@@ -31,22 +29,16 @@ export default function SearchModal() {
     };
   }, [query]);
 
-  // Trigger loading state when query changes (after debounce)
-  useEffect(() => {
-    if (debouncedQuery.trim()) {
-      setIsSearching(true);
-    } else {
-      setIsSearching(false);
-    }
-  }, [debouncedQuery]);
+  // Loading state: true while initial products are loading OR while debounced query is being processed
+  const isSearching = productsLoading || (query.trim() && !debouncedQuery.trim());
 
   const filtered = useMemo(() => {
     if (!debouncedQuery.trim()) return [];
     const q = debouncedQuery.toLowerCase();
     return liveProducts.filter(
-      (p: any) =>
+      (p: Product) =>
         p.name.toLowerCase().includes(q) ||
-        (p.categoryLabel ?? p.categories?.name ?? '').toLowerCase().includes(q) ||
+        p.categoryLabel.toLowerCase().includes(q) ||
         (p.tagline ?? p.description ?? '').toLowerCase().includes(q) ||
         (p.materials ?? []).some((m: string) => m.toLowerCase().includes(q))
     );
@@ -59,7 +51,7 @@ export default function SearchModal() {
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
       <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#8C7A5B]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
-        {/* Search Header — fluid */}
+        {/* Search Header &mdash; fluid */}
         <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-white/10">
           <Search className="w-5 h-5 text-[#8C7A5B] shrink-0" />
           <input
@@ -116,7 +108,7 @@ export default function SearchModal() {
             {isSearching && (
               <div className="flex items-center justify-center py-8">
                 <Loader2 className="w-6 h-6 text-[#8C7A5B] animate-spin" />
-                <span className="ml-2 text-xs text-gray-400">Searching...</span>
+                <span className="ml-2 text-xs text-gray-400">Searching&hellip;</span>
               </div>
             )}
 
@@ -129,7 +121,7 @@ export default function SearchModal() {
                 {filtered.length === 0 ? (
                   <div className="py-12 text-center text-gray-400">
                     <p className="text-sm font-medium">No luxury items match your criteria.</p>
-                    <p className="text-xs mt-1 text-gray-500">Try searching for "Watches", "Silk", "Gold", or "Satchel"</p>
+                    <p className="text-xs mt-1 text-gray-500">Try searching for &ldquo;Watches&rdquo;, &ldquo;Silk&rdquo;, &ldquo;Gold&rdquo;, or &ldquo;Satchel&rdquo;</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
