@@ -88,19 +88,17 @@ export default function HeroSection() {
   // Collapse gracefully if no hero data
   const hasHeroData = heroSlides.length > 0;
 
-  return (
+return (
     <section id="home" className="relative overflow-hidden pt-6 sm:pt-8 pb-8 sm:pb-12 lg:py-16 bg-gradient-to-b from-[#0D0F14] via-[#10131A] to-[#0D0F14]">
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] bg-[#D4AF37]/5 rounded-full blur-[120px] sm:blur-[160px] pointer-events-none" />
-      <div className="absolute top-10 right-10 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-amber-900/10 rounded-full blur-[100px] sm:blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Mobile: side-by-side text + carousel (52/48), Desktop: 4/8 grid */}
         <div className="flex gap-3 items-start lg:hidden mb-4">
           {/* Left column — text only (eyebrow, H1, subhead) */}
           <div className="w-[52%] min-w-0">
-            <p className="text-[11px] font-medium tracking-wide text-[#D4AF37] leading-tight">Handcrafted in Ilorin — leather, silk &amp; Swiss-sourced timepieces</p>
+            <p className="text-[11px] font-medium tracking-wide text-[#D4AF37] leading-tight">Based in Ilorin — genuine leather, silk & Swiss-sourced timepieces</p>
             <h1 className="font-serif text-[22px] leading-tight font-light text-white tracking-tight mt-1.5">
-              Leather &amp; silk, made by hand <em className="italic font-normal gold-gradient-text">in Ilorin.</em>
+              Genuine pieces, <em className="italic font-normal gold-gradient-text">curated from Ilorin.</em>
             </h1>
             <p className="text-[12px] text-gray-400 font-light mt-2 leading-snug">Timepieces, sourced from Switzerland.</p>
           </div>
@@ -157,7 +155,7 @@ export default function HeroSection() {
               <span className="text-2xl font-normal text-gray-400">Timepieces, sourced from Switzerland.</span>
             </h1>
             <p className="text-sm text-gray-300 max-w-sm font-light leading-relaxed mb-6">
-              Every bag and silk piece is cut and stitched by hand in our Ilorin workshop. Our watches come directly from Swiss makers and are inspected here before they ship — with insured courier delivery, worldwide.
+              Every piece we carry is genuine — leather bags, silk wears, hand-selected shoes from Marche, and watches sourced direct from Swiss makers. We're based in Ilorin, where every order is inspected before it ships — with insured courier delivery, worldwide.
             </p>
             <div className="flex items-center gap-3 mb-8">
               <a href="#categories" className="relative overflow-hidden py-3 px-6 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#E2C366] to-[#B38F24] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.98] transition-all shadow-xl min-h-[44px] group/cta">
@@ -173,7 +171,7 @@ export default function HeroSection() {
               <div>
                 <div className="flex items-center gap-1 text-white font-serif text-lg font-bold">
                   <span className="relative flex h-1.5 w-1.5 shrink-0"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" /><span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" /></span>
-                  <span>HANDCRAFTED IN ILORIN</span>
+                  <span>100% GENUINE</span>
                 </div>
               </div>
               <div>
