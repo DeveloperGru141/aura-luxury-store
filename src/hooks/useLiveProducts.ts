@@ -73,6 +73,7 @@ function mapSupabaseToProduct(row: SupabaseProductRow): Product {
   return {
     id: row.id,
     name: row.name,
+    slug: row.slug,
     category,
     categoryLabel: row.categories?.name ?? categoryLabelMap[categorySlug] ?? categorySlug,
     tagline: row.description?.slice(0, 60) ?? '',

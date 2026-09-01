@@ -47,7 +47,8 @@ export default function QuickViewModal() {
     formatPrice(quickViewProduct.price * quantity),
     activeColor,
     activeSize,
-    quantity
+    quantity,
+    typeof window !== 'undefined' ? `${window.location.origin}/product/${quickViewProduct.slug}` : undefined
   );
 
   return (

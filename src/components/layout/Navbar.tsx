@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/StoreContext';
-import { Search, Menu, X, Sparkles, MessageCircle } from 'lucide-react';
+import { Search, Menu, X, MessageCircle } from 'lucide-react';
 import type { ProductCategory } from '@/types/store';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
 
@@ -43,7 +43,6 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
     { label: 'Wristwatches', href: '#catalogue', category: 'watches' },
     { label: 'Jewelry', href: '#catalogue', category: 'jewelry' },
     { label: 'Lookbook', href: '#lookbook' },
-    { label: 'Reviews', href: '#reviews' },
   ];
 
   const handleNavClick = (

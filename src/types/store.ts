@@ -3,6 +3,7 @@ export type ProductCategory = 'all' | 'bags' | 'apparel' | 'shoes' | 'watches' |
 export interface Product {
   id: string;
   name: string;
+  slug: string;
   category: ProductCategory;
   categoryLabel: string;
   tagline: string;
