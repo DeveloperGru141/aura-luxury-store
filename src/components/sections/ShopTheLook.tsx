@@ -74,11 +74,8 @@ export default function ShopTheLook() {
     return (
       <section id="lookbook" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
-            <div className="min-w-0">
-              <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">Curated lookbook</h2>
-            </div>
-            <p className="text-[13px] sm:text-sm text-[var(--color-text-tertiary)] max-w-md font-light leading-relaxed">Styled sets from the current inventory — each item links directly to its product detail and WhatsApp order.</p>
+          <div className="flex flex-col mb-6 sm:mb-8">
+          <h2 className="font-sans text-[22px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight uppercase text-[var(--color-text-primary)] leading-tight">Curated lookbook</h2>
           </div>
           <div className="rounded-2xl border border-[var(--color-border)] bg-white p-10 sm:p-14 text-center shadow-sm">
             <div className="mx-auto w-14 h-14 rounded-2xl bg-[var(--color-surface-alt)] border border-[var(--color-border)] flex items-center justify-center mb-4"><Sparkles className="w-7 h-7 text-[var(--color-accent-gold)]" /></div>
@@ -93,11 +90,8 @@ export default function ShopTheLook() {
   return (
     <section id="lookbook" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <div className="min-w-0">
-            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">Curated lookbook</h2>
-          </div>
-          <p className="text-[13px] sm:text-sm text-[var(--color-text-tertiary)] max-w-md font-light leading-relaxed">Styled sets from the current inventory — each item links directly to its product detail and WhatsApp order.</p>
+        <div className="flex flex-col mb-6 sm:mb-8">
+          <h2 className="font-sans text-[22px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight uppercase text-[var(--color-text-primary)] leading-tight">Curated lookbook</h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-6 items-start">

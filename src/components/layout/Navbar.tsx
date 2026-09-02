@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/StoreContext';
-import { Search, Menu, X, MessageCircle } from 'lucide-react';
+import { Search, MessageCircle } from 'lucide-react';
 import type { ProductCategory } from '@/types/store';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
 
@@ -80,10 +80,13 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
         <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-alt)] active:bg-[var(--color-border)] transition-colors flex items-center justify-center touch-manipulation cursor-pointer"
+            className="lg:hidden min-h-[44px] min-w-[44px] p-2.5 rounded-xl hover:bg-[var(--color-surface-alt)] active:bg-[var(--color-border)] transition-colors flex flex-col items-start justify-center gap-1.5 touch-manipulation cursor-pointer group"
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <span className={`block h-[2px] rounded-full bg-[var(--color-text-primary)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMobileMenuOpen ? 'w-6 rotate-45 translate-y-[7px]' : 'w-6'}`} />
+            <span className={`block h-[2px] rounded-full bg-[var(--color-text-primary)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMobileMenuOpen ? 'w-6 opacity-0' : 'w-4'}`} />
+            <span className={`block h-[2px] rounded-full bg-[var(--color-text-primary)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMobileMenuOpen ? 'w-6 -rotate-45 -translate-y-[7px]' : 'w-3'}`} />
           </button>
 
           {/* Logo — routes to hero */}

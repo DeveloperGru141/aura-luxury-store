@@ -84,7 +84,7 @@ function mapSupabaseToProduct(row: SupabaseProductRow): Product {
     rating: 5.0,
     reviewCount: 0,
     primaryImage: row.images?.[0] ?? 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
-    secondaryImage: row.images?.[1] ?? row.images?.[0] ?? 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
+    secondaryImage: row.images?.[1] ?? '',
     colors: [{ name: 'Default', hex: '#1a1a1a' }],
     materials: [],
     inStock: row.stock_status === 'in_stock',

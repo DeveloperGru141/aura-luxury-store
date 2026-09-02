@@ -52,8 +52,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsHovered(false);
       }}
     >
-      {/* Product Image Container */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-surface-alt)] cursor-pointer" onClick={handleQuickView}>
+      {/* Product Image Container — reduced height, same width */}
+      <div className="relative aspect-[4/5] sm:aspect-[1/1] w-full overflow-hidden bg-[var(--color-surface-alt)] cursor-pointer" onClick={handleQuickView}>
         <Image
           src={primaryImg}
           alt={product.name}

@@ -81,7 +81,7 @@ export default function SearchModal() {
               Popular Searches
             </p>
             <div className="flex flex-wrap gap-2">
-              {['Croc Bag', 'Rose Gold Watch', 'Silk Gown', '18k Choker', 'Loafers', 'Zambian Emerald'].map(
+              {(liveProducts.length > 0 ? liveProducts.slice(0, 6).map((p) => p.name) : ['Bags', 'Watches', 'Jewelry', 'Shoes', 'Silk', 'Gold']).map(
                 (term) => (
                   <button
                     key={term}

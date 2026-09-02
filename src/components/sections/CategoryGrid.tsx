@@ -14,7 +14,7 @@ interface CategoryGridProps {
 export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   const { products: liveProducts } = useLiveProducts();
   const liveCategories = useLiveCategories();
-  const [activeMobileCard, setActiveMobileCard] = useState<string | null>(liveCategories[0]?.id || null);
+  const [activeMobileCard, setActiveMobileCard] = useState<string | null>(null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const CATEGORY_MOCK_IMAGES: Record<string, string> = {
@@ -41,10 +41,6 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
              pCategoriesName === catSlug;
     });
   };
-
-  useEffect(() => {
-    if (liveCategories[0]?.id) setActiveMobileCard(liveCategories[0].id);
-  }, [liveCategories]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -76,20 +72,14 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   return (
     <section id="categories" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 lg:mb-10">
-          <div className="min-w-0">
-            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
-              Explore by category
-            </h2>
-          </div>
-          <p className="text-[13px] sm:text-sm text-[var(--color-text-tertiary)] max-w-md leading-relaxed">
-            Genuine leather bags, silk wears, shoes lasted in Marche, calibres sourced from Switzerland, and 18k jewelry — curated from Ilorin, each restocked in small runs.
-          </p>
+        <div className="flex flex-col mb-6 sm:mb-8 lg:mb-10">
+          <h2 className="font-sans text-[22px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight text-[var(--color-text-primary)] leading-tight uppercase">
+            Explore by category
+          </h2>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {liveCategories.map((cat: any, idx: number) => {
-            const isFeatured = idx === 0 || idx === 3;
             const isMobileHovered = activeMobileCard === cat.id;
 
             return (
@@ -99,6 +89,8 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     cardRefs.current[cat.id] = el;
                   }}
                   data-cat-id={cat.id}
+                  onMouseEnter={() => setActiveMobileCard(cat.id)}
+                  onMouseLeave={() => setActiveMobileCard(null)}
                   onTouchStart={() => setActiveMobileCard(cat.id)}
                   onClick={() => {
                     const slugToCat: Record<string, ProductCategory> = {
@@ -115,8 +107,8 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                   }}
                   className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[140px] sm:min-h-[160px] lg:min-h-[180px] border shadow-sm hover:shadow-md ${
                     isMobileHovered
-                      ? 'border-[var(--color-accent-gold)] shadow-md sm:border-[var(--color-border)] sm:hover:border-[var(--color-accent-gold)]/40'
-                      : 'border-[var(--color-border)] hover:border-[var(--color-accent-gold)]/40'
+                      ? 'border-[#9A7B1F] shadow-md sm:border-[var(--color-border)] sm:group-hover:border-[#9A7B1F] sm:group-hover:shadow-md'
+                      : 'border-[var(--color-border)] hover:border-[#9A7B1F]/60 hover:shadow-md'
                   }`}
                 >
                   <Image
@@ -139,9 +131,9 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
 
                   <div className="absolute top-3 right-3 z-10">
                     <div
-                      className={`w-9 h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[var(--color-accent-gold)] group-hover:text-black group-hover:border-[var(--color-accent-gold)] group-active:scale-90 shadow-sm ${
+                      className={`w-9 h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
                         isMobileHovered
-                          ? 'bg-[var(--color-accent-gold)] text-black border-[var(--color-accent-gold)] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[var(--color-accent-gold)] sm:group-hover:text-black'
+                          ? 'bg-[#9A7B1F] text-white border-[#9A7B1F] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[#9A7B1F] sm:group-hover:text-white'
                           : 'bg-white border-white text-[var(--color-text-primary)]'
                       }`}
                     >
@@ -153,8 +145,8 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     <div className="flex items-center gap-1.5 mb-1">
                       {isMobileHovered && (
                         <span className="relative flex h-1.5 w-1.5 shrink-0 sm:hidden">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent-gold)] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-accent-gold)]" />
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#9A7B1F] opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#9A7B1F]" />
                         </span>
                       )}
                       <span className="text-[10px] uppercase font-bold tracking-widest text-amber-200 block">
@@ -163,11 +155,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     </div>
 
                     <h3
-                      className={`font-serif text-base sm:text-xl lg:text-xl font-medium transition-colors mb-0.5 sm:mb-1 ${
-                        isMobileHovered
-                          ? 'text-white sm:text-white sm:group-hover:text-white'
-                          : 'text-white group-hover:text-white'
-                      }`}
+                      className={`font-serif text-base sm:text-xl lg:text-xl font-medium transition-colors mb-0.5 sm:mb-1 text-white group-hover:text-white`}
                     >
                       {cat.name}
                     </h3>

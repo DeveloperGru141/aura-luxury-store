@@ -38,7 +38,7 @@ export default function BrandPillars() {
                 key={idx}
                 className="snap-start shrink-0 w-[260px] sm:w-auto flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl bg-white border border-[var(--color-border)] hover:border-[var(--color-accent-gold)]/40 hover:shadow-[var(--shadow-elev-1)] active:scale-[0.97] transition-all group touch-manipulation"
               >
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[var(--color-accent-gold-light)] border border-[var(--color-accent-gold)]/20 text-[var(--color-accent-gold)] flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[var(--color-accent-gold)] group-hover:text-black transition-all">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#9A7B1F]/10 border border-[#9A7B1F]/25 text-[#7A5F12] flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] transition-all shadow-sm">
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <h3 className="text-[14px] sm:text-sm font-semibold text-[var(--color-text-primary)] mb-1.5 leading-tight">
