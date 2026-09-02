@@ -34,12 +34,9 @@ export default function FeaturedProducts({
     <section id="catalogue" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
-          <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] mb-3 leading-tight">
+          <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
             The catalogue
           </h2>
-          <p className="text-[13px] sm:text-sm text-[var(--color-text-tertiary)] font-light leading-relaxed">
-            Filter by house — every piece lists its atelier, material and price in naira, with live stock from Supabase.
-          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-[var(--color-border)] overflow-hidden">
