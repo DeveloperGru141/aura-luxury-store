@@ -31,10 +31,10 @@ export default function FeaturedProducts({
   });
 
   return (
-    <section id="catalogue" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative">
+    <section id="catalogue" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
-          <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 px-2">
+          <h2 className="font-serif text-[22px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
             The catalogue
           </h2>
         </div>
@@ -82,11 +82,11 @@ export default function FeaturedProducts({
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-4">
             {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-[var(--color-border)] bg-white">
-                <div className="aspect-[3/4] w-full skeleton-shimmer" />
-                <div className="p-3 space-y-2">
+                <div className="aspect-[1/1] w-full skeleton-shimmer" />
+                <div className="p-2.5 space-y-2">
                   <div className="h-3 w-2/3 rounded skeleton-shimmer" />
                   <div className="h-3 w-1/2 rounded skeleton-shimmer" />
                   <div className="h-6 w-full rounded-lg skeleton-shimmer" />
@@ -95,13 +95,13 @@ export default function FeaturedProducts({
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-12 sm:py-16 text-center border border-[var(--color-border)] rounded-2xl bg-white px-6">
+          <div className="py-10 sm:py-16 text-center border border-[var(--color-border)] rounded-2xl bg-white px-6">
             <p className="font-serif text-base font-light text-[var(--color-text-primary)]">Next small-run drop releasing soon</p>
             <p className="text-xs text-[var(--color-text-tertiary)] mt-2 mb-4">This category is in production at the Ilorin atelier. Message for lot photos and early access.</p>
             <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-black px-5 py-2.5 text-xs font-semibold hover:shadow-md active:scale-[0.97] transition-all">Chat with Concierge to Reserve</a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-4">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

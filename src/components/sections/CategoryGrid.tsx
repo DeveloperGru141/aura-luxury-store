@@ -70,10 +70,10 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   }, []);
 
   return (
-    <section id="categories" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative">
+    <section id="categories" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col mb-6 sm:mb-8 lg:mb-10">
-          <h2 className="font-sans text-[22px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight text-[var(--color-text-primary)] leading-tight uppercase">
+        <div className="flex flex-col mb-5 sm:mb-8 lg:mb-10">
+          <h2 className="font-sans text-[20px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight text-[var(--color-text-primary)] leading-tight uppercase">
             Explore by category
           </h2>
         </div>
@@ -105,7 +105,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     const mapped = (slugToCat[cat.id] ?? cat.id) as ProductCategory;
                     onSelectCategory(mapped);
                   }}
-                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[140px] sm:min-h-[160px] lg:min-h-[180px] border shadow-sm hover:shadow-md ${
+                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] aspect-[5/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[110px] sm:min-h-[160px] lg:min-h-[180px] border shadow-sm hover:shadow-md ${
                     isMobileHovered
                       ? 'border-[#9A7B1F] shadow-md sm:border-[var(--color-border)] sm:group-hover:border-[#9A7B1F] sm:group-hover:shadow-md'
                       : 'border-[var(--color-border)] hover:border-[#9A7B1F]/60 hover:shadow-md'
@@ -129,9 +129,9 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     }`}
                   />
 
-                  <div className="absolute top-3 right-3 z-10">
+                  <div className="absolute top-2.5 right-2.5 z-10">
                     <div
-                      className={`w-9 h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
+                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
                         isMobileHovered
                           ? 'bg-[#9A7B1F] text-white border-[#9A7B1F] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[#9A7B1F] sm:group-hover:text-white'
                           : 'bg-white border-white text-[var(--color-text-primary)]'

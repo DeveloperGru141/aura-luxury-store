@@ -52,8 +52,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsHovered(false);
       }}
     >
-      {/* Product Image Container — reduced height, same width */}
-      <div className="relative aspect-[4/5] sm:aspect-[1/1] w-full overflow-hidden bg-[var(--color-surface-alt)] cursor-pointer" onClick={handleQuickView}>
+      {/* Product Image Container — reduced height on mobile, same width */}
+      <div className="relative aspect-[1/1] w-full overflow-hidden bg-[var(--color-surface-alt)] cursor-pointer" onClick={handleQuickView}>
         <Image
           src={primaryImg}
           alt={product.name}
@@ -124,33 +124,33 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      {/* Product Information */}
-      <div className="flex flex-col p-3 sm:p-3.5 lg:p-4 flex-1 justify-between gap-1.5">
+      {/* Product Information — compact on mobile to reduce cramping */}
+      <div className="flex flex-col p-2.5 sm:p-3 lg:p-4 flex-1 justify-between gap-1">
         <div>
-          <div className="flex items-center justify-between text-xs mb-1.5 gap-2">
-            <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-bold text-[var(--color-accent-gold)] truncate">
+          <div className="flex items-center justify-between text-xs mb-1 gap-2">
+            <span className="uppercase tracking-widest text-[8px] sm:text-[10px] font-bold text-[var(--color-accent-gold)] truncate">
               {(product as any).categoryLabel ?? (anyProduct.categories?.name as string) ?? anyProduct.category ?? '—'}
             </span>
             <div className="flex items-center gap-1 text-amber-500 shrink-0">
-              <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
-              <span className="font-medium text-[var(--color-text-secondary)] text-[11px] sm:text-xs">{(product as any).rating?.toFixed?.(1) ?? '5.0'}</span>
+              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <span className="font-medium text-[var(--color-text-secondary)] text-[10px] sm:text-xs">{(product as any).rating?.toFixed?.(1) ?? '5.0'}</span>
               <span className="text-[var(--color-text-muted)] text-[10px] hidden sm:inline">({(product as any).reviewCount ?? 0})</span>
             </div>
           </div>
 
           <h3
             onClick={handleQuickView}
-            className="font-medium text-xs sm:text-[13px] lg:text-sm text-[var(--color-text-primary)] hover:text-[var(--color-accent-gold)] active:text-[var(--color-accent-gold)] transition-colors cursor-pointer line-clamp-1 mb-1 leading-tight"
+            className="font-medium text-[11px] sm:text-[13px] lg:text-sm text-[var(--color-text-primary)] hover:text-[var(--color-accent-gold)] active:text-[var(--color-accent-gold)] transition-colors cursor-pointer line-clamp-1 mb-0.5 leading-tight"
           >
             {product.name}
           </h3>
 
-          <p className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)] line-clamp-1 leading-tight">
+          <p className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)] line-clamp-1 leading-tight">
             {(product as any).tagline ?? (anyProduct.description ? String(anyProduct.description).slice(0, 60) : '')}
           </p>
         </div>
 
-        <div className="flex items-center justify-between pt-2.5 border-t border-[var(--color-border)] mt-auto gap-2">
+        <div className="flex items-center justify-between pt-2 border-t border-[var(--color-border)] mt-1.5 gap-2">
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             {((product as any).colors as any[])?.map((c: any) => (
               <button
@@ -159,8 +159,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                   e.stopPropagation();
                   setSelectedColor(c.name);
                 }}
-                className={`w-5 h-5 sm:w-4 sm:h-4 rounded-full border-2 transition-all touch-manipulation ${
-                  selectedColor === c.name ? 'ring-2 ring-[var(--color-accent-gold)] ring-offset-2 ring-offset-white border-white' : 'border-[var(--color-border)] hover:scale-110 active:scale-95'
+                className={`w-4 h-4 sm:w-4 sm:h-4 rounded-full border-2 transition-all touch-manipulation ${
+                  selectedColor === c.name ? 'ring-2 ring-[var(--color-accent-gold)] ring-offset-1 sm:ring-offset-2 ring-offset-white border-white' : 'border-[var(--color-border)] hover:scale-110 active:scale-95'
                 }`}
                 style={{ backgroundColor: c.hex }}
                 title={c.name}
@@ -170,7 +170,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
-            <span className="text-xs sm:text-sm font-bold text-[var(--color-text-primary)] tracking-tight truncate">
+            <span className="text-[11px] sm:text-sm font-bold text-[var(--color-text-primary)] tracking-tight truncate">
               {formatPrice(Number(product.price))}
             </span>
           </div>
