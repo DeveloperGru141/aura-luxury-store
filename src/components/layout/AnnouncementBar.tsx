@@ -13,33 +13,33 @@ export default function AnnouncementBar() {
   const conciergeUrl = getWhatsAppConciergeUrl();
 
   return (
-    <aside aria-label="Luxury Concierge" className="bg-[#080A0E] border-b border-white/5 text-gray-300 text-xs py-2 px-4 relative z-50">
+    <aside aria-label="Luxury Concierge" className="bg-[var(--color-surface-alt)] border-b border-[var(--color-border)] text-[var(--color-text-secondary)] text-xs py-2.5 px-4 relative z-50">
       <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-2 sm:gap-4">
         {/* Left: WhatsApp Direct Order Hotline */}
         <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-          <MessageCircle className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-          <span className="hidden sm:inline font-light text-gray-300">
+          <MessageCircle className="w-3.5 h-3.5 text-[var(--color-accent-gold)] shrink-0" />
+          <span className="hidden sm:inline font-light text-[var(--color-text-secondary)]">
             Direct Client Orders &amp; Inquiries:
           </span>
-          <span className="sm:hidden font-light text-gray-300 truncate">
+          <span className="sm:hidden font-light text-[var(--color-text-secondary)] truncate">
             Orders &amp; Inquiries:
           </span>
           <a
             href={conciergeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 font-semibold text-[#F3E5AB] hover:underline transition-all shrink-0"
+            className="inline-flex items-center gap-1 font-semibold text-[var(--color-text-primary)] hover:text-[var(--color-accent-gold)] transition-colors shrink-0"
           >
             <span>+234 706 507 6565</span>
           </a>
         </div>
 
-        {/* Right: Currency Selector — fixed z-index to appear above Navbar */}
-        <div className="flex items-center gap-4 text-gray-400 relative shrink-0">
+        {/* Right: Currency Selector */}
+        <div className="flex items-center gap-4 text-[var(--color-text-tertiary)] relative shrink-0">
           <div className="relative">
             <button
               onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-              className="flex items-center gap-1 hover:text-white transition-colors py-0.5 cursor-pointer min-h-[28px] px-1"
+              className="flex items-center gap-1 hover:text-[var(--color-text-primary)] transition-colors py-0.5 cursor-pointer min-h-[28px] px-2 rounded-full hover:bg-white border border-transparent hover:border-[var(--color-border)]"
               aria-haspopup="listbox"
               aria-expanded={isCurrencyOpen}
             >
@@ -48,7 +48,7 @@ export default function AnnouncementBar() {
             </button>
 
             {isCurrencyOpen && (
-              <div className="absolute right-0 mt-1.5 w-28 bg-[#14171D] border border-white/10 rounded-lg shadow-xl py-1 z-[60] overflow-hidden">
+              <div className="absolute right-0 mt-1.5 w-28 bg-white border border-[var(--color-border)] rounded-xl shadow-lg py-1 z-[60] overflow-hidden">
                 {currencies.map((curr) => (
                   <button
                     key={curr}
@@ -56,8 +56,8 @@ export default function AnnouncementBar() {
                       setCurrency(curr);
                       setIsCurrencyOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 hover:bg-white/10 transition-colors text-xs cursor-pointer flex items-center justify-between ${
-                      currency === curr ? 'text-[#D4AF37] font-semibold bg-[#D4AF37]/10' : 'text-gray-300'
+                    className={`w-full text-left px-3 py-2 hover:bg-[var(--color-surface-alt)] transition-colors text-xs cursor-pointer flex items-center justify-between ${
+                      currency === curr ? 'text-[var(--color-accent-gold)] font-semibold bg-[var(--color-accent-gold-light)]' : 'text-[var(--color-text-secondary)]'
                     }`}
                   >
                     <span>{curr}</span>

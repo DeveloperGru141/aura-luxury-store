@@ -26,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0D0F14] text-white selection:bg-[#D4AF37] selection:text-black">
+    <main className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text-primary)] selection:bg-[var(--color-accent-gold)] selection:text-black">
       {/* Top Announcement Bar */}
       <AnnouncementBar />
 

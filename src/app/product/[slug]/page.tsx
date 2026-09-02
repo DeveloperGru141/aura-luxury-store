@@ -140,49 +140,40 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const whatsappMessage = `Hi OMO ESHO SIGNATURES, I would like to inquire about this product:\n\nProduct: ${product.name}\nPrice: ${product.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 })}\n\n${productUrl}\n\nCould you please share more details regarding availability and how to proceed?`;
 
   return (
-    <html lang="en">
-      <head>
-        <link rel="canonical" href={productUrl} />
-      </head>
-      <body>
-        <main className="min-h-screen bg-[#0D0F14] text-white">
-          <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                <div className="relative aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#161922]">
-                  <Image
-                    src={product.primaryImage}
-                    alt={product.name}
-                    fill
-                    priority
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <p className="text-xs uppercase tracking-widest text-[#D4AF37] mb-2">{product.categoryLabel}</p>
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight mb-4">
-                    {product.name}
-                  </h1>
-                  <p className="text-lg text-gray-300 font-light mb-6">{product.tagline}</p>
-                  <div className="text-3xl font-bold text-[#F3E5AB] mb-8">
-                    {product.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 })}
-                  </div>
-                  <p className="text-gray-400 font-light leading-relaxed mb-8">{product.description}</p>
-                  <a
-                    href={`https://wa.me/2347065076565?text=${encodeURIComponent(whatsappMessage)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-semibold text-sm uppercase tracking-wider hover:brightness-110 transition-all min-h-[44px]"
-                  >
-                    Order via WhatsApp
-                  </a>
-                </div>
-              </div>
+    <main className="min-h-screen bg-white text-[var(--color-text-primary)]">
+      <section className="py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[var(--color-surface-alt)] border border-[var(--color-border)] shadow-sm">
+            <Image
+              src={product.primaryImage}
+              alt={product.name}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+          <div className="flex flex-col justify-center py-2">
+            <p className="text-xs uppercase tracking-widest font-bold text-[var(--color-accent-gold)] mb-2">{product.categoryLabel}</p>
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[var(--color-text-primary)] leading-tight mb-3">
+              {product.name}
+            </h1>
+            <p className="text-base text-[var(--color-text-secondary)] font-light mb-4">{product.tagline}</p>
+            <div className="text-2xl sm:text-3xl font-bold text-[var(--color-text-primary)] mb-6">
+              {product.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 })}
             </div>
-          </section>
-        </main>
-      </body>
-    </html>
+            <p className="text-sm text-[var(--color-text-tertiary)] font-light leading-relaxed mb-8 border-y border-[var(--color-border)] py-4">{product.description}</p>
+            <a
+              href={`https://wa.me/2347065076565?text=${encodeURIComponent(whatsappMessage)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] active:scale-[0.98] text-black font-semibold text-sm shadow-sm hover:shadow-md transition-all min-h-[48px]"
+            >
+              Order via WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

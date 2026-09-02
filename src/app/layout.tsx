@@ -7,7 +7,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0D0F12",
+  themeColor: "#FFFFFF",
 };
 
 const sans = Plus_Jakarta_Sans({
@@ -51,8 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} scroll-smooth dark`}>
-      <body className="font-sans antialiased bg-[#0D0F14] text-white min-h-screen">
+    <html lang="en" className={`${sans.variable} ${serif.variable} scroll-smooth`}>
+      <body className="font-sans antialiased bg-[var(--color-surface)] text-[var(--color-text-primary)] min-h-screen">
         <StoreProvider>{children}</StoreProvider>
       </body>
     </html>

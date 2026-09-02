@@ -16,7 +16,6 @@ export default function FeaturedProducts({
 }: FeaturedProductsProps) {
   const { products: liveProducts, loading } = useLiveProducts();
 
-  // Exact order: Bags, Wears (Clothes), Shoes, Wristwatches, Jewelry
   const tabs: { id: ProductCategory; label: string }[] = [
     { id: 'all', label: 'All Collections' },
     { id: 'bags', label: 'Bags' },
@@ -32,21 +31,19 @@ export default function FeaturedProducts({
   });
 
   return (
-    <section id="catalogue" className="py-12 sm:py-16 lg:py-20 bg-[#0E1117] border-t border-b border-white/5 relative">
+    <section id="catalogue" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title — concrete, no decorative eyebrow */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 px-2">
-          <h2 className="font-serif text-[28px] sm:text-4xl lg:text-5xl font-light text-white mb-3 sm:mb-4 leading-tight">
-            The <span className="italic font-normal gold-gradient-text">catalogue</span>
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
+          <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] mb-3 leading-tight">
+            The catalogue
           </h2>
-          <p className="text-[13px] sm:text-sm text-gray-400 font-light leading-relaxed">
+          <p className="text-[13px] sm:text-sm text-[var(--color-text-tertiary)] font-light leading-relaxed">
             Filter by house — every piece lists its atelier, material and price in naira, with live stock from Supabase.
           </p>
         </div>
 
-        {/* Filter Tabs Bar — fluid, scroll snap on mobile */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 pb-3 sm:pb-4 border-b border-white/10 overflow-hidden">
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 -mx-4 sm:mx-0 px-4 sm:px-0 snap-x snap-mandatory scrollbar-none overscroll-x-contain touch-manipulation">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-[var(--color-border)] overflow-hidden">
+          <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 -mx-4 sm:mx-0 px-4 sm:px-0 snap-x snap-mandatory scrollbar-none overscroll-x-contain touch-manipulation">
             {tabs.map((tab) => {
               const isActive = activeCategory === tab.id;
               const count =
@@ -58,16 +55,25 @@ export default function FeaturedProducts({
                 <button
                   key={tab.id}
                   onClick={() => setActiveCategory(tab.id)}
-                  className={`snap-start px-3.5 sm:px-4 py-2.5 min-h-[40px] rounded-xl text-[11px] sm:text-xs font-medium uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation ${
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                      e.preventDefault();
+                      const idx = tabs.findIndex((t) => t.id === tab.id);
+                      const dir = e.key === 'ArrowRight' ? 1 : -1;
+                      const next = tabs[(idx + dir + tabs.length) % tabs.length];
+                      setActiveCategory(next.id);
+                    }
+                  }}
+                  className={`snap-start px-4 py-2.5 min-h-[40px] rounded-full text-[11px] sm:text-xs font-medium uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-2 shrink-0 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-gold)] focus-visible:ring-offset-2 ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black font-bold shadow-lg shadow-[#D4AF37]/10'
-                      : 'bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 active:bg-white/15'
+                      ? 'bg-[var(--color-accent-gold)] text-black font-semibold shadow-sm'
+                      : 'bg-white border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-primary)] active:scale-[0.97]'
                   }`}
                 >
                   <span>{tab.label}</span>
                   <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded-md ${
-                      isActive ? 'bg-black/20 text-black font-extrabold' : 'bg-white/10 text-gray-400'
+                    className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                      isActive ? 'bg-black/15 text-black font-bold' : 'bg-[var(--color-surface-alt)] text-[var(--color-text-tertiary)] border border-[var(--color-border)]'
                     }`}
                   >
                     {count}
@@ -78,13 +84,12 @@ export default function FeaturedProducts({
           </div>
         </div>
 
-        {/* Product Grid — denser mobile: 2 cols, tighter gaps, 3:4 cards */}
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-2 sm:gap-3 lg:gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-white/5 bg-[#13161C]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-[var(--color-border)] bg-white">
                 <div className="aspect-[3/4] w-full skeleton-shimmer" />
-                <div className="p-2 sm:p-3 space-y-1.5">
+                <div className="p-3 space-y-2">
                   <div className="h-3 w-2/3 rounded skeleton-shimmer" />
                   <div className="h-3 w-1/2 rounded skeleton-shimmer" />
                   <div className="h-6 w-full rounded-lg skeleton-shimmer" />
@@ -93,13 +98,13 @@ export default function FeaturedProducts({
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="py-12 sm:py-16 text-center border border-[#E2DDD5] rounded-2xl bg-[#FAF8F5] px-6">
-            <p className="font-serif text-base font-light text-[#1A1918]">Next small-run drop releasing soon</p>
-            <p className="text-xs text-[#5C5852] mt-2 mb-4">This category is in production at the Ilorin atelier. Message for lot photos and early access.</p>
-            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#121212] text-white px-4 py-2 text-xs font-medium hover:bg-[#1A1918] transition-colors">Chat with Concierge to Reserve</a>
+          <div className="py-12 sm:py-16 text-center border border-[var(--color-border)] rounded-2xl bg-white px-6">
+            <p className="font-serif text-base font-light text-[var(--color-text-primary)]">Next small-run drop releasing soon</p>
+            <p className="text-xs text-[var(--color-text-tertiary)] mt-2 mb-4">This category is in production at the Ilorin atelier. Message for lot photos and early access.</p>
+            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-black px-5 py-2.5 text-xs font-semibold hover:shadow-md active:scale-[0.97] transition-all">Chat with Concierge to Reserve</a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

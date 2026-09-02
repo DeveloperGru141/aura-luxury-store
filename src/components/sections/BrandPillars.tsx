@@ -8,7 +8,7 @@ export default function BrandPillars() {
     {
       icon: Globe,
       title: 'Insured courier',
-      description: 'Free insured delivery over ₦250,000. ILORIN next-day, rest of Nigeria 2–3 days, signature required.',
+      description: 'Free insured delivery over ₦250,000. Ilorin next-day, rest of Nigeria 2–3 days, signature required.',
     },
     {
       icon: ShieldCheck,
@@ -18,7 +18,7 @@ export default function BrandPillars() {
     {
       icon: Gem,
       title: 'Small-run ateliers',
-      description: 'Bags from Ilorin, wears from Ilorin, shoes from Marche, calibres from Ilorin — made in runs of 25–50.',
+      description: 'Genuine leather bags, silk wears, shoes from Marche, calibres from Switzerland — curated in small runs of 25–50.',
     },
     {
       icon: Gift,
@@ -28,23 +28,23 @@ export default function BrandPillars() {
   ];
 
   return (
-    <section id="heritage" className="bg-[#0B0D11] border-t border-b border-white/5 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 lg:gap-8 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 snap-x snap-mandatory scrollbar-none -mx-4 sm:mx-0 px-4 sm:px-0">
+    <section id="heritage" className="bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 snap-x snap-mandatory scrollbar-none -mx-4 sm:mx-0 px-4 sm:px-0">
           {pillars.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="snap-start shrink-0 w-[260px] sm:w-auto flex flex-col items-center text-center p-4 sm:p-5 lg:p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60 transition-all group touch-manipulation relative overflow-hidden shadow-lg active:scale-[0.97]"
+                className="snap-start shrink-0 w-[260px] sm:w-auto flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl bg-white border border-[var(--color-border)] hover:border-[var(--color-accent-gold)]/40 hover:shadow-[var(--shadow-elev-1)] active:scale-[0.97] transition-all group touch-manipulation"
               >
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 group-hover:bg-[#D4AF37] group-hover:text-black transition-all shadow-md">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[var(--color-accent-gold-light)] border border-[var(--color-accent-gold)]/20 text-[var(--color-accent-gold)] flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-[var(--color-accent-gold)] group-hover:text-black transition-all">
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="font-serif text-[15px] sm:text-base font-medium text-white mb-1.5 leading-tight">
+                <h3 className="text-[14px] sm:text-sm font-semibold text-[var(--color-text-primary)] mb-1.5 leading-tight">
                   {item.title}
                 </h3>
-                <p className="text-[12px] sm:text-xs text-gray-400 font-light leading-relaxed">
+                <p className="text-[12px] sm:text-xs text-[var(--color-text-tertiary)] font-light leading-relaxed">
                   {item.description}
                 </p>
               </div>

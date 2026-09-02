@@ -14,7 +14,6 @@ export default function SearchModal() {
   const { products: liveProducts, loading: productsLoading } = useLiveProducts();
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Debounce the search query
   useEffect(() => {
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
@@ -29,7 +28,6 @@ export default function SearchModal() {
     };
   }, [query]);
 
-  // Loading state: true while initial products are loading OR while debounced query is being processed
   const isSearching = productsLoading || (query.trim() && !debouncedQuery.trim());
 
   const filtered = useMemo(() => {
@@ -47,41 +45,39 @@ export default function SearchModal() {
   if (!isSearchOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-20 px-0 sm:px-4 pb-0 sm:pb-4 bg-black/85 backdrop-blur-md animate-fade-in overscroll-contain touch-manipulation">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-16 px-0 sm:px-4 pb-0 sm:pb-4 bg-black/40 backdrop-blur-sm animate-fade-in overscroll-contain touch-manipulation">
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
-      <div className="relative z-10 w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] bg-[#12151B] border-t sm:border border-[#8C7A5B]/30 rounded-t-2xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-white overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
-        {/* Search Header &mdash; fluid */}
-        <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-white/10">
-          <Search className="w-5 h-5 text-[#8C7A5B] shrink-0" />
+      <div className="relative z-10 w-full max-w-2xl max-h-[92dvh] sm:max-h-[80vh] bg-white border border-[var(--color-border)] rounded-t-2xl sm:rounded-2xl shadow-xl p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 text-[var(--color-text-primary)] overflow-hidden flex flex-col animate-slide-up sm:animate-scale-in">
+        <div className="flex items-center gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-[var(--color-border)]">
+          <Search className="w-5 h-5 text-[var(--color-accent-gold)] shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search bags, silk dresses, watches, gold jewelry..."
-            className="flex-1 min-w-0 bg-transparent border-none outline-none text-[16px] sm:text-base text-white placeholder-gray-500 font-medium"
+            className="flex-1 min-w-0 bg-transparent border-none outline-none text-[16px] sm:text-base text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] font-medium"
             autoFocus
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-gray-400 hover:text-white active:text-white p-2 min-h-[36px] min-w-[36px] flex items-center justify-center text-xs touch-manipulation shrink-0"
+              className="text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] p-2 min-h-[36px] min-w-[36px] flex items-center justify-center text-xs hover:bg-[var(--color-surface-alt)] rounded-full transition-colors shrink-0"
             >
               Clear
             </button>
           )}
           <button
             onClick={() => setIsSearchOpen(false)}
-            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 active:bg-white/15 touch-manipulation shrink-0"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-[var(--color-surface-alt)] text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border)] active:scale-95 transition-all shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Quick Suggestion Pills */}
         {!debouncedQuery && (
           <div className="py-6">
-            <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)] mb-3">
               Popular Searches
             </p>
             <div className="flex flex-wrap gap-2">
@@ -90,10 +86,10 @@ export default function SearchModal() {
                   <button
                     key={term}
                     onClick={() => setQuery(term)}
-                    className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#8C7A5B]/15 hover:border-[#8C7A5B]/40 border border-white/5 text-xs text-gray-300 transition-all flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-full bg-white border border-[var(--color-border)] hover:border-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-light)] text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-all flex items-center gap-1.5 shadow-sm hover:shadow-sm"
                   >
                     <span>{term}</span>
-                    <ArrowRight className="w-3 h-3 text-[#8C7A5B]" />
+                    <ArrowRight className="w-3 h-3 text-[var(--color-accent-gold)]" />
                   </button>
                 )
               )}
@@ -101,30 +97,28 @@ export default function SearchModal() {
           </div>
         )}
 
-        {/* Results View */}
         {debouncedQuery && (
           <div className="py-4 max-h-[60vh] overflow-y-auto">
-            {/* Loading indicator */}
             {isSearching && (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 text-[#8C7A5B] animate-spin" />
-                <span className="ml-2 text-xs text-gray-400">Searching&hellip;</span>
+                <Loader2 className="w-6 h-6 text-[var(--color-accent-gold)] animate-spin" />
+                <span className="ml-2 text-xs text-[var(--color-text-tertiary)]">Searching&hellip;</span>
               </div>
             )}
 
             {!isSearching && (
               <>
-                <p className="text-xs font-medium text-gray-400 mb-3">
+                <p className="text-xs font-medium text-[var(--color-text-tertiary)] mb-3">
                   Found {filtered.length} {filtered.length === 1 ? 'item' : 'items'} matching &ldquo;{debouncedQuery}&rdquo;
                 </p>
 
                 {filtered.length === 0 ? (
-                  <div className="py-12 text-center text-gray-400">
-                    <p className="text-sm font-medium">No luxury items match your criteria.</p>
-                    <p className="text-xs mt-1 text-gray-500">Try searching for &ldquo;Watches&rdquo;, &ldquo;Silk&rdquo;, &ldquo;Gold&rdquo;, or &ldquo;Satchel&rdquo;</p>
+                  <div className="py-12 text-center">
+                    <p className="text-sm font-medium text-[var(--color-text-primary)]">No luxury items match your criteria.</p>
+                    <p className="text-xs mt-1 text-[var(--color-text-tertiary)]">Try searching for &ldquo;Watches&rdquo;, &ldquo;Silk&rdquo;, &ldquo;Gold&rdquo;, or &ldquo;Satchel&rdquo;</p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {filtered.map((item) => (
                       <div
                         key={item.id}
@@ -132,7 +126,7 @@ export default function SearchModal() {
                           setIsSearchOpen(false);
                           setQuickViewProduct(item);
                         }}
-                        className="group flex flex-col rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#8C7A5B]/30 transition-all cursor-pointer"
+                        className="cursor-pointer"
                       >
                         <ProductCard product={item} />
                       </div>

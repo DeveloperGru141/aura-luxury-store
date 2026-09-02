@@ -70,13 +70,15 @@ function mapSupabaseToProduct(row: SupabaseProductRow): Product {
   };
   const category: ProductCategory = slugToCategory[categorySlug] ?? 'bags';
 
+  const rawTagline = row.description ?? '';
+  const tagline = rawTagline.length > 60 ? rawTagline.slice(0, 60).trimEnd().replace(/\s+\S*$/, '') + '…' : rawTagline;
   return {
     id: row.id,
     name: row.name,
     slug: row.slug,
     category,
     categoryLabel: row.categories?.name ?? categoryLabelMap[categorySlug] ?? categorySlug,
-    tagline: row.description?.slice(0, 60) ?? '',
+    tagline,
     description: row.description ?? '',
     price: Number(row.price),
     rating: 5.0,

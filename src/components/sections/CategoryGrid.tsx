@@ -17,7 +17,6 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   const [activeMobileCard, setActiveMobileCard] = useState<string | null>(liveCategories[0]?.id || null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  // Mock category images for fallback until live products are uploaded
   const CATEGORY_MOCK_IMAGES: Record<string, string> = {
     bags: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000&auto=format&fit=crop',
     apparel: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
@@ -48,7 +47,6 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   }, [liveCategories]);
 
   useEffect(() => {
-    // Only engage scroll-driven active hover on mobile & touch viewports
     if (typeof window === 'undefined') return;
 
     const observer = new IntersectionObserver(
@@ -63,7 +61,6 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
         });
       },
       {
-        // Focus on mobile viewport center band with flexible threshold
         rootMargin: '-10% 0px -10% 0px',
         threshold: 0.15,
       }
@@ -77,22 +74,20 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   }, []);
 
   return (
-    <section id="categories" className="py-12 sm:py-16 lg:py-20 bg-[#0D0F14] relative">
+    <section id="categories" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header — concrete, no decorative eyebrow */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 lg:mb-10">
           <div className="min-w-0">
-            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">
-              Explore by <span className="italic font-normal gold-gradient-text">category</span>
+            <h2 className="font-serif text-[26px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
+              Explore by category
             </h2>
           </div>
-          <p className="text-[13px] sm:text-sm text-gray-400 max-w-md leading-relaxed">
-            Five houses: leather bags stitched in Ilorin, silk wears cut in Ilorin, shoes lasted in Marche, Ilorin calibres from Ilorin, and 18k jewelry — each restocked in small runs.
+          <p className="text-[13px] sm:text-sm text-[var(--color-text-tertiary)] max-w-md leading-relaxed">
+            Genuine leather bags, silk wears, shoes lasted in Marche, calibres sourced from Switzerland, and 18k jewelry — curated from Ilorin, each restocked in small runs.
           </p>
         </div>
 
-        {/* 5-Category Bento Grid — denser mobile: 2 cols, tighter gaps */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {liveCategories.map((cat: any, idx: number) => {
             const isFeatured = idx === 0 || idx === 3;
             const isMobileHovered = activeMobileCard === cat.id;
@@ -118,76 +113,66 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     const mapped = (slugToCat[cat.id] ?? cat.id) as ProductCategory;
                     onSelectCategory(mapped);
                   }}
-                  className={`group relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden cursor-pointer transition-all duration-150 active:scale-[0.97] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[120px] sm:min-h-[140px] lg:min-h-[160px] ${
-                    isFeatured ? 'md:col-span-1 lg:col-span-1' : ''
-                  } ${
+                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[140px] sm:min-h-[160px] lg:min-h-[180px] border shadow-sm hover:shadow-md ${
                     isMobileHovered
-                      ? 'border border-[#D4AF37]/75 shadow-2xl shadow-[#D4AF37]/15 ring-1 ring-[#D4AF37]/30 sm:ring-0 sm:shadow-none sm:border-white/10 sm:hover:border-[#D4AF37]/40'
-                      : 'border border-white/10 hover:border-[#D4AF37]/40 active:border-[#D4AF37]/60'
+                      ? 'border-[var(--color-accent-gold)] shadow-md sm:border-[var(--color-border)] sm:hover:border-[var(--color-accent-gold)]/40'
+                      : 'border-[var(--color-border)] hover:border-[var(--color-accent-gold)]/40'
                   }`}
                 >
-                  {/* Background Image — live product from its own category; fallback to category mock image */}
                   <Image
-src={findProductForCategory(cat)?.primaryImage ?? CATEGORY_MOCK_IMAGES[getCategorySlug(cat)] ?? cat.image}
+                    src={findProductForCategory(cat)?.primaryImage ?? CATEGORY_MOCK_IMAGES[getCategorySlug(cat)] ?? cat.image}
                     alt={cat.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className={`mobile-category-img object-cover object-center transition-transform duration-1000 ease-out ease-out group-hover:scale-108 ${
-                      isMobileHovered ? 'scale-105 sm:scale-100 sm:group-hover:scale-108' : 'scale-100'
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className={`mobile-category-img object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 ${
+                      isMobileHovered ? 'scale-105 sm:scale-100 sm:group-hover:scale-105' : 'scale-100'
                     }`}
                   />
 
-                  {/* Dark Vignette Overlay */}
                   <div
-                    className={`absolute inset-0 transition-colors duration-500 ${
+                    className={`absolute inset-0 transition-colors duration-300 ${
                       isMobileHovered
-                        ? 'bg-gradient-to-t from-black/95 via-black/35 to-black/10 sm:from-black/90 sm:via-black/30'
-                        : 'bg-gradient-to-t from-black/90 via-black/30 to-black/10 group-hover:via-black/40'
+                        ? 'bg-gradient-to-t from-black/80 via-black/30 to-black/5 sm:from-black/80 sm:via-black/30'
+                        : 'bg-gradient-to-t from-black/75 via-black/20 to-transparent group-hover:from-black/80'
                     }`}
                   />
 
-                  {/* Card Top Action Pill */}
-                  <div className="absolute top-4 right-4 z-10">
+                  <div className="absolute top-3 right-3 z-10">
                     <div
-                      className={`w-9 h-9 rounded-full backdrop-blur-md border transition-all flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:text-black group-active:scale-90 ${
+                      className={`w-9 h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[var(--color-accent-gold)] group-hover:text-black group-hover:border-[var(--color-accent-gold)] group-active:scale-90 shadow-sm ${
                         isMobileHovered
-                          ? 'bg-[#D4AF37] text-black border-[#D4AF37] scale-105 shadow-lg shadow-[#D4AF37]/30 sm:bg-black/50 sm:text-white sm:border-white/10 sm:scale-100 sm:group-hover:bg-[#D4AF37] sm:group-hover:text-black'
-                          : 'bg-black/50 border-white/10 text-white'
+                          ? 'bg-[var(--color-accent-gold)] text-black border-[var(--color-accent-gold)] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[var(--color-accent-gold)] sm:group-hover:text-black'
+                          : 'bg-white border-white text-[var(--color-text-primary)]'
                       }`}
                     >
                       <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
 
-                  {/* Card Info Bottom — denser mobile padding */}
-                  <div className="absolute inset-x-3 sm:inset-x-6 bottom-3 sm:bottom-6 z-10">
+                  <div className="absolute inset-x-3 sm:inset-x-5 bottom-3 sm:bottom-5 z-10">
                     <div className="flex items-center gap-1.5 mb-1">
                       {isMobileHovered && (
                         <span className="relative flex h-1.5 w-1.5 shrink-0 sm:hidden">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#D4AF37]" />
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent-gold)] opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-accent-gold)]" />
                         </span>
                       )}
-                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37] block">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-amber-200 block">
                         {liveProducts.filter((p: any) => p.category === cat.name || p.categories?.name === cat.name).length || cat.count}
                       </span>
                     </div>
 
                     <h3
-                      className={`font-serif text-base sm:text-xl lg:text-2xl font-medium transition-colors mb-0.5 sm:mb-1 ${
+                      className={`font-serif text-base sm:text-xl lg:text-xl font-medium transition-colors mb-0.5 sm:mb-1 ${
                         isMobileHovered
-                          ? 'text-[#F3E5AB] sm:text-white sm:group-hover:text-[#F3E5AB]'
-                          : 'text-white group-hover:text-[#F3E5AB]'
+                          ? 'text-white sm:text-white sm:group-hover:text-white'
+                          : 'text-white group-hover:text-white'
                       }`}
                     >
                       {cat.name}
                     </h3>
                     <p
-                      className={`text-xs font-light line-clamp-1 transition-all ${
-                        isMobileHovered
-                          ? 'text-gray-200 opacity-100 sm:text-gray-300 sm:opacity-90'
-                          : 'text-gray-300 opacity-90'
-                      }`}
+                      className={`text-xs font-light line-clamp-1 transition-all text-white/80`}
                     >
                       {liveProducts.find((p: any) => p.category === cat.name || p.categories?.name === cat.name)?.tagline ?? cat.tagline}
                     </p>

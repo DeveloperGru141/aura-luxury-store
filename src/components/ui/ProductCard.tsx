@@ -18,11 +18,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [isOpeningWhatsApp, setIsOpeningWhatsApp] = useState(false);
 
   const isWishlisted = isInWishlist(product.id);
-  // Supabase product shape has stock_status and images[]; mock has primaryImage/secondaryImage and inStock
   const anyProduct: any = product as any;
   const stockStatus: 'in_stock' | 'out_of_stock' | undefined = anyProduct.stock_status;
   const isOutOfStock = stockStatus === 'out_of_stock' || anyProduct.inStock === false;
-  // Handle both mock (primaryImage) and supabase (images[]) shapes
   const primaryImg: string = anyProduct.primaryImage ?? anyProduct.images?.[0] ?? '';
   const secondaryImg: string | undefined = anyProduct.secondaryImage ?? anyProduct.images?.[1];
 
@@ -44,7 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-[#13161C] border border-white/5 overflow-hidden transition-[transform,border-color,box-shadow] duration-150 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.97] hover:shadow-2xl hover:shadow-[#D4AF37]/5 touch-manipulation"
+      className="group relative flex flex-col rounded-xl sm:rounded-2xl bg-white border border-[var(--color-border)] overflow-hidden transition-[transform,border-color,box-shadow] duration-200 hover:border-[var(--color-accent-gold)]/30 hover:shadow-[var(--shadow-elev-2)] active:scale-[0.98] touch-manipulation"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={(event) => {
@@ -54,67 +52,61 @@ export default function ProductCard({ product }: ProductCardProps) {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsHovered(false);
       }}
     >
-      {/* Product Image Container — fluid */}
-      <div className="relative aspect-[3/4] sm:aspect-[3/4] w-full overflow-hidden bg-[#1A1E26] cursor-pointer" onClick={handleQuickView}>
-        {/* Primary Image — supports both mock and Supabase shapes */}
+      {/* Product Image Container */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-surface-alt)] cursor-pointer" onClick={handleQuickView}>
         <Image
           src={primaryImg}
           alt={product.name}
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
           className={`mobile-product-primary object-cover object-center transition-all duration-700 ease-out ${
             isHovered && secondaryImg ? 'opacity-0 scale-105' : 'scale-100'
           }`}
         />
 
-        {/* Secondary Image for Hover Reveal & Mobile Auto-Crossfade */}
         {secondaryImg && (
           <Image
             src={secondaryImg}
             alt={`${product.name} alternate view`}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
             className={`mobile-product-secondary object-cover object-center transition-all duration-700 ease-out absolute inset-0 ${
-              isHovered ? 'opacity-100 scale-105' : 'scale-100'
+              isHovered ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
             }`}
           />
         )}
 
-        {/* Out-of-stock badge — fade in, transform+opacity only */}
         {isOutOfStock && (
-          <div className="absolute top-3 left-3 z-10 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border backdrop-blur-md bg-amber-950/80 border-amber-500/40 text-amber-300 badge-fade">
+          <div className="absolute top-2.5 left-2.5 z-10 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border bg-white border-[var(--color-border)] text-[var(--color-text-secondary)] shadow-sm">
             Out of Stock
           </div>
         )}
 
-        {/* Wishlist Button — fluid 44px */}
         <button
           onClick={handleWishlistToggle}
-          className={`absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 p-2.5 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full transition-all duration-300 backdrop-blur-md touch-manipulation ${
+          className={`absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 p-2.5 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full transition-all duration-200 touch-manipulation border shadow-sm ${
             isWishlisted
-              ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
-              : 'bg-black/40 text-gray-300 hover:text-white border border-white/10 hover:bg-black/70 active:bg-black/80'
+              ? 'bg-rose-50 text-rose-500 border-rose-200'
+              : 'bg-white text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] border-[var(--color-border)] hover:border-[var(--color-text-primary)] active:scale-95'
           }`}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
         >
-          <Heart className={`w-4 h-4 transition-transform duration-300 ${isWishlisted ? 'fill-rose-400 scale-110' : ''}`} />
+          <Heart className={`w-4 h-4 transition-transform duration-200 ${isWishlisted ? 'fill-rose-500 scale-110' : ''}`} />
         </button>
 
-        {/* Quick Action Overlay — fluid: always visible on mobile, hover on desktop */}
         <div
           className={`absolute inset-x-2.5 sm:inset-x-3 bottom-2.5 sm:bottom-3 z-10 flex items-center gap-1.5 sm:gap-2 transition-all duration-300 ${
-            isHovered ? 'opacity-100 translate-y-0' : 'opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:translate-y-0 lg:group-hover:pointer-events-auto'
+            isHovered ? 'opacity-100 translate-y-0' : 'opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-2 lg:pointer-events-none lg:group-hover:opacity-100 lg:group-hover:translate-y-0 lg:group-hover:pointer-events-auto'
           }`}
         >
           <button
             onClick={handleQuickView}
-            className="flex-1 py-2.5 px-2 sm:px-3 rounded-lg sm:rounded-xl bg-[#0D0F12]/90 backdrop-blur-md border border-white/10 text-[11px] sm:text-xs font-medium text-gray-200 hover:text-white hover:border-[#D4AF37]/50 active:bg-[#0D0F12] transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation cursor-pointer"
+            className="flex-1 py-2.5 px-2 sm:px-3 rounded-full bg-white border border-[var(--color-border)] text-[11px] sm:text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-primary)] active:scale-[0.97] transition-all flex items-center justify-center gap-1 sm:gap-1.5 shadow-sm min-h-[36px] sm:min-h-[40px] touch-manipulation cursor-pointer"
           >
-            <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] shrink-0" />
+            <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
             <span>View</span>
           </button>
 
-          {/* WhatsApp CTA — brief transitional state on tap, transform+opacity only */}
           <a
             href={whatsappOrderUrl}
             target="_blank"
@@ -124,47 +116,41 @@ export default function ProductCard({ product }: ProductCardProps) {
               setIsOpeningWhatsApp(true);
               setTimeout(() => setIsOpeningWhatsApp(false), 1400);
             }}
-            className="relative overflow-hidden py-2.5 px-3 sm:px-4 rounded-lg sm:rounded-xl font-medium text-[11px] sm:text-xs transition-[transform,filter] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-lg min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-black hover:brightness-110 active:scale-[0.97] active:brightness-95 cursor-pointer"
+            className="py-2.5 px-3 sm:px-4 rounded-full font-semibold text-[11px] sm:text-xs transition-[transform,background-color] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-sm min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-black active:scale-[0.97] cursor-pointer"
           >
-            <span className="shimmer-sheen" />
-            <MessageCircle className={`w-3 h-3 sm:w-3.5 sm:h-3.5 relative z-10 transition-transform duration-150 ${isOpeningWhatsApp ? 'animate-pulse' : ''}`} />
-            <span className="relative z-10">{isOpeningWhatsApp ? 'Opening…' : 'Order'}</span>
+            <MessageCircle className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-150 ${isOpeningWhatsApp ? 'animate-pulse' : ''}`} />
+            <span>{isOpeningWhatsApp ? 'Opening…' : 'Order'}</span>
           </a>
         </div>
       </div>
 
-      {/* Product Information — denser mobile */}
-      <div className="flex flex-col p-2.5 sm:p-3 lg:p-4 flex-1 justify-between gap-1">
+      {/* Product Information */}
+      <div className="flex flex-col p-3 sm:p-3.5 lg:p-4 flex-1 justify-between gap-1.5">
         <div>
-          {/* Category & Star Rating — supports both mock and Supabase shapes */}
-          <div className="flex items-center justify-between text-xs text-gray-400 mb-1 sm:mb-1.5 gap-2">
-            <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold text-[#D4AF37] truncate">
+          <div className="flex items-center justify-between text-xs mb-1.5 gap-2">
+            <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-bold text-[var(--color-accent-gold)] truncate">
               {(product as any).categoryLabel ?? (anyProduct.categories?.name as string) ?? anyProduct.category ?? '—'}
             </span>
-            <div className="flex items-center gap-1 text-amber-400 shrink-0">
-              <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400" />
-              <span className="font-medium text-gray-300 text-[11px] sm:text-xs">{(product as any).rating?.toFixed?.(1) ?? '5.0'}</span>
-              <span className="text-gray-500 text-[10px] hidden sm:inline">({(product as any).reviewCount ?? 0})</span>
+            <div className="flex items-center gap-1 text-amber-500 shrink-0">
+              <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
+              <span className="font-medium text-[var(--color-text-secondary)] text-[11px] sm:text-xs">{(product as any).rating?.toFixed?.(1) ?? '5.0'}</span>
+              <span className="text-[var(--color-text-muted)] text-[10px] hidden sm:inline">({(product as any).reviewCount ?? 0})</span>
             </div>
           </div>
 
-          {/* Product Name — denser mobile */}
           <h3
             onClick={handleQuickView}
-            className="font-serif text-xs sm:text-sm lg:text-base font-medium text-gray-100 hover:text-[#D4AF37] active:text-[#D4AF37] transition-colors cursor-pointer line-clamp-1 mb-0.5 leading-tight"
+            className="font-medium text-xs sm:text-[13px] lg:text-sm text-[var(--color-text-primary)] hover:text-[var(--color-accent-gold)] active:text-[var(--color-accent-gold)] transition-colors cursor-pointer line-clamp-1 mb-1 leading-tight"
           >
             {product.name}
           </h3>
 
-          {/* Tagline — denser mobile */}
-          <p className="text-[10px] sm:text-xs text-gray-400 line-clamp-1 mb-1.5 sm:mb-2 leading-tight">
+          <p className="text-[11px] sm:text-xs text-[var(--color-text-tertiary)] line-clamp-1 leading-tight">
             {(product as any).tagline ?? (anyProduct.description ? String(anyProduct.description).slice(0, 60) : '')}
           </p>
         </div>
 
-        {/* Bottom: Color Swatches & Price (No discount strikethrough) */}
-        <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-auto gap-2">
-          {/* Color swatches — only if product has colors (mock shape) */}
+        <div className="flex items-center justify-between pt-2.5 border-t border-[var(--color-border)] mt-auto gap-2">
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             {((product as any).colors as any[])?.map((c: any) => (
               <button
@@ -173,8 +159,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                   e.stopPropagation();
                   setSelectedColor(c.name);
                 }}
-                className={`w-5 h-5 sm:w-3.5 sm:h-3.5 rounded-full border-2 sm:border transition-all touch-manipulation ${
-                  selectedColor === c.name ? 'ring-2 ring-[#D4AF37] ring-offset-1 ring-offset-[#13161C] border-white' : 'border-white/20 hover:scale-110 active:scale-95'
+                className={`w-5 h-5 sm:w-4 sm:h-4 rounded-full border-2 transition-all touch-manipulation ${
+                  selectedColor === c.name ? 'ring-2 ring-[var(--color-accent-gold)] ring-offset-2 ring-offset-white border-white' : 'border-[var(--color-border)] hover:scale-110 active:scale-95'
                 }`}
                 style={{ backgroundColor: c.hex }}
                 title={c.name}
@@ -183,9 +169,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             ))}
           </div>
 
-          {/* Price — denser mobile */}
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
-            <span className="text-xs sm:text-sm font-semibold text-[#F3E5AB] tracking-tight truncate">
+            <span className="text-xs sm:text-sm font-bold text-[var(--color-text-primary)] tracking-tight truncate">
               {formatPrice(Number(product.price))}
             </span>
           </div>
