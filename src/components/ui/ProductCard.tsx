@@ -22,7 +22,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   const stockStatus: 'in_stock' | 'out_of_stock' | undefined = anyProduct.stock_status;
   const isOutOfStock = stockStatus === 'out_of_stock' || anyProduct.inStock === false;
   const primaryImg: string = anyProduct.primaryImage ?? anyProduct.images?.[0] ?? '';
-  const secondaryImg: string | undefined = anyProduct.secondaryImage ?? anyProduct.images?.[1];
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -52,29 +51,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsHovered(false);
       }}
     >
-      {/* Product Image Container — reduced height on mobile, same width */}
+      {/* Product Image Container — single image, no shimmer */}
       <div className="relative aspect-[1/1] w-full overflow-hidden bg-[var(--color-surface-alt)] cursor-pointer" onClick={handleQuickView}>
         <Image
           src={primaryImg}
           alt={product.name}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
-          className={`mobile-product-primary object-cover object-center transition-all duration-700 ease-out ${
-            isHovered && secondaryImg ? 'opacity-0 scale-105' : 'scale-100'
-          }`}
+          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
         />
-
-        {secondaryImg && (
-          <Image
-            src={secondaryImg}
-            alt={`${product.name} alternate view`}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
-            className={`mobile-product-secondary object-cover object-center transition-all duration-700 ease-out absolute inset-0 ${
-              isHovered ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
-            }`}
-          />
-        )}
 
         {isOutOfStock && (
           <div className="absolute top-2.5 left-2.5 z-10 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border bg-white border-[var(--color-border)] text-[var(--color-text-secondary)] shadow-sm">

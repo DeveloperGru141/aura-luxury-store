@@ -155,18 +155,6 @@
   }
 }
 
-@keyframes mobileProductPrimary {
-  0%, 38% { opacity: 1; }
-  50%, 88% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes mobileProductSecondary {
-  0%, 38% { opacity: 0; }
-  50%, 88% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 @keyframes subtleFloat {
   0%, 100% {
     transform: translateY(0px);
@@ -290,14 +278,6 @@
 /* Touch & Mobile animations: Photography gently crossfades & breathes on mobile */
 @media (max-width: 768px), (hover: none), (pointer: coarse) {
   @media (prefers-reduced-motion: no-preference) {
-    .mobile-product-primary {
-      animation: mobileProductPrimary 7s ease-in-out infinite !important;
-    }
-
-    .mobile-product-secondary {
-      animation: mobileProductSecondary 7s ease-in-out infinite !important;
-    }
-
     .mobile-category-img {
       animation: mobileKenBurns 12s ease-in-out infinite alternate !important;
     }
