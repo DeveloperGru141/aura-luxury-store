@@ -41,6 +41,7 @@ export default function HeroSection() {
   };
 
   useEffect(() => {
+    if (heroSlides.length > 0) setCurrentSlideIndex(0);
     resetTimer();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -109,7 +110,7 @@ export default function HeroSection() {
             <h1 className="font-serif text-[22px] leading-tight font-light text-[var(--color-text-primary)] tracking-tight mt-1.5">
               Genuine pieces, <em className="italic font-normal text-[var(--color-accent-gold)]">curated from Ilorin.</em>
             </h1>
-            <p className="text-[12px] text-[var(--color-text-tertiary)] font-light mt-2 leading-snug">Timepieces, sourced from Switzerland.</p>
+
           </div>
 
           {/* Right column — single-card carousel */}
@@ -125,10 +126,11 @@ export default function HeroSection() {
                   const isActive = currentSlideIndex === idx;
                   const product = liveProducts.find((p) => p.id === slide.productId);
                   return (
-                    <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                      <Image src={slide.image} alt={slide.title} fill className="object-cover" sizes="48vw" priority={idx === 0} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-2.5 flex items-end justify-between gap-1.5">
+                    <div key={slide.id} className={`absolute inset-0 bg-white flex items-center justify-center p-2 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                      <div className="relative w-full h-full bg-[var(--color-surface-alt)] rounded-xl overflow-hidden border border-[var(--color-border)] flex items-center justify-center p-3">
+                        <Image src={slide.image} alt={slide.title} fill className="object-contain p-1" sizes="48vw" priority={idx === 0} />
+                      </div>
+                      <div className="absolute inset-x-0 bottom-0 p-2.5 flex items-end justify-between gap-1.5 bg-gradient-to-t from-black/70 via-black/30 to-transparent rounded-b-2xl">
                         <div className="min-w-0">
                           <div className="flex items-center gap-1 mb-0.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-gold)] shrink-0" />
@@ -199,7 +201,7 @@ export default function HeroSection() {
               Genuine pieces,<br />
               <span className="italic font-normal text-[var(--color-accent-gold)]">curated from Ilorin.</span>
             </h1>
-            <p className="text-[15px] font-normal text-[var(--color-text-tertiary)] leading-snug mb-4">Timepieces, sourced from Switzerland.</p>
+
             <p className="text-[14px] text-[var(--color-text-secondary)] max-w-[38ch] font-light leading-relaxed mb-7">
               Every piece we carry is genuine — leather bags, silk wears, hand-selected shoes from Marche, and watches sourced direct from Swiss makers. We're based in Ilorin, where every order is inspected before it ships — with insured courier delivery, worldwide.
             </p>
@@ -251,9 +253,10 @@ export default function HeroSection() {
                   {heroSlides.map((slide, idx) => {
                     const isActive = currentSlideIndex === idx;
                     return (
-                      <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                        <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-cover object-center ${isActive ? 'animate-hero-drift' : ''}`} sizes="65vw" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                      <div key={slide.id} className={`absolute inset-0 bg-white flex items-center justify-center p-3 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                        <div className="relative w-full h-full max-w-[92%] max-h-[92%] bg-[var(--color-surface-alt)] rounded-2xl overflow-hidden border border-[var(--color-border)] flex items-center justify-center p-6 shadow-sm">
+                          <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-contain p-2 ${isActive ? 'animate-hero-drift' : ''}`} sizes="65vw" />
+                        </div>
                       </div>
                     );
                   })}
