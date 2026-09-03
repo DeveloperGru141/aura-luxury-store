@@ -44,6 +44,8 @@ export default function Footer() {
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-[var(--color-text-tertiary)] text-center sm:text-left">
+            <span>&copy; {new Date().getFullYear()} Omo Esho Signatures. All rights reserved.</span>
+            <span className="hidden sm:inline">&bull;</span>
             <a href="/admin/login" className="hover:text-[var(--color-text-primary)] transition-colors opacity-60 hover:opacity-100">Admin</a>
           </div>
 
