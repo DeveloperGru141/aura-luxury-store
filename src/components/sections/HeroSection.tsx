@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle, Sparkles, ShieldCheck } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
@@ -123,10 +123,44 @@ export default function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [progressKey, setProgressKey] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const activeProduct = watchProducts[currentIndex % watchProducts.length];
 
-  // Auto-advance every 5 seconds (pauses on user interaction)
+  // Mouse Parallax Physics for Award-Winning Depth
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 120, mass: 0.5 };
+  const smoothMouseX = useSpring(mouseX, springConfig);
+  const smoothMouseY = useSpring(mouseY, springConfig);
+
+  // Layer parallax transforms
+  const watermarkX = useTransform(smoothMouseX, [-0.5, 0.5], [-12, 12]);
+  const watermarkY = useTransform(smoothMouseY, [-0.5, 0.5], [-8, 8]);
+  const modelX = useTransform(smoothMouseX, [-0.5, 0.5], [6, -6]);
+  const modelY = useTransform(smoothMouseY, [-0.5, 0.5], [4, -4]);
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      mouseX.set(x);
+      mouseY.set(y);
+    },
+    [mouseX, mouseY]
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    setIsPaused(false);
+    mouseX.set(0);
+    mouseY.set(0);
+  }, [mouseX, mouseY]);
+
+  // Timed auto-transition with progress reset
   useEffect(() => {
     if (isPaused) return;
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -134,17 +168,25 @@ export default function HeroSection() {
     const timer = setInterval(() => {
       if (document.hidden) return;
       setCurrentIndex((prev) => (prev + 1) % watchProducts.length);
-    }, 5000);
+      setProgressKey((prev) => prev + 1);
+    }, 5200);
 
     return () => clearInterval(timer);
-  }, [watchProducts.length, isPaused]);
+  }, [watchProducts.length, isPaused, currentIndex]);
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % watchProducts.length);
+    setProgressKey((prev) => prev + 1);
   };
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + watchProducts.length) % watchProducts.length);
+    setProgressKey((prev) => prev + 1);
+  };
+
+  const handleSelectIndex = (idx: number) => {
+    setCurrentIndex(idx);
+    setProgressKey((prev) => prev + 1);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -161,7 +203,7 @@ export default function HeroSection() {
     setTouchStartX(null);
   };
 
-  // WhatsApp pre-filled order URL (calling +234 706 507 6565)
+  // WhatsApp order URL
   const whatsappUrl = getWhatsAppOrderUrl(
     activeProduct.name,
     formatPrice(activeProduct.price)
@@ -169,20 +211,24 @@ export default function HeroSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="home"
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       className="relative overflow-hidden bg-[#F4EFE6] text-[#1A1A1A] select-none pt-4 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 border-b border-[#E7E1D4]"
     >
-      {/* ================= 1. LARGE LOW-OPACITY SERIF TEXT WATERMARK ('SIGNATURES') ================= */}
-      {/* Positioned across the background behind the model as shown in image_9.png */}
-      <div className="absolute inset-x-0 bottom-6 sm:bottom-10 lg:bottom-14 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+      {/* ================= 1. LARGE LOW-OPACITY SERIF TEXT WATERMARK ('SIGNATURES') WITH SUBTLE PARALLAX ================= */}
+      <motion.div
+        style={{ x: watermarkX, y: watermarkY }}
+        className="absolute inset-x-0 bottom-6 sm:bottom-10 lg:bottom-14 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0 will-change-transform"
+      >
         <span className="font-serif text-[clamp(4.5rem,19vw,17rem)] font-extralight tracking-[0.16em] uppercase text-[#7D6B5A]/[0.08] whitespace-nowrap leading-none select-none">
           SIGNATURES
         </span>
-      </div>
+      </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -225,27 +271,40 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Carousel Navigation Counter & Arrows: (<) (>) 01 / 06 */}
-            <div className="flex items-center gap-2.5 mb-7">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-full bg-white border border-stone-300 text-black hover:border-black active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer"
-                aria-label="Previous watch"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
+            {/* Carousel Navigation Counter & Arrows: (<) (>) 01 / 06 + Hairline Progress Bar */}
+            <div className="flex flex-col gap-2 mb-7">
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={handlePrev}
+                  className="w-10 h-10 rounded-full bg-white border border-stone-300 text-black hover:border-black active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer"
+                  aria-label="Previous watch"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
 
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-full bg-black text-white hover:bg-zinc-800 active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer"
-                aria-label="Next watch"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+                <button
+                  onClick={handleNext}
+                  className="w-10 h-10 rounded-full bg-black text-white hover:bg-zinc-800 active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer"
+                  aria-label="Next watch"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
 
-              <span className="text-xs text-stone-600 font-serif ml-2">
-                0{currentIndex + 1} / 0{watchProducts.length}
-              </span>
+                <span className="text-xs text-stone-600 font-serif ml-2">
+                  0{currentIndex + 1} / 0{watchProducts.length}
+                </span>
+              </div>
+
+              {/* Minimalist Hairline Slide Timer Bar */}
+              <div className="w-24 h-[1.5px] bg-stone-300/60 rounded-full overflow-hidden ml-1">
+                <motion.div
+                  key={progressKey}
+                  initial={{ width: '0%' }}
+                  animate={{ width: isPaused ? '0%' : '100%' }}
+                  transition={{ duration: 5.2, ease: 'linear' }}
+                  className="h-full bg-[#B8941F]"
+                />
+              </div>
             </div>
 
             {/* Bottom Features List: 100% GENUINE | WORLDWIDE INSURED */}
@@ -262,15 +321,16 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* ================= COLUMN 2: CENTER STAGE - MODEL BASE LAYER + DYNAMIC WRIST OVERLAY ================= */}
-          {/* Standing directly on the background (no card frame) as instructed */}
+          {/* ================= COLUMN 2: CENTER STAGE - STATIC MODEL + DYNAMIC WRIST OVERLAY ================= */}
           <div className="lg:col-span-5 relative flex items-center justify-center w-full min-h-[460px] sm:min-h-[540px] lg:min-h-[640px] order-1 lg:order-2">
             
-            {/* Center Model Container (No outer card border, standing directly on the canvas) */}
-            <div className="relative w-full max-w-[420px] lg:max-w-[460px] aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] flex items-center justify-center mx-auto">
-              
-              {/* Static Base Model Layer: Bearded man in blue dotted shirt, brown belt, dark trousers */}
+            {/* Center Model Container (No card frame, standing directly on the canvas with subtle parallax) */}
+            <motion.div
+              style={{ x: modelX, y: modelY }}
+              className="relative w-full max-w-[420px] lg:max-w-[460px] aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] flex items-center justify-center mx-auto will-change-transform"
+            >
               <div className="relative w-full h-full">
+                {/* Static Base Model Layer: Bearded man in blue dotted shirt, brown belt, dark trousers */}
                 <Image
                   src="/images/model-bare-wrist.jpg"
                   alt="Omo Esho Signatures Model"
@@ -287,7 +347,7 @@ export default function HeroSection() {
                   Centered with -translate-x-1/2 -translate-y-1/2
                 */}
                 <div
-                  className="absolute z-30 pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[110px] sm:w-[120px] lg:w-[130px] aspect-square flex items-center justify-center"
+                  className="absolute z-30 pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[110px] sm:w-[120px] lg:w-[130px] aspect-square flex items-center justify-center group/wrist"
                   style={{
                     top: '65%',
                     left: '51%',
@@ -295,15 +355,20 @@ export default function HeroSection() {
                   onClick={() => activeProduct.productRef && setQuickViewProduct(activeProduct.productRef)}
                   title={`Click to inspect ${activeProduct.name}`}
                 >
-                  {/* Framer Motion AnimatePresence: Transitions ONLY within this isolated overlay area on the model's hand */}
+                  {/* Framer Motion AnimatePresence with Spring Physics & Optical Glint */}
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeProduct.id}
-                      initial={{ opacity: 0, scale: 0.84, rotate: -8 }}
+                      initial={{ opacity: 0, scale: 0.82, rotate: -10 }}
                       animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      exit={{ opacity: 0, scale: 1.12, rotate: 8 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.55)] cursor-pointer"
+                      exit={{ opacity: 0, scale: 1.14, rotate: 10 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 280,
+                        damping: 22,
+                        mass: 0.8,
+                      }}
+                      className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.55)] cursor-pointer overflow-hidden rounded-full"
                     >
                       <Image
                         src={activeProduct.overlayCutout}
@@ -312,15 +377,23 @@ export default function HeroSection() {
                         className="object-contain"
                         priority
                       />
+
+                      {/* Ethereal Optical Glass Sheen Sweep on Transition */}
+                      <motion.div
+                        initial={{ x: '-120%', opacity: 0 }}
+                        animate={{ x: '140%', opacity: [0, 0.7, 0] }}
+                        transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none rounded-full"
+                      />
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Subtle golden beacon ping on wrist */}
-                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#B8941F] opacity-70 animate-ping pointer-events-none" />
+                  {/* Golden Pulse Beacon on Wrist */}
+                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#B8941F] opacity-75 animate-ping pointer-events-none" />
                 </div>
 
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* ================= COLUMN 3: RIGHT CONTROLS - PRODUCT CARD & 6-THUMBNAIL SELECTOR GRID ================= */}
@@ -330,11 +403,11 @@ export default function HeroSection() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeProduct.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="bg-white rounded-2xl p-5 shadow-lg border border-stone-200/80 text-left relative"
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -12, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-white rounded-2xl p-5 shadow-lg border border-stone-200/80 text-left relative overflow-hidden"
               >
                 {/* Top Badge Row */}
                 <div className="flex items-center justify-between mb-2">
@@ -374,9 +447,9 @@ export default function HeroSection() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-black hover:bg-zinc-900 active:scale-[0.98] text-white font-medium text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="w-full py-3 px-4 rounded-xl bg-black hover:bg-zinc-900 active:scale-[0.98] text-white font-medium text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all cursor-pointer group"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
+                  <MessageCircle className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
                   <span>ORDER ON WHATSAPP</span>
                 </a>
               </motion.div>
@@ -400,8 +473,8 @@ export default function HeroSection() {
                   return (
                     <button
                       key={item.id}
-                      onClick={() => setCurrentIndex(idx)}
-                      className={`relative aspect-square rounded-2xl bg-white border transition-all cursor-pointer p-1 flex items-center justify-center overflow-hidden ${
+                      onClick={() => handleSelectIndex(idx)}
+                      className={`relative aspect-square rounded-2xl bg-white border transition-all cursor-pointer p-1 flex items-center justify-center overflow-hidden active:scale-95 ${
                         isActive
                           ? 'border-[#B8941F] ring-2 ring-[#B8941F]/40 shadow-md scale-[1.03]'
                           : 'border-stone-200/90 hover:border-black opacity-80 hover:opacity-100 shadow-sm'
@@ -417,6 +490,11 @@ export default function HeroSection() {
                           sizes="85px"
                         />
                       </div>
+
+                      {/* Subtle active status indicator line */}
+                      {isActive && (
+                        <span className="absolute bottom-1 inset-x-2 h-0.5 bg-[#B8941F] rounded-full" />
+                      )}
                     </button>
                   );
                 })}
