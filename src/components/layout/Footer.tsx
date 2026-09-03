@@ -22,7 +22,7 @@ export default function Footer() {
             </div>
 
             <p className="text-[var(--color-text-tertiary)] text-xs font-light max-w-md leading-relaxed">
-              Five houses, sourced with intent: genuine leather bags, silk wears, shoes lasted in Marche, watch calibres from Switzerland, and 18k jewelry — based in Ilorin, priced in naira.
+              Every piece we carry is genuine leather bags,wears,genuine leather and wristwatches sourced directly from various makers,we're based in ilorin where every order is inspected before it ships with insured courier delivery worldwide
             </p>
           </div>
 
@@ -44,12 +44,6 @@ export default function Footer() {
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-[var(--color-text-tertiary)] text-center sm:text-left">
-            <span>&copy; {new Date().getFullYear()} Omo Esho Signatures. All rights reserved.</span>
-            <span className="hidden sm:inline">&bull;</span>
-            <a href="#" className="hover:text-[var(--color-text-primary)] transition-colors">Privacy Protocol</a>
-            <span>&bull;</span>
-            <a href="#" className="hover:text-[var(--color-text-primary)] transition-colors">Terms of Service</a>
-            <span>&bull;</span>
             <a href="/admin/login" className="hover:text-[var(--color-text-primary)] transition-colors opacity-60 hover:opacity-100">Admin</a>
           </div>
 
