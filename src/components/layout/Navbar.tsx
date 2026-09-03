@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/StoreContext';
-import { Search, MessageCircle, ShoppingBag } from 'lucide-react';
+import { Search, MessageCircle } from 'lucide-react';
 import type { ProductCategory } from '@/types/store';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
 
@@ -26,7 +26,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   const navLinks: { label: string; href: string; category?: ProductCategory }[] = [
     { label: 'Shop', href: '#catalogue', category: 'all' },
-    { label: 'New Arrivals', href: '#catalogue', category: 'all' },
+    { label: 'Shoes', href: '#catalogue', category: 'shoes' },
     { label: 'Timepieces', href: '#catalogue', category: 'watches' },
     { label: 'Bags', href: '#catalogue', category: 'bags' },
     { label: 'Wears', href: '#catalogue', category: 'apparel' },
@@ -67,10 +67,11 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           : 'bg-[#F4F0E8] border-b border-[#E7E2D6]'
       }`}
     >
-      {/* TOP ROW: Hamburger Menu (Left) | Grand Editorial Brand Title (Center) | Search & Concierge (Right) */}
+      {/* TOP ROW: Mobile Hamburger (hidden on desktop) | Centered Brand Title | Search & Concierge */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between gap-4">
-        {/* Left: Minimalist Hamburger Menu */}
-        <div className="flex items-center">
+        
+        {/* Left: Hamburger menu visible on mobile only, hidden on desktop */}
+        <div className="flex items-center md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 -ml-2 rounded-lg text-black hover:bg-black/5 active:bg-black/10 transition-colors flex flex-col items-start justify-center gap-1.5 touch-manipulation cursor-pointer group"
@@ -83,7 +84,10 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           </button>
         </div>
 
-        {/* Center: Grand Editorial Brand Title Styled Exactly Like CHRONEX WATCHES in Reference */}
+        {/* Desktop Left Spacer to keep title centered */}
+        <div className="hidden md:block w-20" aria-hidden="true" />
+
+        {/* Center: Grand Editorial Brand Title */}
         <div className="flex-1 text-center">
           <a
             href="#home"
@@ -101,7 +105,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
         </div>
 
         {/* Right: Search & Concierge Icons */}
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center justify-end gap-1 sm:gap-2 md:w-20">
           {/* Search Trigger */}
           <button
             onClick={() => setIsSearchOpen(true)}
@@ -111,7 +115,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             <Search className="w-5 h-5 text-black" />
           </button>
 
-          {/* Concierge Hotline / Bag */}
+          {/* Concierge Hotline */}
           <a
             href={conciergeUrl}
             target="_blank"
@@ -125,7 +129,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
         </div>
       </div>
 
-      {/* SUBNAV LINE: Clean Horizontal Category Text Links (As seen in reference image) */}
+      {/* SUBNAV LINE: Clean Horizontal Category Text Links with Shoes */}
       <div className="border-t border-[#E5DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-start sm:justify-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
           {navLinks.map((link) => (
@@ -143,7 +147,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#E5DFD3] bg-[#F4F0E8] px-5 py-6 animate-slide-down shadow-xl max-h-[calc(100dvh-120px)] overflow-y-auto">
+        <div className="md:hidden border-t border-[#E5DFD3] bg-[#F4F0E8] px-5 py-6 animate-slide-down shadow-xl max-h-[calc(100dvh-120px)] overflow-y-auto">
           <nav className="flex flex-col gap-2">
             {navLinks.map((link) => (
               <a
