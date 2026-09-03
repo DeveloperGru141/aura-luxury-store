@@ -71,14 +71,14 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   }, []);
 
   return (
-    <section id="categories" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative" style={{ contentVisibility: 'auto', containIntrinsicSize: '600px' }}>
+    <section id="categories" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative" style={{ contentVisibility: 'auto', containIntrinsicSize: '600px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col mb-5 sm:mb-8 lg:mb-10"
+          className="flex flex-col mb-6 sm:mb-8 lg:mb-10"
         >
           <h2 className="font-sans text-[20px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight text-[var(--color-text-primary)] leading-tight uppercase">
             Explore by category
@@ -90,7 +90,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4"
         >
           {liveCategories.map((cat: any, idx: number) => {
             const isMobileHovered = activeMobileCard === cat.id;
@@ -118,7 +118,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     const mapped = (slugToCat[cat.id] ?? cat.id) as ProductCategory;
                     onSelectCategory(mapped);
                   }}
-                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] aspect-[5/3] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[110px] sm:min-h-[160px] lg:min-h-[180px] border shadow-sm hover:shadow-md ${
+                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] aspect-[16/9] sm:aspect-[4/3] lg:aspect-[16/10] touch-manipulation min-h-[100px] sm:min-h-[160px] lg:min-h-[180px] border shadow-sm hover:shadow-md ${
                     isMobileHovered
                       ? 'border-[#9A7B1F] shadow-md sm:border-[var(--color-border)] sm:group-hover:border-[#9A7B1F] sm:group-hover:shadow-md'
                       : 'border-[var(--color-border)] hover:border-[#9A7B1F]/60 hover:shadow-md'
@@ -142,38 +142,38 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     }`}
                   />
 
-                  <div className="absolute top-2.5 right-2.5 z-10">
+                  <div className="absolute top-2 right-2 z-10">
                     <div
-                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
+                      className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
                         isMobileHovered
                           ? 'bg-[#9A7B1F] text-white border-[#9A7B1F] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[#9A7B1F] sm:group-hover:text-white'
                           : 'bg-white border-white text-[var(--color-text-primary)]'
                       }`}
                     >
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                       <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
 
-                  <div className="absolute inset-x-3 sm:inset-x-5 bottom-3 sm:bottom-5 z-10">
-                    <div className="flex items-center gap-1.5 mb-1">
+                  <div className="absolute inset-x-2.5 sm:inset-x-5 bottom-2.5 sm:bottom-5 z-10">
+                    <div className="flex items-center gap-1 mb-0.5">
                       {isMobileHovered && (
                         <span className="relative flex h-1.5 w-1.5 shrink-0 sm:hidden">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#9A7B1F] opacity-75" />
                           <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#9A7B1F]" />
                         </span>
                       )}
-                      <span className="text-[10px] uppercase font-bold tracking-widest text-amber-200 block">
+                      <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-amber-200 block">
                         {liveProducts.filter((p: any) => p.category === cat.name || p.categories?.name === cat.name).length || cat.count}
                       </span>
                     </div>
 
                     <h3
-                      className={`font-serif text-base sm:text-xl lg:text-xl font-medium transition-colors mb-0.5 sm:mb-1 text-white group-hover:text-white`}
+                      className={`font-serif text-[14px] sm:text-xl lg:text-xl font-medium transition-colors mb-0.5 sm:mb-1 text-white group-hover:text-white leading-tight`}
                     >
                       {cat.name}
                     </h3>
                     <p
-                      className={`text-xs font-light line-clamp-1 transition-all text-white/80`}
+                      className={`text-[11px] sm:text-xs font-light line-clamp-1 transition-all text-white/80`}
                     >
                       {liveProducts.find((p: any) => p.category === cat.name || p.categories?.name === cat.name)?.tagline ?? cat.tagline}
                     </p>

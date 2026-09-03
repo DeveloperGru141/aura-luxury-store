@@ -89,7 +89,7 @@ export default function FeaturedProducts({
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
             {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} className="rounded-xl sm:rounded-2xl overflow-hidden border border-[var(--color-border)] bg-white">
                 <div className="aspect-[1/1] w-full skeleton-shimmer" />
@@ -108,7 +108,7 @@ export default function FeaturedProducts({
             <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-black hover:bg-zinc-900 text-white px-5 py-2.5 text-xs font-semibold hover:shadow-md active:scale-[0.97] transition-all">Chat with Concierge to Reserve</a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
