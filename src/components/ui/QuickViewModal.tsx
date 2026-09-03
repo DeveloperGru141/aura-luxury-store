@@ -168,7 +168,7 @@ export default function QuickViewModal() {
                       onClick={() => setSelectedSize(s)}
                       className={`px-4 py-2 rounded-full border text-xs font-medium transition-all cursor-pointer ${
                         activeSize === s
-                          ? 'border-[var(--color-accent-gold)] bg-[var(--color-accent-gold)] text-black font-semibold shadow-sm'
+                          ? 'border-[var(--color-accent-gold)] bg-black text-white font-semibold shadow-sm'
                           : 'border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-text-primary)] hover:text-[var(--color-text-primary)]'
                       }`}
                     >

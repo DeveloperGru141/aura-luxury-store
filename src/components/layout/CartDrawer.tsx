@@ -129,7 +129,7 @@ export default function CartDrawer() {
                 </p>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="px-5 py-2.5 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-black text-xs font-bold shadow-sm active:scale-[0.97] transition-all"
+                  className="px-5 py-2.5 rounded-full bg-black hover:bg-zinc-900 text-white text-xs font-bold shadow-sm active:scale-[0.97] transition-all"
                 >
                   Explore Collections
                 </button>

@@ -167,7 +167,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               href={`https://wa.me/2347065076565?text=${encodeURIComponent(whatsappMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] active:scale-[0.98] text-black font-semibold text-sm shadow-sm hover:shadow-md transition-all min-h-[48px]"
+              className="inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-black hover:bg-zinc-900 active:scale-[0.98] text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all min-h-[48px]"
             >
               Order via WhatsApp
             </a>

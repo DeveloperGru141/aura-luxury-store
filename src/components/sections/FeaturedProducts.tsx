@@ -70,7 +70,7 @@ export default function FeaturedProducts({
                   }}
                   className={`snap-start px-4 py-2.5 min-h-[40px] rounded-full text-[11px] sm:text-xs font-medium uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-2 shrink-0 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-gold)] focus-visible:ring-offset-2 ${
                     isActive
-                      ? 'bg-[var(--color-accent-gold)] text-black font-semibold shadow-sm'
+                      ? 'bg-black text-white font-semibold shadow-sm'
                       : 'bg-white border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-primary)] active:scale-[0.97]'
                   }`}
                 >
@@ -105,7 +105,7 @@ export default function FeaturedProducts({
           <div className="py-10 sm:py-16 text-center border border-[var(--color-border)] rounded-2xl bg-white px-6">
             <p className="font-serif text-base font-light text-[var(--color-text-primary)]">Next small-run drop releasing soon</p>
             <p className="text-xs text-[var(--color-text-tertiary)] mt-2 mb-4">This category is in production at the Ilorin atelier. Message for lot photos and early access.</p>
-            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-black px-5 py-2.5 text-xs font-semibold hover:shadow-md active:scale-[0.97] transition-all">Chat with Concierge to Reserve</a>
+            <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-black hover:bg-zinc-900 text-white px-5 py-2.5 text-xs font-semibold hover:shadow-md active:scale-[0.97] transition-all">Chat with Concierge to Reserve</a>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-4">

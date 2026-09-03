@@ -99,7 +99,7 @@ export default function FlashDropBanner() {
 
                 <a
                   href="#catalogue"
-                  className="py-3 px-6 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] active:scale-[0.97] text-black font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm"
+                  className="py-3 px-6 rounded-full bg-black hover:bg-zinc-900 active:scale-[0.97] text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm"
                 >
                   <span>Explore Vault Pieces</span>
                   <ArrowRight className="w-3.5 h-3.5" />

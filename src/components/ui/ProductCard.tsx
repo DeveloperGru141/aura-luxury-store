@@ -101,7 +101,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               setIsOpeningWhatsApp(true);
               setTimeout(() => setIsOpeningWhatsApp(false), 1400);
             }}
-            className="py-2.5 px-3 sm:px-4 rounded-full font-semibold text-[11px] sm:text-xs transition-[transform,background-color] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-sm min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-black active:scale-[0.97] cursor-pointer"
+            className="py-2.5 px-3 sm:px-4 rounded-full font-semibold text-[11px] sm:text-xs transition-[transform,background-color] duration-150 flex items-center justify-center gap-1 sm:gap-1.5 shadow-sm min-h-[36px] sm:min-h-[40px] touch-manipulation shrink-0 bg-black hover:bg-zinc-900 text-white active:scale-[0.97] cursor-pointer"
           >
             <MessageCircle className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-150 ${isOpeningWhatsApp ? 'animate-pulse' : ''}`} />
             <span>{isOpeningWhatsApp ? 'Opening…' : 'Order'}</span>
