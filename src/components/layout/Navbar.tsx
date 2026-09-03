@@ -77,7 +77,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   return (
     <header
-      className={`static lg:sticky lg:top-0 z-40 transition-[background-color,border-color,padding] duration-300 lg:transition-[transform,background-color,border-color,padding] will-change-transform ${
+      className={`sticky top-0 z-40 transition-[background-color,border-color,padding] duration-300 lg:transition-[transform,background-color,border-color,padding] will-change-transform ${
         isHidden ? 'lg:-translate-y-full translate-y-0' : 'translate-y-0'
       } ${isScrolled ? 'bg-white/95 backdrop-blur-xl border-b border-[var(--color-border)] shadow-sm py-3.5' : 'bg-white/80 backdrop-blur-md border-b border-[var(--color-border)] py-4'}`}
     >
