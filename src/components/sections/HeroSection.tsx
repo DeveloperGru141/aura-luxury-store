@@ -106,7 +106,7 @@ export default function HeroSection() {
         <div className="flex gap-3 items-start lg:hidden py-6 sm:py-8">
           {/* Left column — text only */}
           <div className="w-[52%] min-w-0">
-            <p className="text-[11px] font-medium tracking-wide text-[var(--color-accent-gold)] leading-tight">Based in Ilorin — genuine leather, silk & Swiss-sourced timepieces</p>
+            <p className="text-[11px] font-medium tracking-wide text-[var(--color-accent-gold)] leading-tight">Based in ilorin genuine leather,wears and swiss sourced timepieces</p>
             <h1 className="font-serif text-[22px] leading-tight font-light text-[var(--color-text-primary)] tracking-tight mt-1.5">
               Genuine pieces, <em className="italic font-normal text-[var(--color-accent-gold)]">curated from Ilorin.</em>
             </h1>
@@ -195,7 +195,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 xl:col-span-4 flex flex-col items-start text-left w-full min-w-0 pr-2 xl:pr-6"
           >
-            <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[var(--color-accent-gold)] mb-3">Based in Ilorin — genuine leather, silk & Swiss-sourced timepieces</p>
+            <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[var(--color-accent-gold)] mb-3">Based in ilorin genuine leather,wears and swiss sourced timepieces</p>
             <h1 className="font-serif text-[42px] xl:text-[48px] font-light text-[var(--color-text-primary)] tracking-tight leading-[0.95] mb-3">
               Genuine pieces,<br />
               <span className="italic font-normal text-[var(--color-accent-gold)]">curated from Ilorin.</span>
