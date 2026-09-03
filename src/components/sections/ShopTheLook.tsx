@@ -105,9 +105,11 @@ export default function ShopTheLook() {
             {stylingSlides.map((slide, idx) => {
               const isActive = currentIndex === idx;
               return (
-                <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                  <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className="mobile-category-img object-cover object-center" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div key={slide.id} className={`absolute inset-0 bg-[#F5F1E8] flex items-center justify-center p-4 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                  <div className="relative w-full h-full max-w-[88%] max-h-[88%]">
+                    <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className="object-contain" sizes="65vw" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                 </div>
               );
             })}
