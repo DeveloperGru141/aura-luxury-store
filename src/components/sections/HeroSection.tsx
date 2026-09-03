@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle, Sparkles, Check } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, MessageCircle, Sparkles, ShieldCheck } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { Product } from '@/types/store';
@@ -17,13 +17,12 @@ interface WatchHeroItem {
   price: number;
   image: string;
   cutout: string;
-  dialImage: string;
   colors: { name: string; hex: string }[];
   sizes: string[];
   productRef?: Product;
 }
 
-// Preserved mockup product of the bag used as the floating image card
+// Preserved bag accessory card
 const BAG_IMAGE_CARD = {
   id: 'bag-01',
   name: 'Monceau Croc-Embossed Structured Satchel',
@@ -37,10 +36,10 @@ export default function HeroSection() {
   const { setQuickViewProduct, formatPrice } = useStore();
   const { products: liveProducts } = useLiveProducts();
 
-  // Primary source: live products from Supabase database
+  // Six wristwatches sourced primarily from live Supabase products
   const heroItems: WatchHeroItem[] = useMemo(() => {
     if (liveProducts && liveProducts.length > 0) {
-      // Prioritize watches if available, otherwise use live products
+      // Prioritize live wristwatches, otherwise fall back to any available live products
       const watches = liveProducts.filter(
         (p) => p.category === 'watches' || p.categoryLabel?.toLowerCase().includes('watch')
       );
@@ -52,12 +51,11 @@ export default function HeroSection() {
         return {
           id: p.id,
           name: p.name,
-          subtitle: p.tagline || (p.description ? p.description.slice(0, 55) + '...' : 'Swiss precision horology'),
+          subtitle: p.tagline || (p.description ? p.description.slice(0, 50) + '...' : 'Swiss precision movement'),
           category: p.categoryLabel || 'Wristwatches',
           price: Number(p.price) || 1250000,
           image: imageSrc,
           cutout: `/images/watches/cutouts/watch-cutout-${num}.png`,
-          dialImage: `/images/watches/dials/dial-${num}.png`,
           colors: p.colors && p.colors.length > 0 ? p.colors : [{ name: 'Gold', hex: '#D4AF37' }, { name: 'Obsidian', hex: '#111111' }],
           sizes: p.sizes && p.sizes.length > 0 ? p.sizes : ['40', '42', '44'],
           productRef: p,
@@ -74,6 +72,14 @@ export default function HeroSection() {
       'Geneva Royal Fluted Automatic',
       'Monaco Vintage Sport Tachymeter',
     ];
+    const subtitles = [
+      'Swiss precision meets modern luxury.',
+      'Ceramic bezel automatic with sapphire case back.',
+      'Open-worked titanium calibre with brilliant indices.',
+      'Column-wheel mechanism in hand-burnished leather.',
+      '18k yellow gold fluted bezel with jubilee bracelet.',
+      'Perforated rally leather strap with panda dial.',
+    ];
     const prices = [1249000, 980000, 1850000, 1420000, 1650000, 1380000];
 
     return Array.from({ length: 6 }, (_, idx) => {
@@ -81,12 +87,11 @@ export default function HeroSection() {
       return {
         id: `hero-watch-${num}`,
         name: titles[idx],
-        subtitle: 'Swiss precision meets modern luxury.',
+        subtitle: subtitles[idx],
         category: 'Wristwatches',
         price: prices[idx],
         image: `/images/watches/watch-${num}.jpg`,
         cutout: `/images/watches/cutouts/watch-cutout-${num}.png`,
-        dialImage: `/images/watches/dials/dial-${num}.png`,
         colors: [
           { name: 'Rose Gold', hex: '#B76E79' },
           { name: 'Obsidian', hex: '#111111' },
@@ -103,7 +108,7 @@ export default function HeroSection() {
 
   const activeItem = heroItems[currentIndex % heroItems.length];
 
-  // Automatic transition every 4.5s
+  // Auto-switch every 4.5s (pauses on hover)
   useEffect(() => {
     if (isPaused) return;
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -138,7 +143,7 @@ export default function HeroSection() {
     setTouchStartX(null);
   };
 
-  // WhatsApp direct order link for active wristwatch
+  // WhatsApp order link
   const whatsappOrderUrl = getWhatsAppOrderUrl(
     activeItem.name,
     formatPrice(activeItem.price),
@@ -153,14 +158,21 @@ export default function HeroSection() {
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative overflow-hidden bg-[#F4F0E8] text-[#1A1A1A] border-b border-[#E8E4DA] select-none"
+      className="relative overflow-hidden bg-[#F4F0E8] text-[#1A1A1A] border-b border-[#E8E4DA] select-none py-8 sm:py-12 lg:py-16"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-12 relative flex flex-col justify-between min-h-[660px] lg:min-h-[720px]">
+      {/* ================= 1. EDITORIAL TYPOGRAPHY: LARGE LOW-OPACITY WATERMARK IN BACKGROUND ================= */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+        <span className="font-serif text-[clamp(4.5rem,15vw,14rem)] font-extralight tracking-[0.18em] uppercase text-black/[0.035] whitespace-nowrap leading-none select-none">
+          OMO ESHO SIGNATURES
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* 3-COLUMN HERO GRID: Left Copy | Center Bare-Wrist Model with Dynamic Wrist Overlay | Right 6-Item Carousel */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center relative z-10 my-auto">
+        {/* EDITORIAL SPLIT-SCREEN LAYOUT: Left Copy | Center Stage Model | Right Controls & Metadata */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10 items-center">
           
-          {/* ================= 1. LEFT COLUMN: EXACT HERO TEXT FROM PREVIOUS COMMIT ================= */}
+          {/* ================= LEFT COLUMN: HERO TEXT FROM PREVIOUS COMMIT ================= */}
           <div className="lg:col-span-4 flex flex-col items-start text-left z-20 order-2 lg:order-1">
             {/* Eyebrow */}
             <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#B8941F] mb-3">
@@ -168,12 +180,12 @@ export default function HeroSection() {
             </p>
 
             {/* Headline */}
-            <h1 className="font-serif text-[38px] sm:text-5xl lg:text-[54px] font-light text-black tracking-tight leading-[0.98] mb-4">
+            <h1 className="font-serif text-[38px] sm:text-5xl lg:text-[52px] font-light text-black tracking-tight leading-[0.98] mb-4">
               Genuine pieces,<br />
               <span className="italic font-normal text-[#B8941F]">curated from Ilorin.</span>
             </h1>
 
-            {/* Body paragraph */}
+            {/* Body */}
             <p className="text-[14px] text-stone-700 max-w-[38ch] font-light leading-relaxed mb-7">
               Every piece we carry is genuine leather bags,wears,genuine leather and wristwatches sourced directly from various makers,we're based in ilorin where every order is inspected before it ships with insured courier delivery worldwide
             </p>
@@ -208,7 +220,7 @@ export default function HeroSection() {
 
               <button
                 onClick={handleNext}
-                className="w-10 h-11 rounded-full bg-black text-white hover:bg-zinc-800 active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer"
+                className="w-10 h-10 rounded-full bg-black text-white hover:bg-zinc-800 active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer"
                 aria-label="Next timepiece"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -219,7 +231,7 @@ export default function HeroSection() {
               </span>
             </div>
 
-            {/* Trust Proof Badges */}
+            {/* Trust Proofs */}
             <div className="flex items-center gap-6 pt-5 border-t border-[#DDD6C8] w-full max-w-sm text-left">
               <div className="flex items-center gap-1.5 text-black font-sans text-[11px] font-bold tracking-widest">
                 <span className="relative flex h-1.5 w-1.5 shrink-0">
@@ -239,46 +251,47 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* ================= 2. CENTER: BASE MODEL (WITHOUT WATCH) + DYNAMIC WRIST OVERLAY ================= */}
-          <div className="lg:col-span-4 relative flex items-center justify-center w-full min-h-[400px] sm:min-h-[480px] lg:min-h-[580px] order-1 lg:order-2">
-            <div className="relative w-full max-w-[440px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-[#EDE6DC] border border-black/5 mx-auto">
+          {/* ================= 2. CENTER STAGE: RELATIVE WRAPPER WITH BASE MODEL + WRIST ANCHOR ================= */}
+          <div className="lg:col-span-5 relative flex items-center justify-center w-full min-h-[420px] sm:min-h-[500px] lg:min-h-[580px] order-1 lg:order-2">
+            
+            {/* Center Stage: Relative wrapper containing the static base model image */}
+            <div className="relative w-full max-w-[450px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-[#EDE6DC] border border-black/5 mx-auto">
               
-              {/* 1. Base Model Image (Clean bare wrist, no watch) */}
+              {/* Base Model Image (Static, without watch) */}
               <Image
                 src="/images/model-bare-wrist.jpg"
                 alt="Omo Esho Signatures Model"
                 fill
                 priority
                 className="object-cover object-top"
-                sizes="(max-width: 768px) 90vw, 40vw"
+                sizes="(max-width: 768px) 90vw, 42vw"
               />
 
-              {/* Soft studio vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
+              {/* Soft studio ambient light */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
-              {/* 2. Absolute-Positioned Dynamic Overlay Layer on Top of Wrist: top: 65%, left: 51% */}
+              {/* ================= 3. WRIST ANCHOR: top: 65%, left: 51%, w-[110px] to w-[130px] ================= */}
               <div
-                className="absolute z-30 pointer-events-auto"
+                className="absolute z-30 pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[110px] sm:w-[120px] lg:w-[130px] aspect-square flex items-center justify-center"
                 style={{
                   top: '65%',
                   left: '51%',
-                  transform: 'translate(-50%, -50%)',
                 }}
                 onClick={() => activeItem.productRef && setQuickViewProduct(activeItem.productRef)}
                 title={`Active watch: ${activeItem.name}`}
               >
-                {/* 3. Framer Motion AnimatePresence cross-fading each watch product PNG cutout */}
+                {/* ================= 4. SMOOTH SWITCH: Framer Motion AnimatePresence ================= */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeItem.id}
-                    initial={{ opacity: 0, scale: 0.82, rotate: -8 }}
+                    initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    exit={{ opacity: 0, scale: 1.15, rotate: 8 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex items-center justify-center filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.55)] cursor-pointer"
+                    exit={{ opacity: 0, scale: 1.15, rotate: 10 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] cursor-pointer"
                   >
                     <Image
-                      src={activeItem.cutout || activeItem.dialImage || activeItem.image}
+                      src={activeItem.cutout}
                       alt={`${activeItem.name} on wrist`}
                       fill
                       className="object-contain"
@@ -287,11 +300,11 @@ export default function HeroSection() {
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Subtle pulse beacon indicating interactive timepiece on wrist */}
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -inset-1 rounded-full bg-[#B8941F] opacity-75 animate-ping pointer-events-none" />
+                {/* Subtle golden beacon pulse */}
+                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#B8941F] opacity-75 animate-ping pointer-events-none" />
               </div>
 
-              {/* Preserved Floating Bag Image Card in corner */}
+              {/* Preserved Floating Bag Accessory Card */}
               <div className="absolute bottom-3 left-3 z-20 p-2 sm:p-2.5 rounded-xl bg-white/95 backdrop-blur-md border border-[#DDD6C8] shadow-md flex items-center gap-2.5 max-w-[240px]">
                 <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-stone-100 shrink-0">
                   <Image src={BAG_IMAGE_CARD.image} alt={BAG_IMAGE_CARD.name} fill className="object-cover" />
@@ -311,93 +324,109 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* ================= 3. RIGHT COLUMN: 6-ITEM THUMBNAIL CAROUSEL WITH DETAILS ================= */}
-          <div className="lg:col-span-4 flex flex-col justify-center z-20 order-3">
-            {/* Carousel Header */}
-            <div className="flex items-center justify-between mb-3 px-1">
-              <span className="text-[11px] uppercase tracking-[0.16em] font-bold text-[#B8941F] flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#B8941F]" />
-                <span>Omo Esho Signatures Collection</span>
-              </span>
-              <span className="text-[11px] text-stone-500 font-medium">
-                0{currentIndex + 1} / 0{heroItems.length}
-              </span>
-            </div>
+          {/* ================= 5. INTERACTIVE CONTROLS: METADATA CARD & 6-THUMBNAIL SELECTOR GRID ================= */}
+          <div className="lg:col-span-3 flex flex-col justify-center z-20 order-3 space-y-4">
+            
+            {/* Dynamic Product Metadata Card (Name, Price in NGN, Category) */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeItem.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="bg-white rounded-2xl p-4 sm:p-5 border border-[#DDD6C8] shadow-lg text-left relative overflow-hidden"
+              >
+                {/* Category & Status */}
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[9px] uppercase tracking-[0.2em] font-bold text-[#B8941F] flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-[#B8941F]" />
+                    <span>{activeItem.category}</span>
+                  </span>
+                  <span className="text-[9px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    Active on Wrist
+                  </span>
+                </div>
 
-            {/* 6-Item Thumbnail Carousel Stack */}
-            <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1 scrollbar-none">
-              {heroItems.map((item, idx) => {
-                const isActive = currentIndex === idx;
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`group p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                      isActive
-                        ? 'bg-white border-[#B8941F] ring-2 ring-[#B8941F]/30 shadow-md scale-[1.01]'
-                        : 'bg-white/60 hover:bg-white border-[#E3DDCF] hover:border-black/20'
-                    }`}
-                  >
-                    {/* Thumbnail Image */}
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-stone-50 border border-stone-200 overflow-hidden shrink-0 p-0.5">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-contain p-1"
-                        sizes="56px"
-                      />
-                    </div>
+                {/* Product Name */}
+                <h3 className="font-serif text-base sm:text-lg font-medium text-black leading-tight mb-1 line-clamp-1">
+                  {activeItem.name}
+                </h3>
 
-                    {/* Details: Category, Title, Price in NGN */}
-                    <div className="min-w-0 flex-1 text-left">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="text-[9px] uppercase tracking-wider font-bold text-[#B8941F] truncate">
-                          {item.category}
-                        </span>
-                        {isActive && (
-                          <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-0.5 shrink-0">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            <span>On Wrist</span>
-                          </span>
-                        )}
+                {/* Subtitle */}
+                <p className="text-[11px] text-stone-500 font-light line-clamp-1 mb-3">
+                  {activeItem.subtitle}
+                </p>
+
+                {/* Price in NGN */}
+                <div className="text-xl sm:text-2xl font-serif font-bold text-black tracking-tight pb-3 mb-3 border-b border-stone-100 flex items-baseline justify-between">
+                  <span>{formatPrice(activeItem.price)}</span>
+                  <span className="text-[10px] font-sans font-normal text-stone-500">NGN / Insured</span>
+                </div>
+
+                {/* WhatsApp Order Button */}
+                <a
+                  href={whatsappOrderUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-black hover:bg-zinc-900 active:scale-[0.98] text-white font-medium text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>Order on WhatsApp</span>
+                </a>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* 6-Thumbnail Selector Grid */}
+            <div>
+              <div className="flex items-center justify-between mb-2 px-1">
+                <span className="text-[10px] uppercase tracking-[0.16em] font-bold text-stone-600">
+                  Select Timepiece (0{currentIndex + 1}/06)
+                </span>
+                <span className="text-[10px] text-stone-400">Click to switch</span>
+              </div>
+
+              {/* 2x3 or 3x2 Grid of 6 Clean Thumbnails */}
+              <div className="grid grid-cols-3 gap-2">
+                {heroItems.map((item, idx) => {
+                  const isActive = currentIndex === idx;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`relative aspect-square rounded-xl bg-white border p-1 transition-all cursor-pointer flex flex-col items-center justify-center overflow-hidden ${
+                        isActive
+                          ? 'border-[#B8941F] ring-2 ring-[#B8941F]/40 shadow-md scale-[1.03]'
+                          : 'border-[#DDD6C8] hover:border-black opacity-75 hover:opacity-100 shadow-sm'
+                      }`}
+                      aria-label={`Select ${item.name}`}
+                    >
+                      <div className="relative w-full h-full rounded-lg overflow-hidden">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-contain p-0.5"
+                          sizes="80px"
+                        />
                       </div>
 
-                      <h4 className={`text-[12px] sm:text-[13px] font-medium leading-tight truncate mt-0.5 ${
-                        isActive ? 'text-black font-semibold' : 'text-stone-800'
-                      }`}>
-                        {item.name}
-                      </h4>
-
-                      {/* Price in NGN */}
-                      <p className="text-[12px] sm:text-[13px] font-serif font-bold text-black mt-0.5">
-                        {formatPrice(item.price)}
-                      </p>
-                    </div>
-
-                    {/* Quick Select Arrow */}
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                      isActive ? 'bg-[#141414] text-white' : 'bg-stone-100 text-stone-400 group-hover:bg-stone-200 group-hover:text-black'
-                    }`}>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </div>
-                  </div>
-                );
-              })}
+                      {/* Active indicator bar */}
+                      {isActive && (
+                        <span className="absolute bottom-0 inset-x-1 h-0.5 bg-[#B8941F] rounded-full" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Direct WhatsApp Order CTA for active watch */}
-            <div className="mt-4 pt-3 border-t border-[#DDD6C8]">
-              <a
-                href={whatsappOrderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-4 rounded-xl bg-black hover:bg-zinc-900 active:scale-[0.98] text-white font-medium text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
-                <span>Order {activeItem.name.split(' ')[0]} on WhatsApp</span>
-              </a>
+            {/* Micro-guarantee */}
+            <div className="flex items-center justify-center gap-1.5 text-[10px] text-stone-500 font-light pt-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#B8941F]" />
+              <span>Omo Esho Signatures • 100% Inspected</span>
             </div>
+
           </div>
 
         </div>
