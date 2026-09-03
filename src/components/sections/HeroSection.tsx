@@ -126,11 +126,10 @@ export default function HeroSection() {
                   const isActive = currentSlideIndex === idx;
                   const product = liveProducts.find((p) => p.id === slide.productId);
                   return (
-                    <div key={slide.id} className={`absolute inset-0 bg-white flex items-center justify-center p-2 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                      <div className="relative w-full h-full bg-[var(--color-surface-alt)] rounded-xl overflow-hidden border border-[var(--color-border)] flex items-center justify-center p-3">
-                        <Image src={slide.image} alt={slide.title} fill className="object-contain p-1" sizes="48vw" priority={idx === 0} />
-                      </div>
-                      <div className="absolute inset-x-0 bottom-0 p-2.5 flex items-end justify-between gap-1.5 bg-gradient-to-t from-black/70 via-black/30 to-transparent rounded-b-2xl">
+                    <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                      <Image src={slide.image} alt={slide.title} fill className="object-cover object-center" sizes="48vw" priority={idx === 0} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-2.5 flex items-end justify-between gap-1.5">
                         <div className="min-w-0">
                           <div className="flex items-center gap-1 mb-0.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-gold)] shrink-0" />
@@ -253,10 +252,8 @@ export default function HeroSection() {
                   {heroSlides.map((slide, idx) => {
                     const isActive = currentSlideIndex === idx;
                     return (
-                      <div key={slide.id} className={`absolute inset-0 bg-white flex items-center justify-center p-3 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                        <div className="relative w-full h-full max-w-[92%] max-h-[92%] bg-[var(--color-surface-alt)] rounded-2xl overflow-hidden border border-[var(--color-border)] flex items-center justify-center p-6 shadow-sm">
-                          <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-contain p-2 ${isActive ? 'animate-hero-drift' : ''}`} sizes="65vw" />
-                        </div>
+                      <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                        <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-cover object-center ${isActive ? 'animate-hero-drift' : ''}`} sizes="65vw" />
                       </div>
                     );
                   })}
@@ -293,24 +290,9 @@ export default function HeroSection() {
             </div>
             </motion.div>
 
-            {/* Numbered index row + thumbnail rail - extends dot mechanism */}
+            {/* Thumbnail rail */}
             {hasHeroData && (
-              <div className="flex items-center justify-between gap-4 mt-4">
-                <div className="flex items-center gap-2">
-                  {heroSlides.map((_, idx) => {
-                    const isActive = currentSlideIndex === idx;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => handleDotClick(idx)}
-                        className={`font-mono text-xs tracking-widest transition-all min-w-[28px] min-h-[28px] flex items-center justify-center rounded-full ${isActive ? 'bg-[var(--color-accent-gold)] text-black font-bold shadow-sm' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-alt)]'}`}
-                        aria-label={`Go to slide ${idx + 1}`}
-                      >
-                        0{idx + 1}
-                      </button>
-                    );
-                  })}
-                </div>
+              <div className="flex items-center justify-center gap-2 mt-4">
                 <div className="flex items-center gap-2">
                   {heroSlides.map((slide, idx) => {
                     const isActive = currentSlideIndex === idx;
