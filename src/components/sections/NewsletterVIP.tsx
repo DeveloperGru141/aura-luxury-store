@@ -22,7 +22,7 @@ export default function NewsletterVIP() {
     });
 
     setIsSubmitted(true);
-    showToast('Welcome to the VIP Atelier! Code WELCOME10 is now activated.', 'success');
+    showToast('Welcome to the VIP Atelier!', 'success');
   };
 
   return (
@@ -47,7 +47,7 @@ export default function NewsletterVIP() {
         </h2>
 
         <p className="text-xs sm:text-sm text-gray-300 max-w-lg mx-auto font-light leading-relaxed mb-8">
-          Join our distinguished collective. Subscribers receive priority allocation for limited horology releases, private lookbooks, and 15% off your inaugural order.
+          Join our distinguished collective. Subscribers receive priority allocation for limited horology releases and private lookbooks.
         </p>
 
         {isSubmitted ? (
@@ -57,7 +57,7 @@ export default function NewsletterVIP() {
               <span>Membership Confirmed</span>
             </div>
             <p className="text-xs text-gray-300 mb-3">
-              Your welcome voucher <strong className="text-[#F3E5AB]">WELCOME10</strong> has been applied to your session.
+              You are now part of the inner circle.
             </p>
             <span className="text-[11px] text-[#D4AF37] font-semibold">
               Check your inbox for private showroom access.

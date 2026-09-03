@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/store';
 import { useStore } from '@/context/StoreContext';
-import { Heart, Eye, MessageCircle, Star } from 'lucide-react';
+import { Eye, MessageCircle, Star } from 'lucide-react';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
 interface ProductCardProps {
@@ -12,21 +12,15 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { formatPrice, toggleWishlist, isInWishlist, setQuickViewProduct } = useStore();
+  const { formatPrice, setQuickViewProduct } = useStore();
   const [isHovered, setIsHovered] = useState(false);
   const [selectedColor, setSelectedColor] = useState((product as any).colors?.[0]?.name || '');
   const [isOpeningWhatsApp, setIsOpeningWhatsApp] = useState(false);
 
-  const isWishlisted = isInWishlist(product.id);
   const anyProduct: any = product as any;
   const stockStatus: 'in_stock' | 'out_of_stock' | undefined = anyProduct.stock_status;
   const isOutOfStock = stockStatus === 'out_of_stock' || anyProduct.inStock === false;
   const primaryImg: string = anyProduct.primaryImage ?? anyProduct.images?.[0] ?? '';
-
-  const handleWishlistToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    toggleWishlist(product);
-  };
 
   const handleQuickView = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -66,18 +60,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             Out of Stock
           </div>
         )}
-
-        <button
-          onClick={handleWishlistToggle}
-          className={`absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 p-2.5 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full transition-all duration-200 touch-manipulation border shadow-sm ${
-            isWishlisted
-              ? 'bg-rose-50 text-rose-500 border-rose-200'
-              : 'bg-white text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] border-[var(--color-border)] hover:border-[var(--color-text-primary)] active:scale-95'
-          }`}
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
-        >
-          <Heart className={`w-4 h-4 transition-transform duration-200 ${isWishlisted ? 'fill-rose-500 scale-110' : ''}`} />
-        </button>
 
         <div
           className={`absolute inset-x-2.5 sm:inset-x-3 bottom-2.5 sm:bottom-3 z-10 flex items-center gap-1.5 sm:gap-2 transition-all duration-300 ${

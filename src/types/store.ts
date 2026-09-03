@@ -9,7 +9,6 @@ export interface Product {
   tagline: string;
   description: string;
   price: number;
-  originalPrice?: number;
   rating: number;
   reviewCount: number;
   primaryImage: string;
@@ -56,11 +55,4 @@ export interface CustomerReview {
   productImage: string;
   date: string;
   verified: boolean;
-}
-
-export interface PromoCode {
-  code: string;
-  discountPercent: number;
-  description: string;
-  minSpend?: number;
 }

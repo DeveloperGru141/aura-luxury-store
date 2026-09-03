@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import {
   X,
-  Heart,
   Star,
   ShieldCheck,
   Truck,
@@ -15,7 +14,7 @@ import {
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
 export default function QuickViewModal() {
-  const { quickViewProduct, setQuickViewProduct, formatPrice, toggleWishlist, isInWishlist } = useStore();
+  const { quickViewProduct, setQuickViewProduct, formatPrice } = useStore();
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
@@ -23,8 +22,6 @@ export default function QuickViewModal() {
   const [quantity, setQuantity] = useState(1);
 
   if (!quickViewProduct) return null;
-
-  const isWishlisted = isInWishlist(quickViewProduct.id);
 
   const images = [
     quickViewProduct.primaryImage,
@@ -212,23 +209,11 @@ export default function QuickViewModal() {
                   href={whatsappOrderUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-3.5 sm:py-3 px-4 sm:px-6 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-sm min-h-[44px] bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] active:scale-[0.97] text-black cursor-pointer"
+                  className="flex-1 py-3.5 sm:py-3 px-4 sm:px-6 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-sm min-h-[44px] bg-black hover:bg-zinc-900 active:scale-[0.97] text-white cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 shrink-0" />
                   <span className="truncate font-bold">Order via WhatsApp</span>
                 </a>
-
-                <button
-                  onClick={() => toggleWishlist(quickViewProduct)}
-                  className={`p-3 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full border transition-all cursor-pointer shadow-sm ${
-                    isWishlisted
-                      ? 'border-rose-200 bg-rose-50 text-rose-500'
-                      : 'border-[var(--color-border)] bg-white text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-primary)]'
-                  }`}
-                  aria-label="Wishlist toggle"
-                >
-                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-rose-500' : ''}`} />
-                </button>
               </div>
             </div>
 

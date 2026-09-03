@@ -1,13 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Product, CartItem, WishlistItem, PromoCode } from '@/types/store';
-
-const PROMO_CODES: PromoCode[] = [
-  { code: 'OMOESHO15', discountPercent: 15, description: '15% Off Your Entire Order' },
-  { code: 'WELCOME10', discountPercent: 10, description: '10% Off For First-Time Shoppers' },
-  { code: 'VIP20', discountPercent: 20, description: '20% Off Orders Above ₦500,000', minSpend: 500000 },
-];
+import { Product, CartItem, WishlistItem } from '@/types/store';
 
 export type Currency = 'NGN' | 'USD' | 'GBP';
 
@@ -40,7 +34,6 @@ interface StoreContextType {
   isSearchOpen: boolean;
   quickViewProduct: Product | null;
   currency: Currency;
-  appliedPromo: PromoCode | null;
   toasts: ToastInfo[];
   isAdminLoggedIn: boolean;
 
@@ -60,9 +53,6 @@ interface StoreContextType {
   toggleWishlist: (product: Product) => void;
   isInWishlist: (productId: string) => boolean;
 
-  applyPromoCode: (codeStr: string) => { success: boolean; message: string };
-  removePromoCode: () => void;
-
   formatPrice: (amountInNGN: number) => string;
   showToast: (message: string, type?: 'success' | 'info' | 'warning') => void;
   removeToast: (id: string) => void;
@@ -70,7 +60,6 @@ interface StoreContextType {
   // Computed values
   cartItemCount: number;
   subtotal: number;
-  discountAmount: number;
   shipping: number;
   total: number;
   freeShippingProgress: number;
@@ -87,7 +76,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [currency, setCurrency] = useState<Currency>('NGN');
-  const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
@@ -227,31 +215,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return wishlist.some((item) => item.product.id === productId);
   };
 
-  const applyPromoCode = (codeStr: string) => {
-    const trimmed = codeStr.trim().toUpperCase();
-    const found = PROMO_CODES.find((p) => p.code === trimmed);
-
-    if (!found) {
-      return { success: false, message: 'Invalid promo code. Try "OMOESHO15" or "WELCOME10"' };
-    }
-
-    if (found.minSpend && subtotal < found.minSpend) {
-      return {
-        success: false,
-        message: `Promo code requires a minimum spend of ${formatPrice(found.minSpend)}`,
-      };
-    }
-
-    setAppliedPromo(found);
-    showToast(`Promo code "${found.code}" applied: ${found.discountPercent}% OFF!`, 'success');
-    return { success: true, message: `Promo code applied (${found.discountPercent}% OFF)` };
-  };
-
-  const removePromoCode = () => {
-    setAppliedPromo(null);
-    showToast('Promo code removed', 'info');
-  };
-
   const formatPrice = (amountInNGN: number) => {
     const rate = CURRENCY_RATES[currency] || 1;
     const symbol = CURRENCY_SYMBOLS[currency] || '₦';
@@ -266,9 +229,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
-  const discountAmount = appliedPromo ? (subtotal * appliedPromo.discountPercent) / 100 : 0;
   const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 15000;
-  const total = Math.max(0, subtotal - discountAmount + shipping);
+  const total = subtotal + shipping;
 
   const freeShippingProgress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
@@ -283,7 +245,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         isSearchOpen,
         quickViewProduct,
         currency,
-        appliedPromo,
         toasts,
         isAdminLoggedIn,
         setIsCartOpen,
@@ -298,14 +259,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         clearCart,
         toggleWishlist,
         isInWishlist,
-        applyPromoCode,
-        removePromoCode,
         formatPrice,
         showToast,
         removeToast,
         cartItemCount,
         subtotal,
-        discountAmount,
         shipping,
         total,
         freeShippingProgress,

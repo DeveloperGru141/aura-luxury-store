@@ -3,11 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
-import { Copy, Check, Sparkles, Flame, ArrowRight } from 'lucide-react';
+import { Flame, ArrowRight } from 'lucide-react';
 
 export default function FlashDropBanner() {
-  const { showToast, formatPrice } = useStore();
-  const [copied, setCopied] = useState(false);
+  const { formatPrice } = useStore();
 
   const [timeLeft, setTimeLeft] = useState({
     hours: 14,
@@ -32,13 +31,6 @@ export default function FlashDropBanner() {
     return () => clearInterval(timer);
   }, []);
 
-  const copyVipCode = () => {
-    navigator.clipboard?.writeText('VIP20');
-    setCopied(true);
-    showToast('VIP Voucher "VIP20" copied! (20% OFF Orders > ₦500,000)', 'success');
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <section id="flash-drop" className="py-10 sm:py-12 bg-[var(--color-surface-alt)] relative border-y border-[var(--color-border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,7 +47,7 @@ export default function FlashDropBanner() {
               </h2>
 
               <p className="text-xs sm:text-sm text-[var(--color-text-tertiary)] max-w-lg mb-6 leading-relaxed">
-                Only 25 numbered pieces of the Chronographe Imperial and 18k Solitaire Diamond Chokers remain in reserve. Unlock 20% off high-tier allocations with your exclusive invitation code.
+                Only 25 numbered pieces of the Chronographe Imperial and 18k Solitaire Diamond Chokers remain in reserve. Private allocation for distinguished clients.
               </p>
 
               <div className="flex items-center gap-3 sm:gap-4 mb-6">
@@ -86,17 +78,6 @@ export default function FlashDropBanner() {
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-                <button
-                  onClick={copyVipCode}
-                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-full bg-white border border-[var(--color-border)] hover:border-[var(--color-accent-gold)] text-xs font-mono font-bold text-[var(--color-text-primary)] hover:bg-[var(--color-surface-alt)] transition-all cursor-pointer min-h-[44px]"
-                >
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-gold)]" />
-                    <span>USE CODE: VIP20</span>
-                  </div>
-                  {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-[var(--color-text-tertiary)]" />}
-                </button>
-
                 <a
                   href="#catalogue"
                   className="py-3 px-6 rounded-full bg-black hover:bg-zinc-900 active:scale-[0.97] text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm"
