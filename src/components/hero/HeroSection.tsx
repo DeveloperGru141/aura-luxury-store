@@ -13,8 +13,8 @@ const timepieces = [
     price: '₦240,000',
     wristImg: '/images/watches/watch-1.png',
     thumbImg: '/images/watches/watch-1.png',
-    // Fine-tune offset & rotation to seat naturally along the forearm
-    wristAdjustment: { top: '53.5%', left: '53.2%', rotate: -28, scale: 1.0 },
+    // Calibrated offset & rotation to snap directly onto the wrist along the forearm
+    wristAdjustment: { top: '55.2%', left: '54.2%', rotate: -24, scale: 1.0 },
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const timepieces = [
     price: '₦380,000',
     wristImg: '/images/watches/watch-2.png',
     thumbImg: '/images/watches/watch-2.png',
-    wristAdjustment: { top: '53.2%', left: '53.0%', rotate: -26, scale: 1.02 },
+    wristAdjustment: { top: '55.0%', left: '54.0%', rotate: -23, scale: 1.02 },
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const timepieces = [
     price: '₦310,000',
     wristImg: '/images/watches/watch-3.png',
     thumbImg: '/images/watches/watch-3.png',
-    wristAdjustment: { top: '53.5%', left: '53.3%', rotate: -28, scale: 0.98 },
+    wristAdjustment: { top: '55.2%', left: '54.3%', rotate: -24, scale: 0.98 },
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const timepieces = [
     price: '₦260,000',
     wristImg: '/images/watches/watch-4.png',
     thumbImg: '/images/watches/watch-4.png',
-    wristAdjustment: { top: '53.6%', left: '53.2%', rotate: -28, scale: 1.0 },
+    wristAdjustment: { top: '55.2%', left: '54.2%', rotate: -24, scale: 1.0 },
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const timepieces = [
     price: '₦290,000',
     wristImg: '/images/watches/watch-5.png',
     thumbImg: '/images/watches/watch-5.png',
-    wristAdjustment: { top: '53.5%', left: '53.2%', rotate: 0, scale: 0.95 },
+    wristAdjustment: { top: '55.2%', left: '54.2%', rotate: 0, scale: 0.96 },
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ const timepieces = [
     price: '₦120,000',
     wristImg: '/images/watches/watch-6.png',
     thumbImg: '/images/watches/watch-6.png',
-    wristAdjustment: { top: '53.4%', left: '53.1%', rotate: -27, scale: 0.97 },
+    wristAdjustment: { top: '55.1%', left: '54.1%', rotate: -24, scale: 0.98 },
   },
 ];
 
@@ -136,9 +136,15 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Center: Model Cutout + Pinned Wrist Transition Layer */}
-        <div className="lg:col-span-5 relative flex justify-center items-end">
-          <div className="relative w-full max-w-[440px] aspect-[3/4]">
+        {/* Center: Model Cutout Grounded to Bottom + Calibrated Wrist Overlay */}
+        <div className="lg:col-span-5 relative flex items-end justify-center self-end">
+          <div
+            className="relative w-full max-w-[480px] lg:max-w-[520px] aspect-[3/4]"
+            style={{
+              WebkitMaskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
+            }}
+          >
             {/* Base Model */}
             <Image
               src="/images/model-cutout.png"
@@ -148,9 +154,9 @@ export default function HeroSection() {
               className="object-contain object-bottom select-none pointer-events-none z-10"
             />
 
-            {/* Dynamic Wrist Slot */}
+            {/* Dynamic Wrist Slot - Scaled slightly to w-[88px] sm:w-[98px] for seamless mask over wrist */}
             <div
-              className="absolute z-20 pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[72px] sm:w-[84px] aspect-square flex items-center justify-center"
+              className="absolute z-20 pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[88px] sm:w-[98px] aspect-square flex items-center justify-center"
               style={{
                 top: activeWatch.wristAdjustment.top,
                 left: activeWatch.wristAdjustment.left,
@@ -214,7 +220,7 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* 6 Selector Thumbnails */}
+          {/* 6 Selector Thumbnails with solid clean backdrop */}
           <div>
             <div className="flex items-center justify-between text-[11px] font-medium text-neutral-500 mb-2.5">
               <span>Select Timepiece (0{currentIndex + 1}/06)</span>
@@ -226,14 +232,14 @@ export default function HeroSection() {
                 <button
                   key={item.id}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`relative aspect-square rounded-xl overflow-hidden p-1.5 transition-all duration-200 cursor-pointer ${
+                  className={`relative aspect-square rounded-xl overflow-hidden p-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
                     currentIndex === idx
-                      ? 'border-2 border-[#B38344] bg-white shadow-md scale-105'
-                      : 'border border-neutral-200/80 bg-white/60 hover:border-neutral-300 opacity-60 hover:opacity-100'
+                      ? 'bg-[#FDFBF7] border-2 border-[#B38344] shadow-sm scale-105'
+                      : 'bg-[#FDFBF7] border border-neutral-200/80 hover:border-neutral-300 opacity-70 hover:opacity-100'
                   }`}
                   aria-label={`Select ${item.name}`}
                 >
-                  <div className="relative w-full h-full">
+                  <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={item.thumbImg}
                       alt={item.name}
