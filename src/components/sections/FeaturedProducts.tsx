@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ProductCategory } from '@/types/store';
 import ProductCard from '@/components/ui/ProductCard';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
@@ -31,13 +32,19 @@ export default function FeaturedProducts({
   });
 
   return (
-    <section id="catalogue" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative">
+    <section id="catalogue" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative" style={{ contentVisibility: 'auto', containIntrinsicSize: '800px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 px-2">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 px-2"
+        >
           <h2 className="font-serif text-[22px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
             The catalogue
           </h2>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-[var(--color-border)] overflow-hidden">
           <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 -mx-4 sm:mx-0 px-4 sm:px-0 snap-x snap-mandatory scrollbar-none overscroll-x-contain touch-manipulation">

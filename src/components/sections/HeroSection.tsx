@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
@@ -90,8 +91,15 @@ export default function HeroSection() {
   const hasHeroData = heroSlides.length > 0;
   const heroImageSrc = (activeProduct as any)?.heroImage ?? currentSlide?.image ?? '';
 
+  // Scroll parallax — efficient, transform only, disabled on coarser / reduced-motion
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, -18]);
+
   return (
-    <section id="home" className="relative overflow-hidden bg-[var(--color-surface)]">
+    <section ref={heroRef} id="home" className="relative overflow-hidden bg-[var(--color-surface)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Mobile: side-by-side text + carousel (52/48) - re-themed to light, structure intact */}
         <div className="flex gap-3 items-start lg:hidden py-6 sm:py-8">
@@ -178,8 +186,14 @@ export default function HeroSection() {
 
         {/* DESKTOP HERO — 35/65 two-column, pill CTA, floating card, numbered + thumbnail rail */}
         <div className="hidden lg:grid lg:grid-cols-12 gap-8 xl:gap-10 items-center py-10 xl:py-14">
-          {/* Left column ~35% */}
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start text-left w-full min-w-0 pr-2 xl:pr-6">
+          {/* Left column ~35% — scroll reveal */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 xl:col-span-4 flex flex-col items-start text-left w-full min-w-0 pr-2 xl:pr-6"
+          >
             <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[var(--color-accent-gold)] mb-3">Based in Ilorin — genuine leather, silk & Swiss-sourced timepieces</p>
             <h1 className="font-serif text-[42px] xl:text-[48px] font-light text-[var(--color-text-primary)] tracking-tight leading-[0.95] mb-3">
               Genuine pieces,<br />
@@ -209,17 +223,21 @@ export default function HeroSection() {
                 <span>WORLDWIDE INSURED DELIVERY</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right column ~65% - large product image area */}
+          {/* Right column ~65% - large product image area — scroll parallax */}
           <div className="lg:col-span-7 xl:col-span-8 relative w-full min-w-0">
-            <div
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              className="relative aspect-[16/10] xl:aspect-[16/9] min-h-[420px] xl:min-h-[520px] w-full rounded-[1.5rem] overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface-alt)] group touch-pan-y shadow-[var(--shadow-elev-2)]"
+            <motion.div
+              style={isReduced ? undefined : { scale: imageScale, y: imageY }}
+              className="will-change-transform"
             >
+              <div
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                className="relative aspect-[16/10] xl:aspect-[16/9] min-h-[420px] xl:min-h-[520px] w-full rounded-[1.5rem] overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface-alt)] group touch-pan-y shadow-[var(--shadow-elev-2)]"
+              >
               {heroSlides.length === 0 ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--color-surface-alt)] p-8 text-center">
                   <div className="w-14 h-14 rounded-2xl bg-white border border-[var(--color-border)] flex items-center justify-center mb-4 shadow-sm">
@@ -270,6 +288,7 @@ export default function HeroSection() {
                 </>
               )}
             </div>
+            </motion.div>
 
             {/* Numbered index row + thumbnail rail - extends dot mechanism */}
             {hasHeroData && (

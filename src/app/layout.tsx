@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
 import { StoreProvider } from "@/context/StoreContext";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -53,7 +54,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} scroll-smooth`}>
       <body className="font-sans antialiased bg-[var(--color-surface)] text-[var(--color-text-primary)] min-h-screen">
-        <StoreProvider>{children}</StoreProvider>
+        <SmoothScroll>
+          <StoreProvider>{children}</StoreProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

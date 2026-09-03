@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { ProductCategory } from '@/types/store';
 import { ArrowUpRight } from 'lucide-react';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
@@ -70,15 +71,27 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   }, []);
 
   return (
-    <section id="categories" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative">
+    <section id="categories" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface)] relative" style={{ contentVisibility: 'auto', containIntrinsicSize: '600px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col mb-5 sm:mb-8 lg:mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col mb-5 sm:mb-8 lg:mb-10"
+        >
           <h2 className="font-sans text-[20px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight text-[var(--color-text-primary)] leading-tight uppercase">
             Explore by category
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
+        >
           {liveCategories.map((cat: any, idx: number) => {
             const isMobileHovered = activeMobileCard === cat.id;
 
@@ -168,7 +181,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                 </div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
