@@ -126,10 +126,8 @@ export default function HeroSection() {
                   const isActive = currentSlideIndex === idx;
                   const product = liveProducts.find((p) => p.id === slide.productId);
                   return (
-                    <div key={slide.id} className={`absolute inset-0 bg-[#F5F1E8] flex items-center justify-center p-3 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                      <div className="relative w-full h-full max-w-[86%] max-h-[86%]">
-                        <Image src={slide.image} alt={slide.title} fill className="object-contain" sizes="48vw" priority={idx === 0} />
-                      </div>
+                    <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                      <Image src={slide.image} alt={slide.title} fill className="object-cover object-center" sizes="48vw" priority={idx === 0} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent pointer-events-none" />
                       <div className="absolute inset-x-0 bottom-0 p-2.5 flex items-end justify-between gap-1.5">
                         <div className="min-w-0">
@@ -254,10 +252,8 @@ export default function HeroSection() {
                   {heroSlides.map((slide, idx) => {
                     const isActive = currentSlideIndex === idx;
                     return (
-                      <div key={slide.id} className={`absolute inset-0 bg-[#F5F1E8] flex items-center justify-center p-5 sm:p-6 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
-                        <div className="relative w-full h-full max-w-[84%] max-h-[84%]">
-                          <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-contain ${isActive ? 'animate-hero-drift' : ''}`} sizes="65vw" />
-                        </div>
+                      <div key={slide.id} className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
+                        <Image src={slide.image} alt={slide.title} fill priority={idx === 0} className={`object-cover object-center ${isActive ? 'animate-hero-drift' : ''}`} sizes="65vw" />
                       </div>
                     );
                   })}
