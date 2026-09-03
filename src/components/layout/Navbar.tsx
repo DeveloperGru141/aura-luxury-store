@@ -22,6 +22,12 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
     const handleScroll = () => {
       const currentY = window.scrollY;
       setIsScrolled(currentY > 20);
+      // Static on mobile — never hide, no scroll-away
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        setIsHidden(false);
+        lastScrollY.current = currentY;
+        return;
+      }
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         setIsHidden(false);
       } else if (!isMobileMenuOpen) {
@@ -71,8 +77,8 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-[transform,background-color,border-color,padding] duration-300 will-change-transform ${
-        isHidden ? '-translate-y-full' : 'translate-y-0'
+      className={`static lg:sticky lg:top-0 z-40 transition-[background-color,border-color,padding] duration-300 lg:transition-[transform,background-color,border-color,padding] will-change-transform ${
+        isHidden ? 'lg:-translate-y-full translate-y-0' : 'translate-y-0'
       } ${isScrolled ? 'bg-white/95 backdrop-blur-xl border-b border-[var(--color-border)] shadow-sm py-3.5' : 'bg-white/80 backdrop-blur-md border-b border-[var(--color-border)] py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
