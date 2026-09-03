@@ -1,109 +1,84 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLiveProducts } from '@/hooks/useLiveProducts';
+import { useStore } from '@/context/StoreContext';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
-interface Timepiece {
-  id: number;
-  name: string;
-  tagline: string;
-  price: string;
-  thumbImg: string;
-  isSignature: boolean;
-}
-
-const timepieces: Timepiece[] = [
-  {
-    id: 1,
-    name: 'Patek Philippe Aquanaut Orange',
-    tagline: 'Swiss precision movement & composite strap',
-    price: '₦240,000',
-    thumbImg: '/images/watches/watch-1.png',
-    isSignature: true,
-  },
-  {
-    id: 2,
-    name: 'Patek Philippe Tourbillon Skeleton',
-    tagline: 'Rose gold bezel & openworked calibre',
-    price: '₦380,000',
-    thumbImg: '/images/watches/watch-2.png',
-    isSignature: false,
-  },
-  {
-    id: 3,
-    name: 'Patek Philippe AET Remould',
-    tagline: 'Tiffany turquoise ceramic edition',
-    price: '₦310,000',
-    thumbImg: '/images/watches/watch-3.png',
-    isSignature: false,
-  },
-  {
-    id: 4,
-    name: 'Patek Philippe Aquanaut Chrono',
-    tagline: 'Black embossed dial & composite strap',
-    price: '₦260,000',
-    thumbImg: '/images/watches/watch-4.png',
-    isSignature: false,
-  },
-  {
-    id: 5,
-    name: 'Exhibition Calibre Movement',
-    tagline: '22k Gold rotor Swiss caseback',
-    price: '₦290,000',
-    thumbImg: '/images/watches/watch-5.png',
-    isSignature: false,
-  },
-  {
-    id: 6,
-    name: 'Poedagar Classic Date',
-    tagline: 'Emerald leather & silver sunray dial',
-    price: '₦120,000',
-    thumbImg: '/images/watches/watch-6.png',
-    isSignature: false,
-  },
-];
-
 export default function HeroSection() {
+  const { products: liveProducts, loading } = useLiveProducts();
+  const { formatPrice } = useStore();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const activeWatch = timepieces[currentIndex];
-  const whatsappUrl = getWhatsAppOrderUrl(activeWatch.name, activeWatch.price);
+  // Sourced strictly from real live products in database (prioritizing timepieces, up to 6 products)
+  const carouselProducts = useMemo(() => {
+    if (!liveProducts || liveProducts.length === 0) return [];
+
+    const watches = liveProducts.filter(
+      (p) => p.category === 'watches' || p.categoryLabel?.toLowerCase().includes('watch')
+    );
+
+    if (watches.length >= 2) {
+      return watches.slice(0, 6);
+    }
+
+    return liveProducts.slice(0, 6);
+  }, [liveProducts]);
+
+  const totalItems = carouselProducts.length;
+  const safeIndex = totalItems > 0 ? currentIndex % totalItems : 0;
+  const activeProduct = totalItems > 0 ? carouselProducts[safeIndex] : null;
 
   // Auto-advance timer: cycles card selection (~4.5s), pauses on hover/interaction
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || totalItems <= 1) return;
 
     timerRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % timepieces.length);
+      setCurrentIndex((prev) => (prev + 1) % totalItems);
     }, 4500);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused]);
+  }, [isPaused, totalItems]);
 
   const resetTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
   };
 
   const handleNext = () => {
+    if (totalItems <= 1) return;
     resetTimer();
-    setCurrentIndex((prev) => (prev + 1) % timepieces.length);
+    setCurrentIndex((prev) => (prev + 1) % totalItems);
   };
 
   const handlePrev = () => {
+    if (totalItems <= 1) return;
     resetTimer();
-    setCurrentIndex((prev) => (prev - 1 + timepieces.length) % timepieces.length);
+    setCurrentIndex((prev) => (prev - 1 + totalItems) % totalItems);
   };
 
   const handleSelect = (index: number) => {
     resetTimer();
     setCurrentIndex(index);
   };
+
+  const formattedPrice = activeProduct ? formatPrice(activeProduct.price) : '₦240,000';
+  const whatsappUrl = activeProduct
+    ? getWhatsAppOrderUrl(activeProduct.name, formattedPrice)
+    : '#';
+
+  const isSignature =
+    safeIndex === 0 ||
+    Boolean(
+      activeProduct?.name.toLowerCase().includes('patek') ||
+      activeProduct?.name.toLowerCase().includes('orange')
+    );
 
   return (
     <section
@@ -145,24 +120,26 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* Prev/Next Navigation Controls for Floating Card Selection */}
+          {/* Prev/Next Navigation Controls */}
           <div className="flex items-center gap-3 pt-4">
             <button
               onClick={handlePrev}
-              className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-white transition cursor-pointer"
+              disabled={totalItems <= 1}
+              className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-white transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
               aria-label="Previous timepiece"
             >
               &lsaquo;
             </button>
             <button
               onClick={handleNext}
-              className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition cursor-pointer"
+              disabled={totalItems <= 1}
+              className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
               aria-label="Next timepiece"
             >
               &rsaquo;
             </button>
             <span className="text-xs text-neutral-500 font-mono ml-2">
-              0{currentIndex + 1} / 0{timepieces.length}
+              0{totalItems > 0 ? safeIndex + 1 : 1} / 0{totalItems || 1}
             </span>
           </div>
 
@@ -172,7 +149,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Center Column: FIXED Signature Model Photo (Never Swapped, Seamless & Photorealistic) */}
+        {/* Center Column: Fixed Signature Model Photo (Permanent Hero Asset) */}
         <div className="lg:col-span-5 relative flex items-end justify-center self-end">
           <div
             className="relative w-full max-w-[480px] lg:max-w-[520px] aspect-[3/4]"
@@ -181,10 +158,9 @@ export default function HeroSection() {
               maskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
             }}
           >
-            {/* Fixed Model with Photorealistic Signature Watch */}
             <Image
-              src="/images/model-cutout.png"
-              alt="Omo Esho Model wearing signature timepiece"
+              src="/images/model-refined.png"
+              alt="Omo Esho Model"
               fill
               priority
               className="object-contain object-bottom select-none pointer-events-none z-10"
@@ -192,66 +168,77 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Right Column: Floating Product Card & Thumbnail Rail */}
+        {/* Right Column: Floating Product Card & Thumbnail Rail from Database */}
         <div
           className="lg:col-span-3 flex flex-col gap-5 justify-center"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Floating Product Card with Cycling Content */}
+          {/* Floating Product Card with Cycling Real Database Content */}
           <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl border border-neutral-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold tracking-widest text-[#B38344] uppercase">
-                ✦ Swiss Watch
+                ✦ {activeProduct?.categoryLabel || 'Swiss Watch'}
               </span>
 
-              {/* Dynamic Badge: "Active on Wrist" only for Signature Watch */}
-              {activeWatch.isSignature ? (
+              {/* Dynamic Badge: "Active on Wrist" for signature piece, "In Stock" for others */}
+              {isSignature ? (
                 <span className="text-[9px] bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200">
                   Active on Wrist
                 </span>
               ) : (
                 <span className="text-[9px] bg-neutral-100 text-neutral-600 font-medium px-2.5 py-0.5 rounded-full border border-neutral-200">
-                  Available in Store
+                  {activeProduct?.inStock ? 'In Stock' : 'Exclusive'}
                 </span>
               )}
             </div>
             
-            {/* Card Content Cross-fade: Thumbnail Image + Title + Tagline + Price */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeWatch.id}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-3 flex flex-col"
-              >
-                {/* Product Thumbnail inside Card (Real product photography) */}
-                <div className="relative w-full h-36 bg-[#FDFBF7] rounded-xl border border-neutral-100/90 flex items-center justify-center p-2.5 mb-3 overflow-hidden">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={activeWatch.thumbImg}
-                      alt={activeWatch.name}
-                      fill
-                      className="object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
-                    />
+            {/* Card Content Cross-fade */}
+            {loading && totalItems === 0 ? (
+              <div className="mt-3 py-12 text-center text-neutral-400 font-serif text-sm animate-pulse">
+                Loading atelier pieces...
+              </div>
+            ) : activeProduct ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeProduct.id}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="mt-3 flex flex-col"
+                >
+                  {/* Real Product Photo from Database */}
+                  <div className="relative w-full h-40 bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-3 mb-3 overflow-hidden">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={activeProduct.primaryImage}
+                        alt={activeProduct.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 300px"
+                        className="object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.12)]"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <h3 className="font-serif text-base sm:text-lg font-bold text-neutral-900 leading-snug">
-                  {activeWatch.name}
-                </h3>
-                <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed line-clamp-2">
-                  {activeWatch.tagline}
-                </p>
-                
-                <div className="mt-3 flex items-baseline justify-between border-t border-neutral-100 pt-3">
-                  <span className="text-xl font-bold text-neutral-900">{activeWatch.price}</span>
-                  <span className="text-[10px] text-neutral-400 font-mono">NGN / Insured</span>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                  <h3 className="font-serif text-base sm:text-lg font-bold text-neutral-900 leading-snug">
+                    {activeProduct.name}
+                  </h3>
+                  <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed line-clamp-2">
+                    {activeProduct.tagline || activeProduct.description}
+                  </p>
+                  
+                  <div className="mt-3 flex items-baseline justify-between border-t border-neutral-100 pt-3">
+                    <span className="text-xl font-bold text-neutral-900">{formattedPrice}</span>
+                    <span className="text-[10px] text-neutral-400 font-mono">NGN / Insured</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              <div className="mt-3 py-12 text-center text-neutral-400 font-serif text-sm">
+                Collection available below
+              </div>
+            )}
 
             {/* Direct WhatsApp Order CTA */}
             <a
@@ -264,37 +251,40 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* 6 Selector Thumbnails Rail */}
-          <div>
-            <div className="flex items-center justify-between text-[11px] font-medium text-neutral-500 mb-2.5">
-              <span>Curated Selection (0{currentIndex + 1}/06)</span>
-              <span className="text-[10px] text-neutral-400">Click to switch</span>
+          {/* Real Products Thumbnail Rail from Database */}
+          {totalItems > 0 && (
+            <div>
+              <div className="flex items-center justify-between text-[11px] font-medium text-neutral-500 mb-2.5">
+                <span>Curated Selection (0{safeIndex + 1}/0{totalItems})</span>
+                <span className="text-[10px] text-neutral-400">Click to inspect</span>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-2.5">
+                {carouselProducts.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleSelect(idx)}
+                    className={`relative aspect-square rounded-xl overflow-hidden p-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                      safeIndex === idx
+                        ? 'bg-[#FDFBF7] border-2 border-[#B38344] shadow-sm scale-105 ring-2 ring-[#B38344]/15'
+                        : 'bg-[#FDFBF7] border border-neutral-200/80 hover:border-neutral-300 opacity-70 hover:opacity-100'
+                    }`}
+                    aria-label={`Select ${item.name}`}
+                  >
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <Image
+                        src={item.primaryImage}
+                        alt={item.name}
+                        fill
+                        sizes="80px"
+                        className="object-contain"
+                      />
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
-            
-            <div className="grid grid-cols-3 gap-2.5">
-              {timepieces.map((item, idx) => (
-                <button
-                  key={item.id}
-                  onClick={() => handleSelect(idx)}
-                  className={`relative aspect-square rounded-xl overflow-hidden p-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
-                    currentIndex === idx
-                      ? 'bg-[#FDFBF7] border-2 border-[#B38344] shadow-sm scale-105 ring-2 ring-[#B38344]/15'
-                      : 'bg-[#FDFBF7] border border-neutral-200/80 hover:border-neutral-300 opacity-70 hover:opacity-100'
-                  }`}
-                  aria-label={`Select ${item.name}`}
-                >
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <Image
-                      src={item.thumbImg}
-                      alt={item.name}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
 
       </div>
