@@ -158,7 +158,7 @@ export default function HeroSection() {
         {/* Mobile full-width below two-column row */}
         <div className="lg:hidden pb-8">
           <p className="text-[13px] text-[var(--color-text-secondary)] font-light leading-relaxed">
-            Every piece we carry is genuine — leather bags, silk wears, hand-selected shoes from Marche, and watches sourced direct from Swiss makers. We're based in Ilorin, where every order is inspected before it ships — with insured courier delivery, worldwide.
+            Every piece we carry is genuine leather bags,wears,genuine leather and wristwatches sourced directly from various makers,we're based in ilorin where every order is inspected before it ships with insured courier delivery worldwide
           </p>
           <div className="flex flex-col gap-3 mt-4">
             <a href="#catalogue" className="py-3.5 px-6 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] active:scale-[0.98] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 min-h-[44px] shadow-sm hover:shadow-md transition-all">
@@ -202,7 +202,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-[14px] text-[var(--color-text-secondary)] max-w-[38ch] font-light leading-relaxed mb-7">
-              Every piece we carry is genuine — leather bags, silk wears, hand-selected shoes from Marche, and watches sourced direct from Swiss makers. We're based in Ilorin, where every order is inspected before it ships — with insured courier delivery, worldwide.
+              Every piece we carry is genuine leather bags,wears,genuine leather and wristwatches sourced directly from various makers,we're based in ilorin where every order is inspected before it ships with insured courier delivery worldwide
             </p>
             <div className="flex items-center gap-3 mb-7">
               <a href="#catalogue" className="py-3.5 px-7 rounded-full bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] active:scale-[0.98] text-black font-semibold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all min-h-[44px]">
