@@ -17,8 +17,9 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -60,9 +61,9 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
+      className={`sticky top-0 z-40 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#F4F0E8]/95 backdrop-blur-xl border-b border-[#DDD6C8] shadow-sm'
+          ? 'bg-[#F4F0E8]/70 backdrop-blur-xl backdrop-saturate-150 border-b border-black/[0.07] shadow-[0_8px_32px_rgba(0,0,0,0.04)] supports-[backdrop-filter]:bg-[#F4F0E8]/65'
           : 'bg-[#F4F0E8] border-b border-[#E7E2D6]'
       }`}
     >
@@ -141,7 +142,11 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
       </div>
 
       {/* DIRECT CATEGORY NAVIGATION BAR: Visible on Desktop ONLY, removed completely on mobile */}
-      <div className="hidden md:block border-t border-[#E5DFD3]">
+      <div
+        className={`hidden md:block border-t transition-colors duration-500 ${
+          isScrolled ? 'border-black/[0.06]' : 'border-[#E5DFD3]'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
           {navLinks.map((link) => (
             <a
@@ -158,7 +163,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
       {/* Mobile Menu Drawer (revealed on hamburger tap) */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-[#E5DFD3] bg-[#F4F0E8] px-5 py-6 shadow-xl max-h-[calc(100dvh-70px)] overflow-y-auto animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden border-t border-black/[0.08] bg-[#F4F0E8]/85 backdrop-blur-2xl backdrop-saturate-150 px-5 py-6 shadow-2xl max-h-[calc(100dvh-70px)] overflow-y-auto animate-in slide-in-from-top-2 duration-200">
           <nav className="flex flex-col gap-1.5">
             <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#A67C43] mb-2">
               Collections & Navigation
