@@ -125,11 +125,11 @@ export default function HeroSection() {
     ? getWhatsAppOrderUrl(activeProduct.name, formattedPrice)
     : '#';
 
-  // Renders the floating product card (responsive for mobile overlay and desktop side column)
+  // Renders the product card: ultra-compact on mobile overlay, full-sized on desktop
   const renderProductCard = (isMobileOverlay = false) => {
     if (loading && totalItems === 0) {
       return (
-        <div className="bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-neutral-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] py-8 text-center text-neutral-400 font-serif text-sm animate-pulse">
+        <div className="bg-white/95 backdrop-blur-md p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-neutral-200/80 shadow-md text-center text-neutral-400 font-serif text-xs animate-pulse">
           Loading atelier pieces...
         </div>
       );
@@ -137,18 +137,74 @@ export default function HeroSection() {
 
     if (!activeProduct) {
       return (
-        <div className="bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-neutral-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] py-8 text-center text-neutral-400 font-serif text-sm">
+        <div className="bg-white/95 backdrop-blur-md p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-neutral-200/80 shadow-md text-center text-neutral-400 font-serif text-xs">
           Curated collection below
         </div>
       );
     }
 
+    if (isMobileOverlay) {
+      // Mobile Single-Height Overlaid Card: ultra-compact (~85px)
+      return (
+        <div className="bg-white/95 backdrop-blur-xl rounded-xl p-2.5 border border-white/80 shadow-xl w-full">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[9px] font-bold tracking-widest text-[#B38344] uppercase">
+              ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
+            </span>
+            <span className="text-[8px] bg-neutral-100 text-neutral-600 font-medium px-2 py-0.2 rounded-full">
+              {activeProduct.inStock ? 'In Stock' : 'Exclusive'}
+            </span>
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeProduct.id}
+              initial={{ opacity: 0, y: 3 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -3 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center gap-2.5"
+            >
+              {/* Small Product Thumbnail */}
+              <div className="relative w-12 h-12 bg-[#FDFBF7] rounded-lg border border-neutral-100 flex items-center justify-center p-1 shrink-0 overflow-hidden">
+                <Image
+                  src={activeProduct.heroImage}
+                  alt={activeProduct.name}
+                  fill
+                  sizes="48px"
+                  className="object-contain"
+                />
+              </div>
+
+              {/* Title & Price */}
+              <div className="flex-1 min-w-0">
+                <h3 className="font-serif text-xs font-bold text-neutral-900 leading-tight truncate">
+                  {activeProduct.name}
+                </h3>
+                <div className="text-xs font-bold text-neutral-900 font-serif mt-0.5">
+                  {formattedPrice}
+                </div>
+              </div>
+
+              {/* WhatsApp CTA */}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-1.5 px-2.5 bg-black hover:bg-neutral-800 text-white text-[10px] font-semibold rounded-lg shrink-0 flex items-center gap-1 shadow-sm"
+              >
+                <span>💬</span>
+                <span>Order</span>
+              </a>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      );
+    }
+
+    // Desktop Side Column Floating Card
     return (
-      <div
-        className={`bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/80 shadow-[0_12px_32px_rgba(0,0,0,0.08)] ${
-          isMobileOverlay ? 'p-3 sm:p-4' : 'p-5'
-        }`}
-      >
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/80 shadow-[0_12px_32px_rgba(0,0,0,0.08)] p-5">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[10px] font-bold tracking-widest text-[#B38344] uppercase">
             ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
@@ -166,20 +222,16 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className={isMobileOverlay ? 'flex items-center gap-3' : 'flex flex-col'}
+            className="flex flex-col"
           >
             {/* Product Thumbnail */}
-            <div
-              className={`relative bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-2 overflow-hidden shrink-0 ${
-                isMobileOverlay ? 'w-20 h-20' : 'w-full h-36 mb-3'
-              }`}
-            >
+            <div className="relative bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-2 overflow-hidden w-full h-36 mb-3">
               <div className="relative w-full h-full">
                 <Image
                   src={activeProduct.heroImage}
                   alt={activeProduct.name}
                   fill
-                  sizes="(max-width: 768px) 100px, 300px"
+                  sizes="300px"
                   className="object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
                 />
               </div>
@@ -187,25 +239,24 @@ export default function HeroSection() {
 
             {/* Text & Price */}
             <div className="flex-1 min-w-0">
-              <h3 className="font-serif text-sm sm:text-base lg:text-lg font-bold text-neutral-900 leading-snug truncate">
+              <h3 className="font-serif text-base lg:text-lg font-bold text-neutral-900 leading-snug truncate">
                 {activeProduct.name}
               </h3>
-              <p className="text-[11px] sm:text-xs text-neutral-500 line-clamp-1 mt-0.5">
+              <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5">
                 {activeProduct.tagline || activeProduct.description}
               </p>
-              <div className="text-base sm:text-lg font-bold text-neutral-900 mt-1 font-serif">
+              <div className="text-lg font-bold text-neutral-900 mt-1 font-serif">
                 {formattedPrice}
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Direct WhatsApp Order CTA */}
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full mt-2.5 sm:mt-3 py-2 sm:py-2.5 bg-[#0A0A0A] hover:bg-neutral-800 text-white text-[11px] sm:text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition cursor-pointer shadow-sm"
+          className="w-full mt-3 py-2.5 bg-[#0A0A0A] hover:bg-neutral-800 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition cursor-pointer shadow-sm"
         >
           <span>💬</span> Order on WhatsApp
         </a>
@@ -214,17 +265,17 @@ export default function HeroSection() {
   };
 
   // Renders the 6-thumbnail rail
-  const renderThumbnailRail = () => {
+  const renderThumbnailRail = (isMobile = false) => {
     if (totalItems <= 0) return null;
 
     return (
-      <div>
-        <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-medium text-neutral-500 mb-2 px-1">
+      <div className={isMobile ? 'w-full' : ''}>
+        <div className="flex items-center justify-between text-[9px] sm:text-[11px] font-medium text-neutral-500 mb-1 sm:mb-2 px-1">
           <span>Curated Selection (0{safeIndex + 1}/0{totalItems})</span>
-          <span className="text-[10px] text-neutral-400">Tap to inspect</span>
+          <span className="text-[9px] sm:text-[10px] text-neutral-400">Tap to inspect</span>
         </div>
 
-        <div className="grid grid-cols-6 sm:grid-cols-3 gap-1.5 sm:gap-2.5">
+        <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2.5'}>
           {carouselProducts.map((item, idx) => (
             <button
               key={item.id}
@@ -241,7 +292,7 @@ export default function HeroSection() {
                   src={item.heroImage}
                   alt={item.name}
                   fill
-                  sizes="80px"
+                  sizes="60px"
                   className="object-contain"
                 />
               </div>
@@ -255,53 +306,53 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-[calc(100svh-64px)] lg:min-h-[calc(100vh-80px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 py-6 sm:py-8 select-none"
+      className="relative h-[calc(100svh-64px)] max-h-[100svh] lg:h-auto lg:min-h-[calc(100vh-80px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 py-3 sm:py-6 lg:py-8 select-none"
     >
-      {/* Background Subtle Watermark — Hidden on mobile to prevent clashing with portrait photo */}
+      {/* Background Subtle Watermark — Hidden on mobile */}
       <h1 className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-serif font-light tracking-widest text-[#EADBCE]/40 select-none pointer-events-none z-0 whitespace-nowrap">
         SIGNATURES
       </h1>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center max-w-7xl mx-auto w-full my-auto">
+      {/* Main Container: On mobile, fits 100% inside single screen height via flex-col; on desktop, 12-col grid */}
+      <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-8 items-center max-w-7xl mx-auto w-full h-full my-auto justify-between lg:justify-center">
         
-        {/* Left Column: Editorial Headline & Actions */}
-        <div className="lg:col-span-4 flex flex-col items-start gap-4 sm:gap-6 text-left">
-          <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#A67C43] font-semibold">
-            Based in Ilorin • Genuine Leather, Wears and Swiss Sourced Timepieces
+        {/* Top/Left Column: Concise Editorial Headline & Actions */}
+        <div className="lg:col-span-4 flex flex-col items-start gap-1.5 sm:gap-4 lg:gap-6 text-left w-full shrink-0">
+          <p className="text-[9px] sm:text-[11px] uppercase tracking-[0.2em] text-[#A67C43] font-semibold">
+            Based in Ilorin • Genuine Leather & Sourced Timepieces
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-neutral-900 leading-[1.12]">
-            Genuine pieces, <br />
+          <h2 className="text-2xl sm:text-4xl lg:text-6xl font-serif text-neutral-900 leading-[1.08]">
+            Genuine pieces, <br className="hidden sm:inline" />
             <span className="italic font-normal text-[#B38344]">curated from Ilorin.</span>
           </h2>
-          <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-sm">
-            Every piece we carry is genuine leather bags, wears, and wristwatches sourced directly from various makers. Every order is inspected before insured worldwide delivery.
+          <p className="hidden sm:block text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-sm">
+            Every piece we carry is genuine leather bags, wears, and wristwatches sourced directly from various makers. Inspected before insured delivery.
           </p>
           
-          <div className="flex items-center gap-3 pt-1 w-full sm:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 w-full sm:w-auto">
             <a
               href="#catalogue"
-              className="flex-1 sm:flex-none text-center px-5 sm:px-7 py-3 sm:py-3.5 bg-black text-white text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-neutral-800 transition shadow-sm inline-block"
+              className="flex-1 sm:flex-none text-center px-4 sm:px-7 py-2 sm:py-3.5 bg-black text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-neutral-800 transition shadow-sm inline-block"
             >
               Explore Collections &rarr;
             </a>
             <a
               href="#lookbook"
-              className="flex-1 sm:flex-none text-center px-5 sm:px-7 py-3 sm:py-3.5 border border-neutral-300 text-neutral-800 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-white transition inline-block"
+              className="flex-1 sm:flex-none text-center px-4 sm:px-7 py-2 sm:py-3.5 border border-neutral-300 text-neutral-800 text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-white transition inline-block"
             >
               Lookbook
             </a>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] sm:text-[11px] font-medium tracking-wider text-neutral-700 uppercase pt-1">
+          <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-medium tracking-wider text-neutral-700 uppercase pt-1">
             <span>&bull; 100% Genuine</span>
             <span>&bull; Worldwide Insured Delivery</span>
           </div>
         </div>
 
-        {/* Center Column: Model Stage with Bottom-Overlaid Card on Mobile */}
-        <div className="lg:col-span-5 relative flex flex-col items-center justify-end self-end w-full mt-2 lg:mt-0">
-          {/* Constrained Height Container on Mobile (Max 480px) */}
-          <div className="relative w-full max-w-[360px] sm:max-w-[440px] lg:max-w-[520px] h-[440px] sm:h-[500px] lg:h-auto lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible">
+        {/* Center Visual Stage: On mobile, takes remaining flex-1 height with card overlaid; on desktop, col-span-5 */}
+        <div className="lg:col-span-5 relative flex-1 min-h-0 lg:min-h-auto w-full flex flex-col items-center justify-end self-end my-1 lg:my-0">
+          <div className="relative w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[520px] h-full lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
             {/* Model Photo with Soft Fade Mask */}
             <div
               className="relative w-full h-full"
@@ -320,18 +371,18 @@ export default function HeroSection() {
             </div>
 
             {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
-            <div className="lg:hidden absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none z-10" />
+            <div className="lg:hidden absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />
 
-            {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Image */}
-            <div className="lg:hidden absolute bottom-2.5 inset-x-2.5 z-20">
+            {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Model Photo */}
+            <div className="lg:hidden absolute bottom-1.5 inset-x-1.5 z-20">
               {renderProductCard(true)}
             </div>
           </div>
+        </div>
 
-          {/* Mobile ONLY: Thumbnail Rail directly beneath the contained model visual */}
-          <div className="lg:hidden w-full max-w-[360px] sm:max-w-[440px] mx-auto mt-3">
-            {renderThumbnailRail()}
-          </div>
+        {/* Mobile ONLY: Compact Thumbnail Rail directly at the bottom */}
+        <div className="lg:hidden w-full max-w-[320px] sm:max-w-[400px] mx-auto shrink-0 pb-1">
+          {renderThumbnailRail(true)}
         </div>
 
         {/* Desktop ONLY: Right Column (Floating Card + Thumbnail Rail) */}
@@ -341,7 +392,7 @@ export default function HeroSection() {
           onMouseLeave={() => setIsPaused(false)}
         >
           {renderProductCard(false)}
-          {renderThumbnailRail()}
+          {renderThumbnailRail(false)}
         </div>
 
       </div>
