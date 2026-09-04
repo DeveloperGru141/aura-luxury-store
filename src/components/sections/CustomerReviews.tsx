@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Star, CheckCircle2, Quote } from 'lucide-react';
 
 const CUSTOMER_REVIEWS = [
@@ -42,11 +43,41 @@ const CUSTOMER_REVIEWS = [
 ];
 
 export default function CustomerReviews() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : 0.6,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
+  };
+
   return (
     <section id="reviews" className="py-12 sm:py-16 lg:py-24 bg-[#0D0F14] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header — concrete, no decorative eyebrow */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12 lg:mb-16">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12 lg:mb-16"
+        >
           <div className="min-w-0">
             <h2 className="font-serif text-[26px] sm:text-3xl lg:text-4xl font-light text-white leading-tight">
               What <span className="italic font-normal gold-gradient-text">clients</span> say
@@ -64,14 +95,21 @@ export default function CustomerReviews() {
             <span className="text-[11px] sm:text-xs text-gray-400 font-light hidden sm:inline">from over 2,400 verified orders</span>
             <span className="text-[11px] text-gray-400 font-light sm:hidden">2,400+ orders</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Review Cards Grid — fluid gaps */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
+        >
           {CUSTOMER_REVIEWS.map((rev) => (
-            <div
+            <motion.div
               key={rev.id}
-              className="flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.99] transition-all duration-300 group touch-manipulation relative"
+              variants={cardVariants}
+              className="flex flex-col justify-between p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-[#13161E] border border-white/5 hover:border-[#D4AF37]/35 active:border-[#D4AF37]/50 active:scale-[0.99] transition-all duration-300 group touch-manipulation relative will-change-transform"
             >
               <div>
                 {/* Quote Icon & Stars */}
@@ -115,9 +153,9 @@ export default function CustomerReviews() {
 
                 <span className="text-[10px] text-gray-500">{rev.date}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
