@@ -310,7 +310,7 @@ export default function HeroSection() {
     >
       {/* Background Subtle Watermark */}
       <h1 className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14vw] font-serif font-light tracking-[0.16em] text-[#EADBCE]/40 select-none pointer-events-none z-0 whitespace-nowrap">
-        OMO ESHO
+        SIGNATURES
       </h1>
 
       {/* Main Container: On mobile, visual stage is top (order-1), headline & CTAs under model (order-2); on desktop, 12-col grid */}
