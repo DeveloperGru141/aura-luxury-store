@@ -34,7 +34,7 @@ export default function Home() {
       <Navbar onSelectCategory={handleSelectCategory} />
 
       {/* Main Landing Sections */}
-      <HeroSection />
+      <HeroSection onSelectCategory={handleSelectCategory} />
       <CategoryGrid onSelectCategory={handleSelectCategory} />
       <FeaturedProducts
         activeCategory={activeCategory}

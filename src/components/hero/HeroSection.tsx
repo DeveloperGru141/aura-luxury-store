@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { useStore } from '@/context/StoreContext';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
-import type { Product } from '@/types/store';
+import type { Product, ProductCategory } from '@/types/store';
 
 // Helper to detect multi-panel collage / thumbnail grid images
 function isCollageImage(url: string): boolean {
@@ -34,7 +34,7 @@ function isCollageImage(url: string): boolean {
  * - If a product ONLY has a collage version available, returns null so it is excluded from hero rotation.
  */
 function getCleanHeroImage(product: Product): string | null {
-  const images: string[] = (product as any).images || [];
+  const images: string[] = (product as { images?: string[] }).images || [];
   
   if (images.length === 0) {
     const fallback = product.primaryImage;
@@ -60,7 +60,11 @@ function getCleanHeroImage(product: Product): string | null {
 
 type HeroCuratedProduct = Product & { heroImage: string };
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  onSelectCategory?: (cat: ProductCategory) => void;
+}
+
+export default function HeroSection({ onSelectCategory }: HeroSectionProps = {}) {
   const { products: liveProducts, loading } = useLiveProducts();
   const { formatPrice } = useStore();
 
@@ -118,6 +122,36 @@ export default function HeroSection() {
   const handleSelect = (index: number) => {
     resetTimer();
     setCurrentIndex(index);
+  };
+
+  const navLinks: { label: string; href: string; category?: ProductCategory }[] = [
+    { label: 'Shop', href: '#catalogue', category: 'all' },
+    { label: 'Shoes', href: '#catalogue', category: 'shoes' },
+    { label: 'Timepieces', href: '#catalogue', category: 'watches' },
+    { label: 'Bags', href: '#catalogue', category: 'bags' },
+    { label: 'Wears', href: '#catalogue', category: 'apparel' },
+    { label: 'Lookbook', href: '#lookbook' },
+  ];
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: (typeof navLinks)[number]
+  ) => {
+    if (link.category && onSelectCategory) {
+      e.preventDefault();
+      onSelectCategory(link.category);
+      const el = document.getElementById('catalogue');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      window.history.replaceState(null, '', link.href);
+      return;
+    }
+    if (link.href.startsWith('#')) {
+      e.preventDefault();
+      const id = link.href.slice(1);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      window.history.replaceState(null, '', link.href);
+    }
   };
 
   const formattedPrice = activeProduct ? formatPrice(activeProduct.price) : '₦240,000';
@@ -204,7 +238,7 @@ export default function HeroSection() {
 
     // Desktop Side Column Floating Card
     return (
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/80 shadow-[0_12px_32px_rgba(0,0,0,0.08)] p-5">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/80 shadow-[0_12px_32px_rgba(0,0,0,0.08)] p-4 xl:p-5">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[10px] font-bold tracking-widest text-[#B38344] uppercase">
             ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
@@ -225,7 +259,7 @@ export default function HeroSection() {
             className="flex flex-col"
           >
             {/* Product Thumbnail */}
-            <div className="relative bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-2 overflow-hidden w-full h-36 mb-3">
+            <div className="relative bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-2 overflow-hidden w-full h-28 xl:h-36 mb-2 xl:mb-3">
               <div className="relative w-full h-full">
                 <Image
                   src={activeProduct.heroImage}
@@ -264,23 +298,23 @@ export default function HeroSection() {
     );
   };
 
-  // Renders the 6-thumbnail rail
+  // Renders the thumbnail rail
   const renderThumbnailRail = (isMobile = false) => {
     if (totalItems <= 0) return null;
 
     return (
       <div className={isMobile ? 'w-full' : ''}>
-        <div className="flex items-center justify-between text-[9px] sm:text-[11px] font-medium text-neutral-500 mb-1 sm:mb-2 px-1">
-          <span>Curated Selection (0{safeIndex + 1}/0{totalItems})</span>
-          <span className="text-[9px] sm:text-[10px] text-neutral-400">Tap to inspect</span>
+        <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-medium text-neutral-500 mb-1.5 px-1">
+          <span className="tracking-wider uppercase">Curated (0{safeIndex + 1}/0{totalItems})</span>
+          <span className="text-[9px] text-neutral-400">Select piece</span>
         </div>
 
-        <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2.5'}>
+        <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2'}>
           {carouselProducts.map((item, idx) => (
             <button
               key={item.id}
               onClick={() => handleSelect(idx)}
-              className={`relative aspect-square rounded-lg sm:rounded-xl overflow-hidden p-1 sm:p-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
+              className={`relative aspect-square rounded-lg sm:rounded-xl overflow-hidden p-1 sm:p-1.5 flex items-center justify-center transition-all duration-200 cursor-pointer ${
                 safeIndex === idx
                   ? 'bg-[#FDFBF7] border-2 border-[#B38344] shadow-sm scale-105 ring-2 ring-[#B38344]/15'
                   : 'bg-[#FDFBF7] border border-neutral-200/80 hover:border-neutral-300 opacity-70 hover:opacity-100'
@@ -306,88 +340,102 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-[calc(100svh-56px)] lg:h-auto lg:min-h-[calc(100vh-80px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 py-2.5 sm:py-6 lg:py-8 select-none"
+      className="relative min-h-[calc(100svh-56px)] lg:min-h-[calc(100vh-80px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 pt-3 sm:pt-4 lg:pt-6 pb-3 sm:pb-5 lg:pb-0 select-none"
     >
-      {/* Background Subtle Watermark */}
-      <h1 className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14vw] font-serif font-light tracking-[0.16em] text-[#EADBCE]/40 select-none pointer-events-none z-0 whitespace-nowrap">
-        SIGNATURES
-      </h1>
+      {/* Luxury Brand Editorial Title Across Top Behind Model */}
+      <div className="absolute top-3 sm:top-4 lg:top-6 inset-x-0 w-full px-4 sm:px-8 lg:px-14 pointer-events-none z-0 select-none">
+        <div className="max-w-7xl mx-auto flex items-baseline justify-between w-full">
+          <span className="font-serif font-bold text-[clamp(1.2rem,3.8vw,3.6rem)] sm:text-[clamp(1.75rem,4.2vw,4.4rem)] xl:text-[4.75rem] tracking-[0.14em] sm:tracking-[0.16em] uppercase text-neutral-900 leading-none whitespace-nowrap">
+            OMO ESHO
+          </span>
+          <span className="font-serif font-bold text-[clamp(1.2rem,3.8vw,3.6rem)] sm:text-[clamp(1.75rem,4.2vw,4.4rem)] xl:text-[4.75rem] tracking-[0.14em] sm:tracking-[0.16em] uppercase text-neutral-900 leading-none text-right whitespace-nowrap">
+            SIGNATURES
+          </span>
+        </div>
+      </div>
 
-      {/* Main Container: On mobile, visual stage is top (order-1), headline & CTAs under model (order-2); on desktop, 12-col grid */}
-      <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-8 items-center max-w-7xl mx-auto w-full h-full my-auto justify-between lg:justify-center">
+      {/* Main Container: 12-col grid on desktop */}
+      <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 max-w-7xl mx-auto w-full flex-1 min-h-0 pt-8 sm:pt-10 lg:pt-24 xl:pt-28 justify-between">
         
-        {/* Visual Stage: Model + Wristwatch Transition (order-1 on mobile, order-2 on desktop) */}
-        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full flex flex-col items-center justify-end self-center my-1 lg:my-0 shrink-0 lg:shrink">
-          <div className="relative w-full max-w-[400px] sm:max-w-[460px] lg:max-w-[520px] h-[48svh] sm:h-[52svh] max-h-[480px] min-h-[320px] lg:h-auto lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
-            {/* Model Photo with Soft Fade Mask */}
-            <div
-              className="relative w-full h-full"
-              style={{
-                WebkitMaskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
-                maskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
-              }}
-            >
+        {/* Left Column: Nav bar under OMO ESHO, Headline & CTAs aligned to bottom */}
+        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col justify-between h-full w-full shrink-0 z-10 pb-4 sm:pb-6">
+          {/* Category Navigation Bar (in the exact manner of reference layout) */}
+          <div className="hidden lg:block w-full">
+            <div className="border-y border-neutral-300/80 py-2 sm:py-2.5">
+              <nav className="flex items-center justify-between xl:justify-start gap-3 xl:gap-5 text-[10px] xl:text-[11px] tracking-[0.14em] uppercase font-medium text-neutral-700 overflow-x-auto scrollbar-none">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link)}
+                    className="hover:text-black transition-colors whitespace-nowrap py-0.5 cursor-pointer shrink-0"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          {/* Flexible middle breathing space */}
+          <div className="hidden lg:block flex-1 min-h-[40px] lg:min-h-[80px]" />
+
+          {/* Bottom-Aligned Editorial Headline & CTA Buttons */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-3 sm:gap-4 lg:gap-6 w-full shrink-0 pt-2 lg:pt-0">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-serif text-neutral-900 leading-[1.12]">
+              Genuine pieces, <br className="hidden sm:inline" />
+              <span className="italic font-normal text-[#B38344]">curated from Ilorin.</span>
+            </h2>
+
+            <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 w-full max-w-[320px] sm:max-w-none pt-1">
+              <a
+                href="#catalogue"
+                className="flex-1 sm:flex-none text-center px-5 sm:px-7 py-3 sm:py-3.5 bg-black text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-neutral-800 transition shadow-sm inline-block"
+              >
+                Explore Collections &rarr;
+              </a>
+              <a
+                href="#lookbook"
+                className="flex-1 sm:flex-none text-center px-5 sm:px-7 py-3 sm:py-3.5 border border-neutral-300 text-neutral-800 text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-white transition inline-block"
+              >
+                Lookbook
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Center Column: Model Image (Scaled bigger and taller like reference, head reaching into brand text area) */}
+        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full h-full flex flex-col items-center justify-end self-end shrink-0 lg:shrink z-10 pointer-events-none">
+          <div className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[560px] xl:max-w-[640px] h-[52svh] sm:h-[58svh] lg:h-[78vh] xl:h-[84vh] max-h-[860px] min-h-[340px] mx-auto flex items-end justify-center">
+            {/* Model Photo: Crisp, tall, solid trousers anchored cleanly at bottom */}
+            <div className="relative w-full h-full">
               <Image
                 src="/images/model-refined.png"
                 alt="Omo Esho Model"
                 fill
                 priority
-                className="object-contain object-bottom scale-105 sm:scale-100 origin-bottom select-none pointer-events-none z-10"
+                className="object-contain object-bottom scale-105 sm:scale-105 lg:scale-110 xl:scale-115 origin-bottom select-none pointer-events-none z-10"
               />
             </div>
 
             {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
-            <div className="lg:hidden absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/45 via-black/15 to-transparent pointer-events-none z-10" />
+            <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />
 
             {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Model Photo */}
-            <div className="lg:hidden absolute bottom-2 inset-x-2 sm:inset-x-3 z-20">
+            <div className="lg:hidden absolute bottom-2 inset-x-2 sm:inset-x-3 z-20 pointer-events-auto">
               {renderProductCard(true)}
             </div>
           </div>
 
           {/* Mobile ONLY: Compact Thumbnail Rail directly beneath the model */}
-          <div className="lg:hidden w-full max-w-[400px] sm:max-w-[460px] mx-auto shrink-0 pt-2">
+          <div className="lg:hidden w-full max-w-[400px] sm:max-w-[460px] mx-auto shrink-0 pt-2 pointer-events-auto">
             {renderThumbnailRail(true)}
           </div>
         </div>
 
-        {/* Editorial Headline & CTA Actions: Under the model on mobile (order-2), left column on desktop (order-1) */}
-        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left gap-1.5 sm:gap-3 lg:gap-6 w-full shrink-0 pt-1 lg:pt-0">
-          <p className="text-[9px] sm:text-[11px] uppercase tracking-[0.2em] text-[#A67C43] font-semibold">
-            Based in Ilorin • Genuine Leather & Sourced Timepieces
-          </p>
-          <h2 className="text-xl sm:text-3xl lg:text-6xl font-serif text-neutral-900 leading-[1.12]">
-            Genuine pieces, <br className="hidden sm:inline" />
-            <span className="italic font-normal text-[#B38344]">curated from Ilorin.</span>
-          </h2>
-          <p className="hidden sm:block text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-sm">
-            Every piece we carry is genuine leather bags, wears, and wristwatches sourced directly from various makers. Inspected before insured delivery.
-          </p>
-          
-          <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-0.5 sm:pt-1 w-full max-w-[320px] sm:max-w-none">
-            <a
-              href="#catalogue"
-              className="flex-1 sm:flex-none text-center px-4 sm:px-7 py-2 sm:py-3.5 bg-black text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-neutral-800 transition shadow-sm inline-block"
-            >
-              Explore Collections &rarr;
-            </a>
-            <a
-              href="#lookbook"
-              className="flex-1 sm:flex-none text-center px-4 sm:px-7 py-2 sm:py-3.5 border border-neutral-300 text-neutral-800 text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-white transition inline-block"
-            >
-              Lookbook
-            </a>
-          </div>
-
-          <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-medium tracking-wider text-neutral-700 uppercase pt-1">
-            <span>&bull; 100% Genuine</span>
-            <span>&bull; Worldwide Insured Delivery</span>
-          </div>
-        </div>
-
-        {/* Desktop ONLY: Right Column (Floating Card + Thumbnail Rail) */}
+        {/* Right Column: Floating Card + Thumbnail Rail (Aligned to bottom) */}
         <div
-          className="hidden lg:flex lg:order-3 lg:col-span-3 flex-col gap-5 justify-center w-full"
+          className="hidden lg:flex lg:order-3 lg:col-span-3 flex-col gap-3 xl:gap-4 justify-end pb-4 lg:pb-6 w-full z-10"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >

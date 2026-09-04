@@ -63,15 +63,15 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
     <header
       className={`sticky top-0 z-40 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#F4F0E8]/70 backdrop-blur-xl backdrop-saturate-150 border-b border-black/[0.07] shadow-[0_8px_32px_rgba(0,0,0,0.04)] supports-[backdrop-filter]:bg-[#F4F0E8]/65'
-          : 'bg-[#F4F0E8] border-b border-[#E7E2D6]'
+          ? 'bg-[#FAF7F2]/85 backdrop-blur-xl backdrop-saturate-150 border-b border-black/[0.07] shadow-[0_8px_32px_rgba(0,0,0,0.04)]'
+          : 'bg-[#FAF7F2] border-b border-transparent'
       }`}
     >
-      {/* TOP ROW: Mobile Hamburger Button (left) | Centered Brand Title | Search & Concierge (right) */}
+      {/* TOP ROW: Hamburger Button (left) | Centered Brand Title (on scroll) | Search & Concierge (right) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between gap-2 sm:gap-4">
         
-        {/* Mobile: Hamburger toggle button / Desktop: Balanced spacer */}
-        <div className="flex items-center md:hidden w-16">
+        {/* Hamburger toggle button (visible on all breakpoints like reference layout) */}
+        <div className="flex items-center w-16 sm:w-20">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 -ml-2 rounded-lg text-black hover:bg-black/5 active:bg-black/10 transition-colors flex flex-col items-start justify-center gap-1.5 touch-manipulation cursor-pointer group"
@@ -96,11 +96,8 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           </button>
         </div>
 
-        {/* Desktop Left Spacer to balance the right action buttons */}
-        <div className="hidden md:block w-20" aria-hidden="true" />
-
-        {/* Center: Grand Editorial Brand Title */}
-        <div className="flex-1 text-center">
+        {/* Center: Brand Title (Visible when scrolled, hidden at top so hero's grand brand text shines) */}
+        <div className={`flex-1 text-center transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <a
             href="#home"
             onClick={(e) => {
@@ -110,7 +107,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             }}
             className="inline-block group cursor-pointer"
           >
-            <h1 className="font-serif text-xl sm:text-3xl lg:text-5xl font-light tracking-[0.12em] sm:tracking-[0.16em] uppercase text-black group-hover:text-[#B8941F] transition-colors leading-none">
+            <h1 className="font-serif text-lg sm:text-2xl font-light tracking-[0.14em] uppercase text-black group-hover:text-[#B8941F] transition-colors leading-none">
               OMO ESHO SIGNATURES
             </h1>
           </a>
@@ -141,57 +138,55 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
         </div>
       </div>
 
-      {/* DIRECT CATEGORY NAVIGATION BAR: Visible on Desktop ONLY, removed completely on mobile */}
-      <div
-        className={`hidden md:block border-t transition-colors duration-500 ${
-          isScrolled ? 'border-black/[0.06]' : 'border-[#E5DFD3]'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link)}
-              className="hover:text-black transition-colors whitespace-nowrap py-1"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* Mobile Menu Drawer (revealed on hamburger tap) */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-black/[0.08] bg-[#F4F0E8]/85 backdrop-blur-2xl backdrop-saturate-150 px-5 py-6 shadow-2xl max-h-[calc(100dvh-70px)] overflow-y-auto animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col gap-1.5">
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#A67C43] mb-2">
-              Collections & Navigation
-            </p>
+      {/* DIRECT CATEGORY NAVIGATION BAR: Visible when scrolled on desktop */}
+      {isScrolled && (
+        <div className="hidden md:block border-t border-black/[0.06] transition-all duration-300">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link)}
-                className="text-[17px] font-serif tracking-wide text-neutral-900 hover:text-[#B8941F] py-2.5 flex items-center justify-between border-b border-black/5 transition-colors"
+                className="hover:text-black transition-colors whitespace-nowrap py-1"
               >
-                <span>{link.label}</span>
-                <span className="text-[#B8941F] text-sm">&rarr;</span>
+                {link.label}
               </a>
             ))}
+          </div>
+        </div>
+      )}
 
-            <div className="pt-5 mt-2">
-              <a
-                href={conciergeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-4 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-sm"
-              >
-                <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
-                <span>Chat with WhatsApp Concierge</span>
-              </a>
-            </div>
-          </nav>
+      {/* Menu Drawer (revealed on hamburger tap) */}
+      {isMobileMenuOpen && (
+        <div className="border-t border-black/[0.08] bg-[#FAF7F2]/95 backdrop-blur-2xl px-5 sm:px-8 py-6 shadow-2xl max-h-[calc(100dvh-70px)] overflow-y-auto animate-in slide-in-from-top-2 duration-200">
+            <nav className="flex flex-col gap-1.5">
+              <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#A67C43] mb-2">
+                Collections & Navigation
+              </p>
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className="text-[17px] font-serif tracking-wide text-neutral-900 hover:text-[#B8941F] py-2.5 flex items-center justify-between border-b border-black/5 transition-colors"
+                >
+                  <span>{link.label}</span>
+                  <span className="text-[#B8941F] text-sm">&rarr;</span>
+                </a>
+              ))}
+
+              <div className="pt-5 mt-2">
+                <a
+                  href={conciergeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 px-4 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Chat with WhatsApp Concierge</span>
+                </a>
+              </div>
+            </nav>
         </div>
       )}
     </header>
