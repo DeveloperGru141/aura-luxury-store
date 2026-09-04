@@ -306,22 +306,57 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative h-[calc(100svh-64px)] max-h-[100svh] lg:h-auto lg:min-h-[calc(100vh-80px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 py-3 sm:py-6 lg:py-8 select-none"
+      className="relative min-h-[calc(100svh-56px)] lg:h-auto lg:min-h-[calc(100vh-80px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 py-2.5 sm:py-6 lg:py-8 select-none"
     >
       {/* Background Subtle Watermark — Hidden on mobile */}
       <h1 className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-serif font-light tracking-widest text-[#EADBCE]/40 select-none pointer-events-none z-0 whitespace-nowrap">
         SIGNATURES
       </h1>
 
-      {/* Main Container: On mobile, fits 100% inside single screen height via flex-col; on desktop, 12-col grid */}
+      {/* Main Container: On mobile, visual stage is top (order-1), headline & CTAs under model (order-2); on desktop, 12-col grid */}
       <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-8 items-center max-w-7xl mx-auto w-full h-full my-auto justify-between lg:justify-center">
         
-        {/* Top/Left Column: Concise Editorial Headline & Actions */}
-        <div className="lg:col-span-4 flex flex-col items-start gap-1.5 sm:gap-4 lg:gap-6 text-left w-full shrink-0">
+        {/* Visual Stage: Model + Wristwatch Transition (order-1 on mobile, order-2 on desktop) */}
+        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full flex flex-col items-center justify-end self-center my-0.5 lg:my-0 shrink-0 lg:shrink">
+          <div className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[520px] h-[38svh] sm:h-[44svh] max-h-[350px] min-h-[220px] lg:h-auto lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
+            {/* Model Photo with Soft Fade Mask */}
+            <div
+              className="relative w-full h-full"
+              style={{
+                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+              }}
+            >
+              <Image
+                src="/images/model-refined.png"
+                alt="Omo Esho Model"
+                fill
+                priority
+                className="object-contain object-bottom select-none pointer-events-none z-10"
+              />
+            </div>
+
+            {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
+            <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />
+
+            {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Model Photo */}
+            <div className="lg:hidden absolute bottom-1.5 inset-x-1.5 z-20">
+              {renderProductCard(true)}
+            </div>
+          </div>
+
+          {/* Mobile ONLY: Compact Thumbnail Rail directly beneath the model */}
+          <div className="lg:hidden w-full max-w-[320px] sm:max-w-[380px] mx-auto shrink-0 pt-1.5">
+            {renderThumbnailRail(true)}
+          </div>
+        </div>
+
+        {/* Editorial Headline & CTA Actions: Under the model on mobile (order-2), left column on desktop (order-1) */}
+        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left gap-1.5 sm:gap-3 lg:gap-6 w-full shrink-0 pt-1 lg:pt-0">
           <p className="text-[9px] sm:text-[11px] uppercase tracking-[0.2em] text-[#A67C43] font-semibold">
             Based in Ilorin • Genuine Leather & Sourced Timepieces
           </p>
-          <h2 className="text-2xl sm:text-4xl lg:text-6xl font-serif text-neutral-900 leading-[1.08]">
+          <h2 className="text-xl sm:text-3xl lg:text-6xl font-serif text-neutral-900 leading-[1.12]">
             Genuine pieces, <br className="hidden sm:inline" />
             <span className="italic font-normal text-[#B38344]">curated from Ilorin.</span>
           </h2>
@@ -329,7 +364,7 @@ export default function HeroSection() {
             Every piece we carry is genuine leather bags, wears, and wristwatches sourced directly from various makers. Inspected before insured delivery.
           </p>
           
-          <div className="flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1 w-full sm:w-auto">
+          <div className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-0.5 sm:pt-1 w-full max-w-[320px] sm:max-w-none">
             <a
               href="#catalogue"
               className="flex-1 sm:flex-none text-center px-4 sm:px-7 py-2 sm:py-3.5 bg-black text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider rounded-full hover:bg-neutral-800 transition shadow-sm inline-block"
@@ -350,44 +385,9 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Center Visual Stage: On mobile, takes remaining flex-1 height with card overlaid; on desktop, col-span-5 */}
-        <div className="lg:col-span-5 relative flex-1 min-h-0 lg:min-h-auto w-full flex flex-col items-center justify-end self-end my-1 lg:my-0">
-          <div className="relative w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[520px] h-full lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
-            {/* Model Photo with Soft Fade Mask */}
-            <div
-              className="relative w-full h-full"
-              style={{
-                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-              }}
-            >
-              <Image
-                src="/images/model-refined.png"
-                alt="Omo Esho Model"
-                fill
-                priority
-                className="object-contain object-bottom select-none pointer-events-none z-10"
-              />
-            </div>
-
-            {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
-            <div className="lg:hidden absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />
-
-            {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Model Photo */}
-            <div className="lg:hidden absolute bottom-1.5 inset-x-1.5 z-20">
-              {renderProductCard(true)}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile ONLY: Compact Thumbnail Rail directly at the bottom */}
-        <div className="lg:hidden w-full max-w-[320px] sm:max-w-[400px] mx-auto shrink-0 pb-1">
-          {renderThumbnailRail(true)}
-        </div>
-
         {/* Desktop ONLY: Right Column (Floating Card + Thumbnail Rail) */}
         <div
-          className="hidden lg:flex lg:col-span-3 flex-col gap-5 justify-center w-full"
+          className="hidden lg:flex lg:order-3 lg:col-span-3 flex-col gap-5 justify-center w-full"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
