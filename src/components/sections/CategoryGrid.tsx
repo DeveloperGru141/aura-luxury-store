@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ProductCategory } from '@/types/store';
 import { ArrowUpRight } from 'lucide-react';
 import { useLiveProducts, useLiveCategories } from '@/hooks/useLiveProducts';
@@ -63,37 +63,8 @@ const CURATED_CATEGORIES: CuratedCategoryConfig[] = [
 export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   const { products: liveProducts } = useLiveProducts();
   const liveCategories = useLiveCategories();
-  const shouldReduceMotion = useReducedMotion();
   const [activeMobileCard, setActiveMobileCard] = useState<string | null>(null);
   const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-        delayChildren: 0.05,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: shouldReduceMotion ? 0 : 22,
-      scale: shouldReduceMotion ? 1 : 0.98,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.6,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -192,21 +163,20 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
 
         {/* 4-Card Luxury Grid: 2x2 on mobile, 4 across on desktop (Uncrammed, generous aspect ratio) */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.12 }}
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5"
         >
           {categoryCards.map((cat) => {
             const isMobileHovered = activeMobileCard === cat.id;
 
             return (
-              <motion.div
+              <div
                 key={cat.id}
-                variants={cardVariants}
                 ref={(el) => {
-                  cardRefs.current[cat.id] = el as unknown as HTMLDivElement;
+                  cardRefs.current[cat.id] = el;
                 }}
                 data-cat-id={cat.id}
                 onMouseEnter={() => setActiveMobileCard(cat.id)}
@@ -225,7 +195,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                   alt={cat.name}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className={`object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${
+                  className={`object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 ${
                     isMobileHovered ? 'scale-105 sm:scale-100 sm:group-hover:scale-105' : 'scale-100'
                   }`}
                 />
@@ -269,7 +239,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
                     {cat.tagline}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </motion.div>

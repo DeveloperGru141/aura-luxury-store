@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ProductCategory } from '@/types/store';
 import ProductCard from '@/components/ui/ProductCard';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
@@ -16,7 +16,6 @@ export default function FeaturedProducts({
   setActiveCategory,
 }: FeaturedProductsProps) {
   const { products: liveProducts, loading } = useLiveProducts();
-  const shouldReduceMotion = useReducedMotion();
 
   const tabs: { id: ProductCategory; label: string }[] = [
     { id: 'all', label: 'All Collections' },
@@ -32,56 +31,22 @@ export default function FeaturedProducts({
     return matchesCat;
   });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.04,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: shouldReduceMotion ? 0 : 16,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0.2 : 0.5,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
-
   return (
     <section id="catalogue" className="py-8 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] border-y border-[var(--color-border)] relative" style={{ contentVisibility: 'auto', containIntrinsicSize: '800px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 px-2"
         >
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C43] mb-1">
-            Atelier Inventory
-          </p>
-          <h2 className="font-serif text-[22px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight uppercase">
-            The Catalogue
+          <h2 className="font-serif text-[22px] sm:text-3xl lg:text-[32px] font-light text-[var(--color-text-primary)] leading-tight">
+            The catalogue
           </h2>
         </motion.div>
 
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
-          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-[var(--color-border)] overflow-hidden"
-        >
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 pb-3 sm:pb-4 border-b border-[var(--color-border)] overflow-hidden">
           <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 -mx-4 sm:mx-0 px-4 sm:px-0 snap-x snap-mandatory scrollbar-none overscroll-x-contain touch-manipulation">
             {tabs.map((tab) => {
               const isActive = activeCategory === tab.id;
@@ -121,7 +86,7 @@ export default function FeaturedProducts({
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
@@ -143,19 +108,11 @@ export default function FeaturedProducts({
             <a href="https://wa.me/2347065076565?text=Hi%20Omo%20Esho%20Signatures,%20please%20add%20me%20to%20the%20waitlist." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-black hover:bg-zinc-900 text-white px-5 py-2.5 text-xs font-semibold hover:shadow-md active:scale-[0.97] transition-all">Chat with Concierge to Reserve</a>
           </div>
         ) : (
-          <motion.div
-            key={activeCategory}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4"
-          >
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
             {filteredProducts.map((product) => (
-              <motion.div key={product.id} variants={cardVariants}>
-                <ProductCard product={product} />
-              </motion.div>
+              <ProductCard key={product.id} product={product} />
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

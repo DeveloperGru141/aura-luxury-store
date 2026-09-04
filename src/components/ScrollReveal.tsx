@@ -33,15 +33,8 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const ref = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setPrefersReducedMotion(true);
-      setIsVisible(true);
-      return;
-    }
-
     const el = ref.current;
     if (!el) return;
 
@@ -62,14 +55,6 @@ export default function ScrollReveal({
   }, [threshold, rootMargin]);
 
   const Component = Tag as React.ElementType;
-
-  if (prefersReducedMotion) {
-    return (
-      <Component ref={ref as React.RefObject<HTMLElement>} className={className}>
-        {children}
-      </Component>
-    );
-  }
 
   return (
     <Component

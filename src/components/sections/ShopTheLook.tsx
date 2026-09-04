@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useReducedMotion } from 'framer-motion';
 import { useStore } from '@/context/StoreContext';
 import { Sparkles, Eye, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
@@ -11,7 +10,6 @@ import { useLiveProducts } from '@/hooks/useLiveProducts';
 export default function ShopTheLook() {
   const { setQuickViewProduct, formatPrice } = useStore();
   const { products: liveProducts } = useLiveProducts();
-  const shouldReduceMotion = useReducedMotion();
 
   const stylingSlides = React.useMemo(() => {
     if (liveProducts.length === 0) return [];
@@ -92,28 +90,11 @@ export default function ShopTheLook() {
   return (
     <section id="lookbook" className="py-10 sm:py-14 lg:py-16 bg-[var(--color-surface-alt)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col mb-6 sm:mb-8"
-        >
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C43] mb-1">
-            Visual Atelier
-          </p>
-          <h2 className="font-serif text-[22px] sm:text-[28px] lg:text-[30px] font-light tracking-wide uppercase text-[var(--color-text-primary)] leading-tight">
-            Curated Lookbook
-          </h2>
-        </motion.div>
+        <div className="flex flex-col mb-6 sm:mb-8">
+          <h2 className="font-sans text-[22px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight uppercase text-[var(--color-text-primary)] leading-tight">Curated lookbook</h2>
+        </div>
 
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.12 }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-6 items-start"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-6 items-start">
           <div
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
@@ -193,7 +174,7 @@ export default function ShopTheLook() {
               })}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
