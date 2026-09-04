@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
+import { Plus_Jakarta_Sans, Cormorant_Garamond, Bodoni_Moda } from "next/font/google";
 import { StoreProvider } from "@/context/StoreContext";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import "./globals.css";
@@ -21,6 +21,13 @@ const serif = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-serif",
+  display: "swap",
+});
+
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-bodoni",
   display: "swap",
 });
 
@@ -52,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} scroll-smooth`}>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${bodoni.variable} scroll-smooth`}>
       <body className="font-sans antialiased bg-[var(--color-surface)] text-[var(--color-text-primary)] min-h-screen">
         <SmoothScroll>
           <StoreProvider>{children}</StoreProvider>

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/store';
 import { useStore } from '@/context/StoreContext';
-import { Eye, MessageCircle, Star } from 'lucide-react';
+import { Eye, MessageCircle } from 'lucide-react';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 
 interface ProductCardProps {
@@ -94,17 +94,6 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Information — compact on mobile to reduce cramping */}
       <div className="flex flex-col p-2.5 sm:p-3 lg:p-4 flex-1 justify-between gap-1">
         <div>
-          <div className="flex items-center justify-between text-xs mb-1 gap-2">
-            <span className="uppercase tracking-widest text-[8px] sm:text-[10px] font-bold text-[var(--color-accent-gold)] truncate">
-              {(product as any).categoryLabel ?? (anyProduct.categories?.name as string) ?? anyProduct.category ?? '—'}
-            </span>
-            <div className="flex items-center gap-1 text-amber-500 shrink-0">
-              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-              <span className="font-medium text-[var(--color-text-secondary)] text-[10px] sm:text-xs">{(product as any).rating?.toFixed?.(1) ?? '5.0'}</span>
-              <span className="text-[var(--color-text-muted)] text-[10px] hidden sm:inline">({(product as any).reviewCount ?? 0})</span>
-            </div>
-          </div>
-
           <h3
             onClick={handleQuickView}
             className="font-medium text-[11px] sm:text-[13px] lg:text-sm text-[var(--color-text-primary)] hover:text-[var(--color-accent-gold)] active:text-[var(--color-accent-gold)] transition-colors cursor-pointer line-clamp-1 mb-0.5 leading-tight"

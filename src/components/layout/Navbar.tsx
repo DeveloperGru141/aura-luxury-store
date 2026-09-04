@@ -67,14 +67,14 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           : 'bg-[#FAF7F2] border-b border-[#E7E2D6]'
       }`}
     >
-      {/* TOP ROW: Compact functional bar with logo-sized wordmark */}
+      {/* TOP ROW: Functional bar with no brand name (brand typography lives prominently in hero) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-4">
         
-        {/* Mobile: Hamburger toggle button / Desktop: Left spacer for optical balance */}
-        <div className="flex items-center w-16 md:w-20">
+        {/* Mobile: Hamburger toggle button */}
+        <div className="flex items-center md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 -ml-2 rounded-lg text-black hover:bg-black/5 active:bg-black/10 transition-colors flex flex-col items-start justify-center gap-1.5 touch-manipulation cursor-pointer"
+            className="p-2 -ml-2 rounded-lg text-black hover:bg-black/5 active:bg-black/10 transition-colors flex flex-col items-start justify-center gap-1.5 touch-manipulation cursor-pointer"
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -96,25 +96,22 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           </button>
         </div>
 
-        {/* Center: Elegant Compact Logo Wordmark (Always visible, normal brand scale) */}
-        <div className="flex-1 text-center">
-          <a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
-              window.history.replaceState(null, '', '#home');
-            }}
-            className="inline-block group cursor-pointer"
-          >
-            <h1 className="font-serif text-base sm:text-xl lg:text-2xl font-light tracking-[0.16em] uppercase text-black group-hover:text-[#B8941F] transition-colors leading-none">
-              OMO ESHO SIGNATURES
-            </h1>
-          </a>
-        </div>
+        {/* Desktop ONLY: Elegant Category Navigation Links */}
+        <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link)}
+              className="hover:text-black transition-colors whitespace-nowrap py-1"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
 
         {/* Right: Search & Concierge Icons */}
-        <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 w-16 md:w-20">
+        <div className="flex items-center justify-end gap-1.5 sm:gap-2.5">
           {/* Search Trigger */}
           <button
             onClick={() => setIsSearchOpen(true)}
@@ -135,22 +132,6 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           >
             <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
           </a>
-        </div>
-      </div>
-
-      {/* DIRECT CATEGORY NAVIGATION BAR: Compact, visible on desktop */}
-      <div className="hidden md:block border-t border-black/[0.06]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link)}
-              className="hover:text-black transition-colors whitespace-nowrap py-0.5"
-            >
-              {link.label}
-            </a>
-          ))}
         </div>
       </div>
 

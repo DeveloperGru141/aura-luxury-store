@@ -3,6 +3,7 @@
 @theme {
   --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-serif), "Cormorant Garamond", Georgia, serif;
+  --font-bodoni: var(--font-bodoni), "Bodoni Moda", "Didot", "Bodoni MT", serif;
 
   /* Light theme - 60/30/10 — black primary, gold accent */
   --color-surface: #FFFFFF;

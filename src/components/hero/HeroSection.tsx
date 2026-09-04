@@ -35,7 +35,20 @@ function isCollageImage(url: string): boolean {
  */
 function getCleanHeroImage(product: Product): string | null {
   const images: string[] = (product as { images?: string[] }).images || [];
-  
+  const nameLower = product.name?.toLowerCase() || '';
+
+  // Special safeguard for Patek Philippe timepieces: guarantee a clean studio or isolated photo
+  if (nameLower.includes('patek')) {
+    if (images.length > 1) {
+      const singleShot = images.slice(1).find((img) => !isCollageImage(img));
+      if (singleShot) return singleShot;
+    }
+    if (images[0] && !isCollageImage(images[0])) {
+      return images[0];
+    }
+    return '/images/watches/watch-1.png';
+  }
+
   if (images.length === 0) {
     const fallback = product.primaryImage;
     if (!fallback || isCollageImage(fallback)) return null;
@@ -252,18 +265,9 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
   // Renders the product card: ultra-compact on mobile overlay, full-sized on desktop
   const renderProductCard = (isMobileOverlay = false) => {
     if (isMobileOverlay) {
-      // Mobile Single-Height Overlaid Card: ultra-compact (~85px), crisp text contrast
+      // Mobile Single-Height Overlaid Card: clean, compact, goes straight to product
       return (
         <div className="bg-white/95 backdrop-blur-xl rounded-xl p-2.5 border border-white/90 shadow-xl w-full">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[9px] font-bold tracking-widest text-[#B38344] uppercase">
-              ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
-            </span>
-            <span className="text-[8px] bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded-full border border-emerald-200">
-              {activeProduct.inStock ? 'In Stock' : 'Exclusive'}
-            </span>
-          </div>
-
           <AnimatePresence mode="wait">
             <motion.div
               key={activeProduct.id}
@@ -273,14 +277,14 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-2.5"
             >
-              {/* Small Product Thumbnail */}
-              <div className="relative w-12 h-12 bg-[#F7F4EE] rounded-lg border border-neutral-200 flex items-center justify-center p-1 shrink-0 overflow-hidden">
+              {/* Product Thumbnail — edge-to-edge object-cover */}
+              <div className="relative w-14 h-14 bg-[#F7F4EE] rounded-lg border border-neutral-200 shrink-0 overflow-hidden">
                 <Image
                   src={activeProduct.heroImage}
                   alt={activeProduct.name}
                   fill
-                  sizes="48px"
-                  className="object-contain"
+                  sizes="56px"
+                  className="object-cover"
                   priority
                 />
               </div>
@@ -311,19 +315,9 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       );
     }
 
-    // Desktop Side Column Floating Card: High contrast, prominent image & clear typography
+    // Desktop Side Column Floating Card: Straight from image to product title, no top tag row
     return (
       <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/90 shadow-[0_16px_40px_rgba(0,0,0,0.08)] p-4 xl:p-5">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[10px] font-bold tracking-widest text-[#B38344] uppercase">
-            ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
-          </span>
-
-          <span className="text-[9px] bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200">
-            {activeProduct.inStock ? 'In Stock' : 'Exclusive'}
-          </span>
-        </div>
-
         <AnimatePresence mode="wait">
           <motion.div
             key={activeProduct.id}
@@ -333,18 +327,16 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col"
           >
-            {/* Product Thumbnail with contrast-enhancing background */}
-            <div className="relative bg-[#F7F4EE] rounded-xl border border-neutral-200/80 flex items-center justify-center p-2.5 overflow-hidden w-full h-32 xl:h-36 mb-2.5">
-              <div className="relative w-full h-full">
-                <Image
-                  src={activeProduct.heroImage}
-                  alt={activeProduct.name}
-                  fill
-                  sizes="300px"
-                  className="object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.15)]"
-                  priority
-                />
-              </div>
+            {/* Product Image: properly scaled to fill the container with object-cover, no excess inset padding */}
+            <div className="relative bg-[#F7F4EE] rounded-xl border border-neutral-200/80 overflow-hidden w-full h-44 xl:h-48 mb-3 shadow-inner">
+              <Image
+                src={activeProduct.heroImage}
+                alt={activeProduct.name}
+                fill
+                sizes="(max-width: 1280px) 280px, 340px"
+                className="object-cover transition-transform duration-500 hover:scale-105"
+                priority
+              />
             </div>
 
             {/* Title, Tagline & Price */}
@@ -418,18 +410,18 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       id="home"
       className="relative min-h-[calc(100svh-56px)] lg:min-h-[calc(100vh-100px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 pt-4 sm:pt-6 lg:pt-8 pb-3 sm:pb-5 lg:pb-0 select-none"
     >
-      {/* Large Bold Luxury Decorative Background Wordmark (Contained within hero, behind model photo) */}
-      <div className="absolute top-4 sm:top-8 lg:top-12 inset-x-0 w-full pointer-events-none z-0 select-none flex justify-center items-center overflow-hidden">
-        <span className="font-serif font-black tracking-tighter text-[13vw] xl:text-[145px] uppercase text-neutral-900/[0.07] leading-none whitespace-nowrap">
+      {/* Grand Luxury Typography across top of Hero (Identical Didone aesthetic to reference) */}
+      <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-20 pointer-events-none select-none flex justify-center items-center overflow-hidden px-2 sm:px-4">
+        <h1 className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-950 uppercase text-[10.5vw] sm:text-[8.5vw] lg:text-[7.2vw] xl:text-[112px] 2xl:text-[128px] leading-none whitespace-nowrap text-center select-none">
           OMO ESHO SIGNATURES
-        </span>
+        </h1>
       </div>
 
       {/* Main Container: 12-col grid on desktop, aligned to bottom */}
       <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 max-w-7xl mx-auto w-full flex-1 min-h-0 justify-between items-end">
         
         {/* Left Column: Headline & CTA Buttons aligned to bottom */}
-        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col justify-end h-full w-full shrink-0 z-10 pb-4 sm:pb-6 lg:pb-8">
+        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col justify-end h-full w-full shrink-0 z-30 pb-4 sm:pb-6 lg:pb-8">
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-3 sm:gap-4 lg:gap-5 w-full">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-serif text-neutral-950 font-normal leading-[1.12]">
               Genuine pieces, <br className="hidden sm:inline" />
@@ -453,17 +445,17 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
           </div>
         </div>
 
-        {/* Center Column: Model Image (Generously sized & grounded to bottom edge) */}
+        {/* Center Column: Model Image (Generously sized like reference, positioned directly behind brand text) */}
         <div className="order-1 lg:order-2 lg:col-span-5 relative w-full h-full flex flex-col items-center justify-end self-end shrink-0 lg:shrink z-10 pointer-events-none">
-          <div className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[560px] xl:max-w-[620px] h-[52svh] sm:h-[60svh] lg:h-[76vh] xl:h-[82vh] max-h-[820px] min-h-[340px] mx-auto flex items-end justify-center">
-            {/* Model Photo */}
+          <div className="relative w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[660px] xl:max-w-[740px] 2xl:max-w-[800px] h-[58svh] sm:h-[68svh] lg:h-[86vh] xl:h-[90vh] max-h-[940px] min-h-[380px] mx-auto flex items-end justify-center">
+            {/* Model Photo (Trimmed to 0px top margin so head extends into brand text area) */}
             <div className="relative w-full h-full">
               <Image
                 src="/images/model-refined.png"
                 alt="Omo Esho Model"
                 fill
                 priority
-                className="object-contain object-bottom scale-105 sm:scale-105 lg:scale-110 xl:scale-115 origin-bottom select-none pointer-events-none z-10"
+                className="object-contain object-bottom select-none pointer-events-none z-10"
               />
             </div>
 
@@ -471,20 +463,20 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
             <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />
 
             {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Model Photo */}
-            <div className="lg:hidden absolute bottom-2 inset-x-2 sm:inset-x-3 z-20 pointer-events-auto">
+            <div className="lg:hidden absolute bottom-2 inset-x-2 sm:inset-x-3 z-30 pointer-events-auto">
               {renderProductCard(true)}
             </div>
           </div>
 
           {/* Mobile ONLY: Compact Thumbnail Rail directly beneath the model */}
-          <div className="lg:hidden w-full max-w-[400px] sm:max-w-[460px] mx-auto shrink-0 pt-2 pointer-events-auto">
+          <div className="lg:hidden w-full max-w-[400px] sm:max-w-[460px] mx-auto shrink-0 pt-2 pointer-events-auto z-30">
             {renderThumbnailRail(true)}
           </div>
         </div>
 
         {/* Right Column: Floating Card + Thumbnail Rail (Aligned to bottom) */}
         <div
-          className="hidden lg:flex lg:order-3 lg:col-span-3 flex-col gap-3 xl:gap-4 justify-end pb-4 lg:pb-8 w-full z-10"
+          className="hidden lg:flex lg:order-3 lg:col-span-3 flex-col gap-3 xl:gap-4 justify-end pb-4 lg:pb-8 w-full z-30"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
