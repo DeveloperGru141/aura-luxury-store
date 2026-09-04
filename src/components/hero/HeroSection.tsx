@@ -317,14 +317,14 @@ export default function HeroSection() {
       <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-8 items-center max-w-7xl mx-auto w-full h-full my-auto justify-between lg:justify-center">
         
         {/* Visual Stage: Model + Wristwatch Transition (order-1 on mobile, order-2 on desktop) */}
-        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full flex flex-col items-center justify-end self-center my-0.5 lg:my-0 shrink-0 lg:shrink">
-          <div className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[520px] h-[38svh] sm:h-[44svh] max-h-[350px] min-h-[220px] lg:h-auto lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
+        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full flex flex-col items-center justify-end self-center my-1 lg:my-0 shrink-0 lg:shrink">
+          <div className="relative w-full max-w-[400px] sm:max-w-[460px] lg:max-w-[520px] h-[48svh] sm:h-[52svh] max-h-[480px] min-h-[320px] lg:h-auto lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
             {/* Model Photo with Soft Fade Mask */}
             <div
               className="relative w-full h-full"
               style={{
-                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
+                maskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
               }}
             >
               <Image
@@ -332,21 +332,21 @@ export default function HeroSection() {
                 alt="Omo Esho Model"
                 fill
                 priority
-                className="object-contain object-bottom select-none pointer-events-none z-10"
+                className="object-contain object-bottom scale-105 sm:scale-100 origin-bottom select-none pointer-events-none z-10"
               />
             </div>
 
             {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
-            <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />
+            <div className="lg:hidden absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/45 via-black/15 to-transparent pointer-events-none z-10" />
 
             {/* Mobile ONLY: Overlaid Product Card Floating on Bottom of Model Photo */}
-            <div className="lg:hidden absolute bottom-1.5 inset-x-1.5 z-20">
+            <div className="lg:hidden absolute bottom-2 inset-x-2 sm:inset-x-3 z-20">
               {renderProductCard(true)}
             </div>
           </div>
 
           {/* Mobile ONLY: Compact Thumbnail Rail directly beneath the model */}
-          <div className="lg:hidden w-full max-w-[320px] sm:max-w-[380px] mx-auto shrink-0 pt-1.5">
+          <div className="lg:hidden w-full max-w-[400px] sm:max-w-[460px] mx-auto shrink-0 pt-2">
             {renderThumbnailRail(true)}
           </div>
         </div>
