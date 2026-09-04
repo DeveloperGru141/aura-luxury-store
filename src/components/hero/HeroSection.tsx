@@ -411,14 +411,14 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       className="relative min-h-[calc(100svh-56px)] lg:min-h-[calc(100vh-100px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 pt-4 sm:pt-6 lg:pt-8 pb-3 sm:pb-5 lg:pb-0 select-none"
     >
       {/* Grand Luxury Typography across top of Hero (Identical Didone aesthetic to reference) */}
-      <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-20 pointer-events-none select-none flex justify-center items-center overflow-hidden px-2 sm:px-4">
+      <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-10 pointer-events-none select-none flex justify-center items-center overflow-hidden px-2 sm:px-4">
         <h1 className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-950 uppercase text-[10.5vw] sm:text-[8.5vw] lg:text-[7.2vw] xl:text-[112px] 2xl:text-[128px] leading-none whitespace-nowrap text-center select-none">
           OMO ESHO SIGNATURES
         </h1>
       </div>
 
       {/* Main Container: 12-col grid on desktop, aligned to bottom */}
-      <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 max-w-7xl mx-auto w-full flex-1 min-h-0 justify-between items-end">
+      <div className="relative z-20 flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 max-w-7xl mx-auto w-full flex-1 min-h-0 justify-between items-end">
         
         {/* Left Column: Headline & CTA Buttons aligned to bottom */}
         <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col justify-end h-full w-full shrink-0 z-30 pb-4 sm:pb-6 lg:pb-8">
@@ -445,7 +445,7 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
           </div>
         </div>
 
-        {/* Center Column: Model Image (Generously sized like reference, positioned directly behind brand text) */}
+        {/* Center Column: Model Image (Generously sized like reference, positioned in front of brand text for editorial depth) */}
         <div className="order-1 lg:order-2 lg:col-span-5 relative w-full h-full flex flex-col items-center justify-end self-end shrink-0 lg:shrink z-10 pointer-events-none">
           <div className="relative w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[660px] xl:max-w-[740px] 2xl:max-w-[800px] h-[58svh] sm:h-[68svh] lg:h-[86vh] xl:h-[90vh] max-h-[940px] min-h-[380px] mx-auto flex items-end justify-center">
             {/* Model Photo (Trimmed to 0px top margin so head extends into brand text area) */}
