@@ -12,9 +12,7 @@ interface NavbarProps {
 
 export default function Navbar({ onSelectCategory }: NavbarProps) {
   const { setIsSearchOpen } = useStore();
-
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +40,6 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
       onSelectCategory(link.category);
       const el = document.getElementById('catalogue');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
       window.history.replaceState(null, '', link.href);
       return;
     }
@@ -52,9 +49,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
       window.history.replaceState(null, '', link.href);
-      setIsMobileMenuOpen(false);
     }
-    if (!link.href.startsWith('#')) setIsMobileMenuOpen(false);
   };
 
   const conciergeUrl = getWhatsAppConciergeUrl();
@@ -67,25 +62,11 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           : 'bg-[#F4F0E8] border-b border-[#E7E2D6]'
       }`}
     >
-      {/* TOP ROW: Mobile Hamburger (hidden on desktop) | Centered Brand Title | Search & Concierge */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between gap-4">
+      {/* TOP ROW: Perfectly Centered Brand Title with Balanced Action Icons */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between gap-2 sm:gap-4">
         
-        {/* Left: Hamburger menu visible on mobile only, hidden on desktop */}
-        <div className="flex items-center md:hidden">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 -ml-2 rounded-lg text-black hover:bg-black/5 active:bg-black/10 transition-colors flex flex-col items-start justify-center gap-1.5 touch-manipulation cursor-pointer group"
-            aria-label="Toggle menu"
-            aria-expanded={isMobileMenuOpen}
-          >
-            <span className={`block h-[2px] rounded-full bg-black transition-all duration-300 ${isMobileMenuOpen ? 'w-6 rotate-45 translate-y-[6px]' : 'w-5'}`} />
-            <span className={`block h-[2px] rounded-full bg-black transition-all duration-300 ${isMobileMenuOpen ? 'w-6 opacity-0' : 'w-6'}`} />
-            <span className={`block h-[2px] rounded-full bg-black transition-all duration-300 ${isMobileMenuOpen ? 'w-6 -rotate-45 -translate-y-[6px]' : 'w-4'}`} />
-          </button>
-        </div>
-
-        {/* Desktop Left Spacer to keep title centered */}
-        <div className="hidden md:block w-20" aria-hidden="true" />
+        {/* Left Spacer to perfectly balance the right action buttons */}
+        <div className="w-16 sm:w-20" aria-hidden="true" />
 
         {/* Center: Grand Editorial Brand Title */}
         <div className="flex-1 text-center">
@@ -98,21 +79,21 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             }}
             className="inline-block group cursor-pointer"
           >
-            <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-light tracking-[0.12em] sm:tracking-[0.16em] uppercase text-black group-hover:text-[#B8941F] transition-colors leading-none">
+            <h1 className="font-serif text-xl sm:text-3xl lg:text-5xl font-light tracking-[0.12em] sm:tracking-[0.16em] uppercase text-black group-hover:text-[#B8941F] transition-colors leading-none">
               OMO ESHO SIGNATURES
             </h1>
           </a>
         </div>
 
         {/* Right: Search & Concierge Icons */}
-        <div className="flex items-center justify-end gap-1 sm:gap-2 md:w-20">
+        <div className="flex items-center justify-end gap-1 sm:gap-2 w-16 sm:w-20">
           {/* Search Trigger */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="p-2 rounded-full text-black hover:bg-black/5 active:bg-black/10 transition-colors flex items-center justify-center cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-full text-black hover:bg-black/5 active:bg-black/10 transition-colors flex items-center justify-center cursor-pointer"
             aria-label="Search collection"
           >
-            <Search className="w-5 h-5 text-black" />
+            <Search className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
           </button>
 
           {/* Concierge Hotline */}
@@ -120,18 +101,18 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
             href={conciergeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-full text-black hover:bg-black/5 active:bg-black/10 transition-colors flex items-center justify-center cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-full text-black hover:bg-black/5 active:bg-black/10 transition-colors flex items-center justify-center cursor-pointer"
             title="Chat with Concierge on WhatsApp"
             aria-label="Concierge WhatsApp"
           >
-            <MessageCircle className="w-5 h-5 text-black" />
+            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
           </a>
         </div>
       </div>
 
-      {/* SUBNAV LINE: Clean Horizontal Category Text Links with Shoes */}
+      {/* DIRECT CATEGORY NAVIGATION BAR: Accessible on all devices (mobile & desktop) */}
       <div className="border-t border-[#E5DFD3]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-start sm:justify-center gap-6 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-start sm:justify-center gap-5 sm:gap-10 overflow-x-auto scrollbar-none text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -144,37 +125,6 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
           ))}
         </div>
       </div>
-
-      {/* Mobile Drawer */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-[#E5DFD3] bg-[#F4F0E8] px-5 py-6 animate-slide-down shadow-xl max-h-[calc(100dvh-120px)] overflow-y-auto">
-          <nav className="flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link)}
-                className="text-[16px] font-serif tracking-wide text-black hover:text-[#B8941F] py-2.5 flex items-center justify-between border-b border-black/5"
-              >
-                <span>{link.label}</span>
-                <span className="text-[#B8941F] text-xs">&rarr;</span>
-              </a>
-            ))}
-
-            <div className="pt-4 mt-2">
-              <a
-                href={conciergeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-4 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-wider text-center flex items-center justify-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
-                <span>Chat with Concierge</span>
-              </a>
-            </div>
-          </nav>
-        </div>
-      )}
     </header>
   );
 }
