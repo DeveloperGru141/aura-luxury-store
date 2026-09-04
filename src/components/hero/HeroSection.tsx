@@ -43,9 +43,7 @@ function getCleanHeroImage(product: Product): string | null {
       const singleShot = images.slice(1).find((img) => !isCollageImage(img));
       if (singleShot) return singleShot;
     }
-    if (images[0] && !isCollageImage(images[0])) {
-      return images[0];
-    }
+    // If it only has the 4-panel collage shot (or single image), always provide the pristine studio cutout
     return '/images/watches/watch-1.png';
   }
 
@@ -413,7 +411,10 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       {/* Grand Luxury Typography across top of Hero (Identical Didone aesthetic to reference) */}
       <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-20 pointer-events-none select-none flex justify-center items-center overflow-hidden px-2 sm:px-4">
         <h1 className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-950 uppercase text-[10.5vw] sm:text-[8.5vw] lg:text-[7.2vw] xl:text-[112px] 2xl:text-[128px] leading-none whitespace-nowrap text-center select-none">
-          OMO ESHO SIGNATURES
+          <span>OMO ESHO </span>
+          <span className="text-white/25 [-webkit-text-stroke:1.3px_rgba(255,255,255,0.9)] drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">S</span>
+          <span className="text-white/25 [-webkit-text-stroke:1.3px_rgba(255,255,255,0.9)] drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">I</span>
+          <span>GNATURES</span>
         </h1>
       </div>
 
