@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { useStore } from '@/context/StoreContext';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
@@ -58,11 +58,53 @@ function getCleanHeroImage(product: Product): string | null {
   return single;
 }
 
+interface WristCalibration {
+  wristImg: string;
+  adjustment: {
+    top: string;
+    left: string;
+    rotate: number;
+    scale: number;
+  };
+}
+
+/**
+ * Photorealistic calibrated on-wrist cutouts for model arm.
+ * Coordinates are geometrically pinned to the model's raised left wrist at 55.2% top, 54.2% left.
+ */
+const WRIST_TIMEPIECES: WristCalibration[] = [
+  {
+    wristImg: '/images/watches/watch-1.png',
+    adjustment: { top: '55.2%', left: '54.2%', rotate: -24, scale: 1.0 },
+  },
+  {
+    wristImg: '/images/watches/watch-2.png',
+    adjustment: { top: '55.0%', left: '54.0%', rotate: -23, scale: 1.02 },
+  },
+  {
+    wristImg: '/images/watches/watch-3.png',
+    adjustment: { top: '55.2%', left: '54.3%', rotate: -24, scale: 0.98 },
+  },
+  {
+    wristImg: '/images/watches/watch-4.png',
+    adjustment: { top: '55.2%', left: '54.2%', rotate: -24, scale: 1.0 },
+  },
+  {
+    wristImg: '/images/watches/watch-5.png',
+    adjustment: { top: '55.2%', left: '54.2%', rotate: 0, scale: 0.96 },
+  },
+  {
+    wristImg: '/images/watches/watch-6.png',
+    adjustment: { top: '55.1%', left: '54.1%', rotate: -24, scale: 0.98 },
+  },
+];
+
 type HeroCuratedProduct = Product & { heroImage: string };
 
 export default function HeroSection() {
   const { products: liveProducts, loading } = useLiveProducts();
-  const { formatPrice } = useStore();
+  const { formatPrice, setQuickViewProduct } = useStore();
+  const shouldReduceMotion = useReducedMotion();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -97,6 +139,7 @@ export default function HeroSection() {
   const totalItems = carouselProducts.length;
   const safeIndex = totalItems > 0 ? currentIndex % totalItems : 0;
   const activeProduct = totalItems > 0 ? carouselProducts[safeIndex] : null;
+  const currentWristConfig = totalItems > 0 ? WRIST_TIMEPIECES[safeIndex % WRIST_TIMEPIECES.length] : null;
 
   // Auto-advance timer: cycles card selection (~4.5s), pauses on hover/interaction
   useEffect(() => {
@@ -151,8 +194,9 @@ export default function HeroSection() {
             <span className="text-[9px] font-bold tracking-widest text-[#B38344] uppercase">
               ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
             </span>
-            <span className="text-[8px] bg-neutral-100 text-neutral-600 font-medium px-2 py-0.2 rounded-full">
-              {activeProduct.inStock ? 'In Stock' : 'Exclusive'}
+            <span className="text-[8px] bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+              <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Active on Wrist</span>
             </span>
           </div>
 
@@ -166,7 +210,11 @@ export default function HeroSection() {
               className="flex items-center gap-2.5"
             >
               {/* Small Product Thumbnail */}
-              <div className="relative w-12 h-12 bg-[#FDFBF7] rounded-lg border border-neutral-100 flex items-center justify-center p-1 shrink-0 overflow-hidden">
+              <div
+                onClick={() => setQuickViewProduct(activeProduct)}
+                className="relative w-12 h-12 bg-[#FDFBF7] rounded-lg border border-neutral-100 flex items-center justify-center p-1 shrink-0 overflow-hidden cursor-pointer"
+                title={`Inspect ${activeProduct.name}`}
+              >
                 <Image
                   src={activeProduct.heroImage}
                   alt={activeProduct.name}
@@ -177,8 +225,11 @@ export default function HeroSection() {
               </div>
 
               {/* Title & Price */}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-serif text-xs font-bold text-neutral-900 leading-tight truncate">
+              <div
+                className="flex-1 min-w-0 cursor-pointer"
+                onClick={() => setQuickViewProduct(activeProduct)}
+              >
+                <h3 className="font-serif text-xs font-bold text-neutral-900 leading-tight truncate hover:text-[#B38344] transition-colors">
                   {activeProduct.name}
                 </h3>
                 <div className="text-xs font-bold text-neutral-900 font-serif mt-0.5">
@@ -210,8 +261,9 @@ export default function HeroSection() {
             ✦ {activeProduct.categoryLabel || 'Swiss Watch'}
           </span>
 
-          <span className="text-[9px] bg-neutral-100 text-neutral-600 font-medium px-2.5 py-0.5 rounded-full border border-neutral-200">
-            {activeProduct.inStock ? 'In Stock' : 'Exclusive'}
+          <span className="text-[9px] bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Active on Wrist</span>
           </span>
         </div>
 
@@ -225,21 +277,28 @@ export default function HeroSection() {
             className="flex flex-col"
           >
             {/* Product Thumbnail */}
-            <div className="relative bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-2 overflow-hidden w-full h-36 mb-3">
+            <div
+              onClick={() => setQuickViewProduct(activeProduct)}
+              className="relative bg-[#FDFBF7] rounded-xl border border-neutral-100 flex items-center justify-center p-2 overflow-hidden w-full h-36 mb-3 cursor-pointer group/thumb"
+              title={`Inspect ${activeProduct.name}`}
+            >
               <div className="relative w-full h-full">
                 <Image
                   src={activeProduct.heroImage}
                   alt={activeProduct.name}
                   fill
                   sizes="300px"
-                  className="object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                  className="object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-transform duration-300 group-hover/thumb:scale-105"
                 />
               </div>
             </div>
 
             {/* Text & Price */}
-            <div className="flex-1 min-w-0">
-              <h3 className="font-serif text-base lg:text-lg font-bold text-neutral-900 leading-snug truncate">
+            <div
+              className="flex-1 min-w-0 cursor-pointer"
+              onClick={() => setQuickViewProduct(activeProduct)}
+            >
+              <h3 className="font-serif text-base lg:text-lg font-bold text-neutral-900 leading-snug truncate hover:text-[#B38344] transition-colors">
                 {activeProduct.name}
               </h3>
               <p className="text-xs text-neutral-500 line-clamp-1 mt-0.5">
@@ -316,24 +375,121 @@ export default function HeroSection() {
       {/* Main Container: On mobile, visual stage is top (order-1), headline & CTAs under model (order-2); on desktop, 12-col grid */}
       <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 lg:gap-8 items-center max-w-7xl mx-auto w-full h-full my-auto justify-between lg:justify-center">
         
-        {/* Visual Stage: Model + Wristwatch Transition (order-1 on mobile, order-2 on desktop) */}
+        {/* Visual Stage: Model + Dynamic Wristwatch Transition (order-1 on mobile, order-2 on desktop) */}
         <div className="order-1 lg:order-2 lg:col-span-5 relative w-full flex flex-col items-center justify-end self-center my-1 lg:my-0 shrink-0 lg:shrink">
           <div className="relative w-full max-w-[400px] sm:max-w-[460px] lg:max-w-[520px] h-[48svh] sm:h-[52svh] max-h-[480px] min-h-[320px] lg:h-auto lg:aspect-[3/4] mx-auto rounded-2xl lg:rounded-none overflow-hidden lg:overflow-visible flex items-end justify-center">
-            {/* Model Photo with Soft Fade Mask */}
+            {/* Unified 3:4 Coordinate Frame for Model and Wrist Overlay */}
             <div
-              className="relative w-full h-full"
+              className="relative w-full h-full aspect-[3/4] max-w-full flex items-end justify-center origin-bottom scale-105 sm:scale-100"
               style={{
                 WebkitMaskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
                 maskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
               }}
             >
+              {/* Base Model */}
               <Image
                 src="/images/model-refined.png"
-                alt="Omo Esho Model"
+                alt="Omo Esho Model wearing timepiece"
                 fill
                 priority
-                className="object-contain object-bottom scale-105 sm:scale-100 origin-bottom select-none pointer-events-none z-10"
+                className="object-contain object-bottom select-none pointer-events-none z-10"
               />
+
+              {/* Dynamic Calibrated Wristwatch Transition Layer */}
+              {activeProduct && currentWristConfig && (
+                <div
+                  className="absolute z-20 pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[80px] sm:w-[92px] lg:w-[100px] aspect-square flex items-center justify-center cursor-pointer group/wrist"
+                  style={{
+                    top: currentWristConfig.adjustment.top,
+                    left: currentWristConfig.adjustment.left,
+                  }}
+                  onClick={() => setQuickViewProduct(activeProduct)}
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                  title={`Inspect ${activeProduct.name} (Active on Wrist)`}
+                  aria-label={`Timepiece on wrist: ${activeProduct.name}. Click to view details.`}
+                >
+                  {/* Subtle Anatomical Contact Shadow & Skin Occlusion */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(ellipse 70% 55% at 50% 55%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.2) 45%, transparent 75%)',
+                      filter: 'blur(3px)',
+                      transform: `rotate(${currentWristConfig.adjustment.rotate}deg) scale(0.92) translate(1px, 3px)`,
+                    }}
+                  />
+
+                  {/* AnimatePresence for Smooth Realistic Dynamic Transition */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeProduct.id}
+                      initial={
+                        shouldReduceMotion
+                          ? { opacity: 0 }
+                          : {
+                              opacity: 0,
+                              scale: currentWristConfig.adjustment.scale * 0.9,
+                              rotate: currentWristConfig.adjustment.rotate - 4,
+                            }
+                      }
+                      animate={
+                        shouldReduceMotion
+                          ? { opacity: 1 }
+                          : {
+                              opacity: 1,
+                              scale: currentWristConfig.adjustment.scale,
+                              rotate: currentWristConfig.adjustment.rotate,
+                            }
+                      }
+                      exit={
+                        shouldReduceMotion
+                          ? { opacity: 0 }
+                          : {
+                              opacity: 0,
+                              scale: currentWristConfig.adjustment.scale * 1.06,
+                              rotate: currentWristConfig.adjustment.rotate + 4,
+                            }
+                      }
+                      transition={{
+                        duration: shouldReduceMotion ? 0.15 : 0.35,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className="relative w-full h-full flex items-center justify-center"
+                    >
+                      {/* Watch Cutout with Double-Layer Contact & Studio Drop Shadows */}
+                      <Image
+                        src={(activeProduct as any).cutout || currentWristConfig.wristImg}
+                        alt={`${activeProduct.name} on wrist`}
+                        fill
+                        sizes="100px"
+                        className="object-contain select-none filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] drop-shadow-[0_12px_16px_rgba(0,0,0,0.25)] transition-transform duration-300 group-hover/wrist:scale-105"
+                        priority
+                      />
+
+                      {/* Specular Sapphire Crystal Reflection Sheen Sweep */}
+                      {!shouldReduceMotion && (
+                        <motion.div
+                          key={`glint-${activeProduct.id}`}
+                          initial={{ x: '-120%', opacity: 0 }}
+                          animate={{ x: '120%', opacity: [0, 0.65, 0] }}
+                          transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
+                          className="absolute inset-1 rounded-full pointer-events-none mix-blend-overlay overflow-hidden"
+                          style={{
+                            background:
+                              'linear-gradient(115deg, transparent 25%, rgba(255,255,255,0.6) 48%, rgba(255,255,255,0.7) 52%, transparent 75%)',
+                          }}
+                        />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Subtle luxury golden beacon indicating interactive timepiece on wrist */}
+                  <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5 pointer-events-none">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B38344] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#B38344]" />
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
@@ -352,7 +508,12 @@ export default function HeroSection() {
         </div>
 
         {/* Editorial Headline & CTA Actions: Under the model on mobile (order-2), left column on desktop (order-1) */}
-        <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left gap-1.5 sm:gap-3 lg:gap-6 w-full shrink-0 pt-1 lg:pt-0">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="order-2 lg:order-1 lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left gap-1.5 sm:gap-3 lg:gap-6 w-full shrink-0 pt-1 lg:pt-0"
+        >
           <p className="text-[9px] sm:text-[11px] uppercase tracking-[0.2em] text-[#A67C43] font-semibold">
             Based in Ilorin • Genuine Leather & Sourced Timepieces
           </p>
@@ -383,7 +544,7 @@ export default function HeroSection() {
             <span>&bull; 100% Genuine</span>
             <span>&bull; Worldwide Insured Delivery</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Desktop ONLY: Right Column (Floating Card + Thumbnail Rail) */}
         <div
