@@ -8,6 +8,22 @@ import { useStore } from '@/context/StoreContext';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
 import type { Product } from '@/types/store';
 
+// Exclude multi-panel / collage images from hero rotation so only clean single-product photos render
+function isCollageImage(url: string): boolean {
+  if (!url) return false;
+  const lower = url.toLowerCase();
+  return (
+    lower.includes('patek-philippe-1788295538963') ||
+    lower.includes('collage') ||
+    lower.includes('grid') ||
+    lower.includes('composite') ||
+    lower.includes('4-panel') ||
+    lower.includes('4_panel') ||
+    lower.includes('4in1') ||
+    lower.includes('quad')
+  );
+}
+
 interface HeroSectionProps {
   onSelectCategory?: (cat: any) => void;
 }
@@ -20,25 +36,34 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Sourced strictly from real live products in database (prioritizing wristwatches, up to 6 distinct products)
+  // Sourced strictly from real live products in database (prioritizing wristwatches with clean single photos, up to 6 distinct products)
   const carouselProducts = useMemo<Product[]>(() => {
     if (!liveProducts || liveProducts.length === 0) return [];
 
-    const watches = liveProducts.filter(
-      (p) => p.category === 'watches' || p.categoryLabel?.toLowerCase().includes('watch')
-    );
+    // Filter watches that have clean single photos (no collages)
+    const cleanWatches = liveProducts.filter((p) => {
+      const isWatch = p.category === 'watches' || p.categoryLabel?.toLowerCase().includes('watch');
+      const img = p.primaryImage || (p as any).images?.[0] || '';
+      return isWatch && !isCollageImage(img);
+    });
 
-    if (watches.length >= 6) {
-      return watches.slice(0, 6);
+    if (cleanWatches.length >= 6) {
+      return cleanWatches.slice(0, 6);
     }
 
-    if (watches.length > 0) {
-      // If fewer than 6 watches, supplement with other distinct products from catalogue so all slots are distinct
-      const others = liveProducts.filter((p) => !watches.some((w) => w.id === p.id));
-      return [...watches, ...others].slice(0, 6);
+    if (cleanWatches.length > 0) {
+      // If fewer than 6 clean watches, supplement with other distinct non-collage products from catalogue
+      const others = liveProducts.filter(
+        (p) =>
+          !cleanWatches.some((w) => w.id === p.id) &&
+          !isCollageImage(p.primaryImage || (p as any).images?.[0] || '')
+      );
+      return [...cleanWatches, ...others].slice(0, 6);
     }
 
-    return liveProducts.slice(0, 6);
+    return liveProducts
+      .filter((p) => !isCollageImage(p.primaryImage || (p as any).images?.[0] || ''))
+      .slice(0, 6);
   }, [liveProducts]);
 
   const totalItems = carouselProducts.length;
@@ -213,10 +238,13 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       );
     }
 
+    const currentStr = String(safeIndex + 1).padStart(2, '0');
+    const totalStr = String(totalItems).padStart(2, '0');
+
     return (
       <div className={isMobile ? 'w-full' : ''}>
         <div className="flex items-center justify-between text-[9px] sm:text-[11px] font-medium text-neutral-500 mb-1 sm:mb-2 px-1">
-          <span>Curated Selection (0{safeIndex + 1}/0{totalItems < 10 ? `0${totalItems}` : totalItems})</span>
+          <span>Curated Selection ({currentStr}/{totalStr})</span>
           <span className="text-[9px] sm:text-[10px] text-neutral-400">Tap to inspect</span>
         </div>
 
@@ -258,9 +286,9 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       id="home"
       className="relative min-h-[calc(100svh-56px)] lg:min-h-[calc(100vh-100px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 pt-4 sm:pt-6 lg:pt-8 pb-3 sm:pb-5 lg:pb-0 select-none"
     >
-      {/* Grand Luxury Typography across top of Hero with subtle atmospheric softness (clearly legible at a glance) */}
-      <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-10 pointer-events-none select-none flex justify-center items-center overflow-hidden px-4 sm:px-8 lg:px-14">
-        <h1 className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-900/90 uppercase text-[9.5vw] sm:text-[8vw] lg:text-[6.8vw] xl:text-[104px] 2xl:text-[118px] leading-none whitespace-nowrap text-center select-none filter blur-[0.4px] transition-all duration-500">
+      {/* Grand Luxury Typography across top of Hero with subtle atmospheric softness (clearly legible at a glance, fully fitted on mobile) */}
+      <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-10 pointer-events-none select-none flex justify-center items-center overflow-hidden px-2 sm:px-6 lg:px-14">
+        <h1 className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-900/90 uppercase text-[5.5vw] min-[390px]:text-[5.8vw] sm:text-[6.5vw] md:text-[6.8vw] lg:text-[6.8vw] xl:text-[104px] 2xl:text-[118px] leading-none whitespace-nowrap text-center select-none filter blur-[0.4px] transition-all duration-500">
           OMO ESHO SIGNATURES
         </h1>
       </div>
