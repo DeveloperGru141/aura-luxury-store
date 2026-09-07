@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { useLiveProducts } from '@/hooks/useLiveProducts';
 import { useStore } from '@/context/StoreContext';
 import { getWhatsAppOrderUrl } from '@/lib/whatsapp';
@@ -31,6 +31,17 @@ interface HeroSectionProps {
 export default function HeroSection({ onSelectCategory: _onSelectCategory }: HeroSectionProps = {}) {
   const { products: liveProducts, loading } = useLiveProducts();
   const { formatPrice } = useStore();
+
+  const heroRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  // Scroll-linked continuous scale parallax on hero model photo
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const modelScale = shouldReduceMotion ? 1 : rawScale;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -316,6 +327,7 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
 
   return (
     <section
+      ref={heroRef}
       id="home"
       className="relative min-h-[calc(100svh-56px)] lg:min-h-[calc(100vh-100px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 pt-4 sm:pt-6 lg:pt-8 pb-3 sm:pb-5 lg:pb-0 select-none"
     >
@@ -356,9 +368,12 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
 
         {/* Center Column: Model Image (In sharp focus with depth shadow in front of subtle soft wordmark) */}
         <div className="order-1 lg:order-2 lg:col-span-5 relative w-full h-full flex flex-col items-center justify-end self-end shrink-0 lg:shrink z-20 pointer-events-none">
-          <div className="relative w-full max-w-[440px] sm:max-w-[500px] lg:max-w-[620px] xl:max-w-[700px] 2xl:max-w-[760px] h-[52svh] sm:h-[62svh] lg:h-[84vh] xl:h-[88vh] max-h-[920px] min-h-[340px] mx-auto flex items-end justify-center">
-            {/* Model Photo (Sharp subject with subtle ambient depth shadow) */}
-            <div className="relative w-full h-full drop-shadow-[0_14px_30px_rgba(0,0,0,0.12)]">
+          <div className="relative w-full max-w-[440px] sm:max-w-[500px] lg:max-w-[620px] xl:max-w-[700px] 2xl:max-w-[760px] h-[52svh] sm:h-[62svh] lg:h-[84vh] xl:h-[88vh] max-h-[920px] min-h-[340px] mx-auto flex items-end justify-center overflow-hidden">
+            {/* Model Photo: Scroll-linked continuous scale parallax zoom */}
+            <motion.div
+              style={{ scale: modelScale, transformOrigin: 'center bottom' }}
+              className="relative w-full h-full drop-shadow-[0_14px_30px_rgba(0,0,0,0.12)] will-change-transform"
+            >
               <Image
                 src="/images/model-refined.png"
                 alt="Omo Esho Model"
@@ -366,7 +381,7 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
                 priority
                 className="object-contain object-bottom select-none pointer-events-none z-10"
               />
-            </div>
+            </motion.div>
 
             {/* Mobile Scrim: Soft bottom gradient behind the overlaid product card */}
             <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none z-10" />

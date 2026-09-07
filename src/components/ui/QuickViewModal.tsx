@@ -219,7 +219,7 @@ export default function QuickViewModal() {
 
             <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[var(--color-text-tertiary)] pt-3 border-t border-[var(--color-border)]">
               <span className="flex items-center gap-1">
-                <Truck className="w-3.5 h-3.5 text-[var(--color-accent-gold)] shrink-0" /> Free Insured Delivery
+                <Truck className="w-3.5 h-3.5 text-[var(--color-accent-gold)] shrink-0" /> Insured Delivery
               </span>
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-[var(--color-accent-gold)] shrink-0" /> 100% Certified Authentic

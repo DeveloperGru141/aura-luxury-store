@@ -80,12 +80,12 @@ export default function CartDrawer() {
               {remainingForFreeShipping > 0 ? (
                 <span className="text-[var(--color-text-secondary)] flex items-center gap-1.5">
                   <Truck className="w-3.5 h-3.5 text-[var(--color-accent-gold)]" />
-                  Add <strong className="text-[var(--color-text-primary)]">{formatPrice(remainingForFreeShipping)}</strong> for free shipping
+                  Add <strong className="text-[var(--color-text-primary)]">{formatPrice(remainingForFreeShipping)}</strong> for complimentary insured delivery
                 </span>
               ) : (
                 <span className="text-emerald-700 font-medium flex items-center gap-1.5">
                   <Truck className="w-3.5 h-3.5 text-emerald-600" />
-                  You&apos;ve unlocked free shipping!
+                  Complimentary insured delivery unlocked!
                 </span>
               )}
               <span className="font-bold text-[11px] text-[var(--color-text-tertiary)]">{freeShippingProgress}%</span>

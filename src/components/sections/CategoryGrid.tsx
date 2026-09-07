@@ -146,9 +146,6 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
         {/* Section Header */}
         <ScrollReveal className="flex items-center justify-between mb-5 sm:mb-8">
           <div>
-            <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#A67C43] mb-1">
-              Curated Departments
-            </p>
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide text-[var(--color-text-primary)] leading-tight uppercase">
               Explore by Category
             </h2>

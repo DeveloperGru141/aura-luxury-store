@@ -8,7 +8,7 @@ export default function BrandPillars() {
     {
       icon: Globe,
       title: 'Insured courier',
-      description: 'Free insured delivery over ₦250,000. Ilorin next-day, rest of Nigeria 2–3 days, signature required.',
+      description: 'Worldwide insured courier. Ilorin next-day, rest of Nigeria 2–3 days, signature required.',
     },
     {
       icon: ShieldCheck,
