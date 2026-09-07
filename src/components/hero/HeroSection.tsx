@@ -103,67 +103,72 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
 
   // Renders the product card: ultra-compact on mobile overlay, full-sized on desktop
   const renderProductCard = (isMobileOverlay = false) => {
-    if (!activeProduct) {
-      if (loading) {
-        return (
-          <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/90 p-4 xl:p-5 animate-pulse">
-            <div className="w-full h-44 xl:h-48 bg-neutral-100 rounded-xl mb-3" />
-            <div className="h-4 w-2/3 bg-neutral-200 rounded mb-2" />
-            <div className="h-3 w-1/2 bg-neutral-100 rounded" />
-          </div>
-        );
-      }
-      return null;
-    }
-
     if (isMobileOverlay) {
       // Mobile Single-Height Overlaid Card: clean, compact, goes straight to product
       return (
         <div className="bg-white/95 backdrop-blur-xl rounded-xl p-2.5 border border-white/90 shadow-xl w-full">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeProduct.id}
-              initial={{ opacity: 0, y: 3 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -3 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-2.5"
-            >
-              {/* Product Thumbnail — edge-to-edge object-cover */}
-              <div className="relative w-14 h-14 bg-[#F7F4EE] rounded-lg border border-neutral-200 shrink-0 overflow-hidden">
-                {activeImage && (
-                  <Image
-                    src={activeImage}
-                    alt={activeProduct.name}
-                    fill
-                    sizes="56px"
-                    className="object-cover"
-                    priority
-                  />
-                )}
-              </div>
-
-              {/* Title & Price */}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-serif text-xs font-bold text-neutral-950 leading-tight truncate">
-                  {activeProduct.name}
-                </h3>
-                <div className="text-xs font-bold text-neutral-950 font-serif mt-0.5">
-                  {formattedPrice}
-                </div>
-              </div>
-
-              {/* WhatsApp CTA */}
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-1.5 px-2.5 bg-black hover:bg-neutral-800 text-white text-[10px] font-semibold rounded-lg shrink-0 flex items-center gap-1 shadow-sm cursor-pointer"
+            {loading || !activeProduct ? (
+              <motion.div
+                key="skeleton-mobile"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="flex items-center gap-2.5 animate-pulse"
               >
-                <span>💬</span>
-                <span>Order</span>
-              </a>
-            </motion.div>
+                <div className="w-14 h-14 bg-neutral-200/70 rounded-lg shrink-0" />
+                <div className="flex-1 space-y-1.5 min-w-0">
+                  <div className="h-3.5 w-3/4 bg-neutral-200/80 rounded" />
+                  <div className="h-3 w-1/3 bg-neutral-200/60 rounded" />
+                </div>
+                <div className="w-16 h-7 bg-neutral-200/70 rounded-lg shrink-0" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={activeProduct.id}
+                initial={{ opacity: 0, y: 3 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -3 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center gap-2.5"
+              >
+                {/* Product Thumbnail — edge-to-edge object-cover */}
+                <div className="relative w-14 h-14 bg-[#F7F4EE] rounded-lg border border-neutral-200 shrink-0 overflow-hidden">
+                  {activeImage && (
+                    <Image
+                      src={activeImage}
+                      alt={activeProduct.name}
+                      fill
+                      sizes="56px"
+                      className="object-cover"
+                      priority
+                    />
+                  )}
+                </div>
+
+                {/* Title & Price */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-serif text-xs font-bold text-neutral-950 leading-tight truncate">
+                    {activeProduct.name}
+                  </h3>
+                  <div className="text-xs font-bold text-neutral-950 font-serif mt-0.5">
+                    {formattedPrice}
+                  </div>
+                </div>
+
+                {/* WhatsApp CTA */}
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-1.5 px-2.5 bg-black hover:bg-neutral-800 text-white text-[10px] font-semibold rounded-lg shrink-0 flex items-center gap-1 shadow-sm cursor-pointer"
+                >
+                  <span>💬</span>
+                  <span>Order</span>
+                </a>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       );
@@ -173,110 +178,138 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
     return (
       <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200/90 shadow-[0_16px_40px_rgba(0,0,0,0.08)] p-4 xl:p-5">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeProduct.id}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col"
-          >
-            {/* Product Image: properly scaled to fill the container with object-cover, no excess inset padding */}
-            <div className="relative bg-[#F7F4EE] rounded-xl border border-neutral-200/80 overflow-hidden w-full h-44 xl:h-48 mb-3 shadow-inner">
-              {activeImage && (
-                <Image
-                  src={activeImage}
-                  alt={activeProduct.name}
-                  fill
-                  sizes="(max-width: 1280px) 280px, 340px"
-                  className="object-cover transition-transform duration-500 hover:scale-105"
-                  priority
-                />
-              )}
-            </div>
-
-            {/* Title, Tagline & Price */}
-            <div className="flex-1 min-w-0">
-              <h3 className="font-serif text-base lg:text-lg font-bold text-neutral-950 leading-snug truncate">
-                {activeProduct.name}
-              </h3>
-              <p className="text-xs text-neutral-600 line-clamp-1 mt-0.5">
-                {activeProduct.tagline || activeProduct.description}
-              </p>
-              <div className="text-lg font-bold text-neutral-950 mt-1.5 font-serif">
-                {formattedPrice}
+          {loading || !activeProduct ? (
+            <motion.div
+              key="skeleton-desktop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="animate-pulse"
+            >
+              <div className="w-full h-44 xl:h-48 bg-neutral-200/60 rounded-xl mb-3" />
+              <div className="h-4 w-2/3 bg-neutral-200/80 rounded mb-2" />
+              <div className="h-3 w-1/2 bg-neutral-200/50 rounded mb-4" />
+              <div className="w-full h-10 bg-neutral-200/70 rounded-xl" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={activeProduct.id}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col"
+            >
+              {/* Product Image: properly scaled to fill the container with object-cover, no excess inset padding */}
+              <div className="relative bg-[#F7F4EE] rounded-xl border border-neutral-200/80 overflow-hidden w-full h-44 xl:h-48 mb-3 shadow-inner">
+                {activeImage && (
+                  <Image
+                    src={activeImage}
+                    alt={activeProduct.name}
+                    fill
+                    sizes="(max-width: 1280px) 280px, 340px"
+                    className="object-cover transition-transform duration-500 hover:scale-105"
+                    priority
+                  />
+                )}
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
 
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full mt-3 py-2.5 bg-[#0A0A0A] hover:bg-neutral-800 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition cursor-pointer shadow-sm"
-        >
-          <span>💬</span> Order on WhatsApp
-        </a>
+              {/* Title, Tagline & Price */}
+              <div className="flex-1 min-w-0">
+                <h3 className="font-serif text-base lg:text-lg font-bold text-neutral-950 leading-snug truncate">
+                  {activeProduct.name}
+                </h3>
+                <p className="text-xs text-neutral-600 line-clamp-1 mt-0.5">
+                  {activeProduct.tagline || activeProduct.description}
+                </p>
+                <div className="text-lg font-bold text-neutral-950 mt-1.5 font-serif">
+                  {formattedPrice}
+                </div>
+              </div>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full mt-3 py-2.5 bg-[#0A0A0A] hover:bg-neutral-800 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition cursor-pointer shadow-sm"
+              >
+                <span>💬</span> Order on WhatsApp
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   };
 
   // Renders the 6-thumbnail rail
   const renderThumbnailRail = (isMobile = false) => {
-    if (totalItems <= 0) {
-      if (!loading) return null;
-      return (
-        <div className={isMobile ? 'w-full' : ''}>
-          <div className="h-3 w-28 bg-neutral-200/60 rounded mb-2 animate-pulse" />
-          <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2.5'}>
-            {Array.from({ length: 6 }).map((_, idx) => (
-              <div key={idx} className="aspect-square rounded-lg sm:rounded-xl bg-neutral-200/40 border border-neutral-200/60 animate-pulse" />
-            ))}
-          </div>
-        </div>
-      );
-    }
-
     const currentStr = String(safeIndex + 1).padStart(2, '0');
     const totalStr = String(totalItems).padStart(2, '0');
 
     return (
       <div className={isMobile ? 'w-full' : ''}>
-        <div className="flex items-center justify-between text-[9px] sm:text-[11px] font-medium text-neutral-500 mb-1 sm:mb-2 px-1">
-          <span>Curated Selection ({currentStr}/{totalStr})</span>
-          <span className="text-[9px] sm:text-[10px] text-neutral-400">Tap to inspect</span>
-        </div>
+        <AnimatePresence mode="wait">
+          {totalItems <= 0 ? (
+            <motion.div
+              key="skeleton-rail"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="h-3 w-28 bg-neutral-200/60 rounded mb-2 animate-pulse" />
+              <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2.5'}>
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <div key={idx} className="aspect-square rounded-lg sm:rounded-xl bg-neutral-200/40 border border-neutral-200/60 animate-pulse" />
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="loaded-rail"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex items-center justify-between text-[9px] sm:text-[11px] font-medium text-neutral-500 mb-1 sm:mb-2 px-1">
+                <span>Curated Selection ({currentStr}/{totalStr})</span>
+                <span className="text-[9px] sm:text-[10px] text-neutral-400">Tap to inspect</span>
+              </div>
 
-        <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2.5'}>
-          {carouselProducts.map((item, idx) => {
-            const itemImg = getProductImage(item);
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleSelect(idx)}
-                className={`relative aspect-square rounded-lg sm:rounded-xl overflow-hidden p-1 sm:p-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
-                  safeIndex === idx
-                    ? 'bg-[#FDFBF7] border-2 border-[#B38344] shadow-sm scale-105 ring-2 ring-[#B38344]/15'
-                    : 'bg-[#FDFBF7] border border-neutral-200/80 hover:border-neutral-300 opacity-70 hover:opacity-100'
-                }`}
-                aria-label={`Select ${item.name}`}
-              >
-                <div className="relative w-full h-full flex items-center justify-center">
-                  {itemImg ? (
-                    <Image
-                      src={itemImg}
-                      alt={item.name}
-                      fill
-                      sizes="60px"
-                      className="object-contain"
-                    />
-                  ) : null}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+              <div className={isMobile ? 'grid grid-cols-6 gap-1' : 'grid grid-cols-3 gap-2.5'}>
+                {carouselProducts.map((item, idx) => {
+                  const itemImg = getProductImage(item);
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleSelect(idx)}
+                      className={`relative aspect-square rounded-lg sm:rounded-xl overflow-hidden p-1 sm:p-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
+                        safeIndex === idx
+                          ? 'bg-[#FDFBF7] border-2 border-[#B38344] shadow-sm scale-105 ring-2 ring-[#B38344]/15'
+                          : 'bg-[#FDFBF7] border border-neutral-200/80 hover:border-neutral-300 opacity-70 hover:opacity-100'
+                      }`}
+                      aria-label={`Select ${item.name}`}
+                    >
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        {itemImg ? (
+                          <Image
+                            src={itemImg}
+                            alt={item.name}
+                            fill
+                            sizes="60px"
+                            className="object-contain"
+                          />
+                        ) : null}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   };

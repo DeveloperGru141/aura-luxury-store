@@ -369,7 +369,7 @@ html, body {
   outline-offset: 2px;
 }
 
-/* OMO ESHO SIGNATURES ScrollReveal — luxury motion, but fully accessible */
+/* OMO ESHO SIGNATURES ScrollReveal — luxury motion, fully accessible */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -387,12 +387,11 @@ html, body {
     will-change: auto !important;
   }
 
-  /* ScrollReveal: instantly visible, no lift */
-  .opacity-0 {
+  /* ScrollReveal: instantly visible in final resting state */
+  [data-scroll-reveal] {
     opacity: 1 !important;
-  }
-
-  .translate-y-6 {
-    transform: translateY(0) !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
   }
 }
