@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ProductCategory } from '@/types/store';
 import { ArrowUpRight } from 'lucide-react';
 import { useLiveProducts, useLiveCategories } from '@/hooks/useLiveProducts';
@@ -58,7 +59,134 @@ const CURATED_CATEGORIES: CuratedCategoryConfig[] = [
     fallbackImage: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
     aliases: ['apparel', 'clothes', 'wears', 'clothing'],
   },
+  {
+    id: 'jewelry',
+    name: 'Fine Jewelry',
+    slug: 'jewelry',
+    tagline: '18k Solid Gold, Platinum & Certified Diamonds',
+    categoryKey: 'jewelry',
+    fallbackImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1000&auto=format&fit=crop',
+    aliases: ['jewelry', 'fine-jewelry', 'jewellery', 'gold', 'diamonds'],
+  },
 ];
+
+interface CategoryTileItemProps {
+  cat: any;
+  isMobileHovered: boolean;
+  onSelectCategory: (catKey: ProductCategory) => void;
+  onHover: () => void;
+  onLeave: () => void;
+  onTouch: () => void;
+  setRef: (el: HTMLDivElement | null) => void;
+}
+
+function CategoryTileItem({
+  cat,
+  isMobileHovered,
+  onSelectCategory,
+  onHover,
+  onLeave,
+  onTouch,
+  setRef,
+}: CategoryTileItemProps) {
+  const tileRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop, { passive: true });
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  // Track tile scroll progress through viewport
+  const { scrollYProgress } = useScroll({
+    target: tileRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Subtle parallax: -10px to +10px as tile scrolls through viewport on desktop (disabled on mobile for 60fps smoothness)
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  const translateY = isDesktop && !shouldReduceMotion ? parallaxY : 0;
+
+  return (
+    <div
+      ref={(el) => {
+        (tileRef as any).current = el;
+        setRef(el);
+      }}
+      data-cat-id={cat.id}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onTouchStart={onTouch}
+      onClick={() => onSelectCategory(cat.categoryKey)}
+      className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 active:scale-[0.98] aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] min-h-[170px] sm:min-h-[220px] border shadow-sm hover:shadow-lg touch-manipulation h-full ${
+        isMobileHovered
+          ? 'border-[#9A7B1F] shadow-md sm:border-[var(--color-border)] sm:group-hover:border-[#9A7B1F]'
+          : 'border-[var(--color-border)] hover:border-[#9A7B1F]/60'
+      }`}
+    >
+      {/* Background Category Image Container with subtle parallax transform */}
+      <motion.div
+        style={{ y: translateY }}
+        className="absolute inset-[-12px] will-change-transform"
+      >
+        <Image
+          src={cat.image}
+          alt={cat.name}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          className={`object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 ${
+            isMobileHovered ? 'scale-105 sm:scale-100 sm:group-hover:scale-105' : 'scale-100'
+          }`}
+        />
+      </motion.div>
+
+      {/* Scrim Gradient Overlay for Text Readability */}
+      <div
+        className={`absolute inset-0 transition-colors duration-300 ${
+          isMobileHovered
+            ? 'bg-gradient-to-t from-black/85 via-black/35 to-black/10 sm:from-black/80 sm:via-black/25'
+            : 'bg-gradient-to-t from-black/80 via-black/25 to-transparent group-hover:from-black/85'
+        }`}
+      />
+
+      {/* Top-Right Minimal Arrow Badge */}
+      <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-10">
+        <div
+          className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
+            isMobileHovered
+              ? 'bg-[#9A7B1F] text-white border-[#9A7B1F] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[#9A7B1F] sm:group-hover:text-white'
+              : 'bg-white/90 backdrop-blur-sm border-white/90 text-[var(--color-text-primary)]'
+          }`}
+        >
+          <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </div>
+      </div>
+
+      {/* Bottom Content: Clean & Uncrammed */}
+      <div className="absolute inset-x-3 sm:inset-x-4 bottom-3 sm:bottom-4 z-10">
+        {/* Item Count */}
+        <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#E6C875] block mb-0.5 sm:mb-1">
+          {cat.productCount}
+        </span>
+
+        {/* Category Title */}
+        <h3 className="font-serif text-[15px] sm:text-xl lg:text-xl font-medium text-white group-hover:text-white leading-tight">
+          {cat.name}
+        </h3>
+
+        {/* Tagline: Shown on desktop/tablet, hidden on small mobile to avoid cramming */}
+        <p className="hidden sm:block text-[11px] sm:text-xs font-light text-white/80 line-clamp-1 mt-1">
+          {cat.tagline}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
   const { products: liveProducts } = useLiveProducts();
@@ -93,7 +221,7 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
     return () => observer.disconnect();
   }, []);
 
-  // Compute display data for the 4 core categories
+  // Compute display data for the 5 core categories
   const categoryCards = useMemo(() => {
     return CURATED_CATEGORIES.map((cfg) => {
       // Find matching live category if present
@@ -152,85 +280,31 @@ export default function CategoryGrid({ onSelectCategory }: CategoryGridProps) {
           </div>
         </ScrollReveal>
 
-        {/* 4-Card Luxury Grid: 2x2 on mobile, 4 across on desktop (Uncrammed, generous aspect ratio) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        {/* 5-Card Luxury Grid: 2 across on mobile (5th item spans 2 cols), 3 on tablet, 5 across on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
           {categoryCards.map((cat, index) => {
             const isMobileHovered = activeMobileCard === cat.id;
-            // 70ms stagger between items in each row on mobile (2 cols) and desktop (4 cols)
+            // 70ms stagger between items in each row on mobile (2 cols)
             const staggerDelay = (index % 2) * 0.07;
+            const isLastOnMobile = index === categoryCards.length - 1;
 
             return (
               <ScrollReveal
                 key={cat.id}
                 delay={staggerDelay}
-                className="h-full"
+                className={`h-full ${isLastOnMobile ? 'col-span-2 sm:col-span-1' : ''}`}
               >
-                <div
-                  ref={(el) => {
+                <CategoryTileItem
+                  cat={cat}
+                  isMobileHovered={isMobileHovered}
+                  onSelectCategory={onSelectCategory}
+                  onHover={() => setActiveMobileCard(cat.id)}
+                  onLeave={() => setActiveMobileCard(null)}
+                  onTouch={() => setActiveMobileCard(cat.id)}
+                  setRef={(el) => {
                     cardRefs.current[cat.id] = el;
                   }}
-                  data-cat-id={cat.id}
-                  onMouseEnter={() => setActiveMobileCard(cat.id)}
-                  onMouseLeave={() => setActiveMobileCard(null)}
-                  onTouchStart={() => setActiveMobileCard(cat.id)}
-                  onClick={() => onSelectCategory(cat.categoryKey)}
-                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 active:scale-[0.98] aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] min-h-[170px] sm:min-h-[220px] border shadow-sm hover:shadow-lg touch-manipulation h-full ${
-                    isMobileHovered
-                      ? 'border-[#9A7B1F] shadow-md sm:border-[var(--color-border)] sm:group-hover:border-[#9A7B1F]'
-                      : 'border-[var(--color-border)] hover:border-[#9A7B1F]/60'
-                  }`}
-                >
-                  {/* Background Category Image */}
-                  <Image
-                    src={cat.image}
-                    alt={cat.name}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className={`object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 ${
-                      isMobileHovered ? 'scale-105 sm:scale-100 sm:group-hover:scale-105' : 'scale-100'
-                    }`}
-                  />
-
-                  {/* Scrim Gradient Overlay for Text Readability */}
-                  <div
-                    className={`absolute inset-0 transition-colors duration-300 ${
-                      isMobileHovered
-                        ? 'bg-gradient-to-t from-black/85 via-black/35 to-black/10 sm:from-black/80 sm:via-black/25'
-                        : 'bg-gradient-to-t from-black/80 via-black/25 to-transparent group-hover:from-black/85'
-                    }`}
-                  />
-
-                  {/* Top-Right Minimal Arrow Badge */}
-                  <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-10">
-                    <div
-                      className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full border transition-all flex items-center justify-center group-hover:bg-[#9A7B1F] group-hover:text-white group-hover:border-[#9A7B1F] group-active:scale-90 shadow-sm ${
-                        isMobileHovered
-                          ? 'bg-[#9A7B1F] text-white border-[#9A7B1F] sm:bg-white sm:text-[var(--color-text-primary)] sm:border-white sm:group-hover:bg-[#9A7B1F] sm:group-hover:text-white'
-                          : 'bg-white/90 backdrop-blur-sm border-white/90 text-[var(--color-text-primary)]'
-                      }`}
-                    >
-                      <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </div>
-                  </div>
-
-                  {/* Bottom Content: Clean & Uncrammed */}
-                  <div className="absolute inset-x-3 sm:inset-x-4 bottom-3 sm:bottom-4 z-10">
-                    {/* Item Count */}
-                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#E6C875] block mb-0.5 sm:mb-1">
-                      {cat.productCount}
-                    </span>
-
-                    {/* Category Title */}
-                    <h3 className="font-serif text-[15px] sm:text-xl lg:text-xl font-medium text-white group-hover:text-white leading-tight">
-                      {cat.name}
-                    </h3>
-
-                    {/* Tagline: Shown on desktop/tablet, hidden on small mobile to avoid cramming */}
-                    <p className="hidden sm:block text-[11px] sm:text-xs font-light text-white/80 line-clamp-1 mt-1">
-                      {cat.tagline}
-                    </p>
-                  </div>
-                </div>
+                />
               </ScrollReveal>
             );
           })}

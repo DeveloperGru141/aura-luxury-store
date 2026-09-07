@@ -17,11 +17,20 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const heroEl = document.getElementById('home');
+      // Trigger once hero is roughly 80% scrolled past
+      const threshold = heroEl
+        ? heroEl.offsetTop + heroEl.offsetHeight * 0.8
+        : window.innerHeight * 0.8;
+      setIsScrolled(window.scrollY >= threshold);
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   const navLinks: { label: string; href: string; category?: ProductCategory }[] = [
@@ -61,10 +70,10 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-[#FAF7F2]/80 backdrop-blur-xl backdrop-saturate-150 border-b border-black/[0.07] shadow-[0_8px_32px_rgba(0,0,0,0.04)]'
-          : 'bg-[#FAF7F2] border-b border-[#E7E2D6]'
+      className={`sticky top-0 z-40 transition-all duration-200 ease-out ${
+        isScrolled || isMobileMenuOpen
+          ? 'bg-white/95 backdrop-blur-md border-b border-[var(--color-border)] shadow-sm'
+          : 'bg-transparent border-b border-transparent shadow-none'
       }`}
     >
       {/* TOP ROW: Functional bar with no brand name (brand typography lives prominently in hero) */}
@@ -97,7 +106,7 @@ export default function Navbar({ onSelectCategory }: NavbarProps) {
         </div>
 
         {/* Desktop ONLY: Elegant Category Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-stone-700">
+        <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-[11px] sm:text-xs tracking-[0.18em] uppercase font-medium text-neutral-800">
           {navLinks.map((link) => (
             <a
               key={link.label}
