@@ -37,14 +37,15 @@ function getCleanHeroImage(product: Product): string | null {
   const images: string[] = (product as { images?: string[] }).images || [];
   const nameLower = product.name?.toLowerCase() || '';
 
-  // Special safeguard for Patek Philippe timepieces: guarantee a clean studio or isolated photo
+  // Special safeguard for Patek Philippe timepieces:
+  // The catalog contains a 4-panel collage with red background in images[0] for "Patek Philippe".
+  // If clean isolated shots exist in images.slice(1) (like Orange Patek), use that clean angle.
+  // If no clean isolated shot exists (like the 60k Patek with only the collage),
+  // ALWAYS return the studio atelier cutout (/images/watches/watch-1.png) so a collage is NEVER shown!
   if (nameLower.includes('patek')) {
     if (images.length > 1) {
       const singleShot = images.slice(1).find((img) => !isCollageImage(img));
       if (singleShot) return singleShot;
-    }
-    if (images[0] && !isCollageImage(images[0])) {
-      return images[0];
     }
     return '/images/watches/watch-1.png';
   }
@@ -410,11 +411,16 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
       id="home"
       className="relative min-h-[calc(100svh-56px)] lg:min-h-[calc(100vh-100px)] w-full bg-[#FAF7F2] overflow-hidden flex flex-col justify-between px-4 sm:px-8 lg:px-14 pt-4 sm:pt-6 lg:pt-8 pb-3 sm:pb-5 lg:pb-0 select-none"
     >
-      {/* Grand Luxury Typography across top of Hero (Identical Didone aesthetic to reference) */}
-      <div className="absolute top-2 sm:top-4 lg:top-6 inset-x-0 w-full z-10 pointer-events-none select-none flex justify-center items-center overflow-hidden px-2 sm:px-4">
-        <h1 className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-950 uppercase text-[10.5vw] sm:text-[8.5vw] lg:text-[7.2vw] xl:text-[112px] 2xl:text-[128px] leading-none whitespace-nowrap text-center select-none">
-          OMO ESHO SIGNATURES
-        </h1>
+      {/* Grand Luxury Typography across top of Hero with Depth-of-Field Soft Focus & Contained Overlap */}
+      <div className="absolute top-4 sm:top-6 lg:top-8 xl:top-9 inset-x-0 w-full z-10 pointer-events-none select-none flex justify-center items-center overflow-hidden px-4 sm:px-8 lg:px-14">
+        <div className="max-w-7xl w-full flex items-center justify-between">
+          <span className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-900/80 uppercase text-[7.5vw] sm:text-[6.2vw] md:text-[5.2vw] lg:text-[4.4vw] xl:text-[70px] 2xl:text-[82px] leading-none whitespace-nowrap select-none filter blur-[0.8px] md:blur-[1.8px] transition-all duration-500">
+            OMO ESHO
+          </span>
+          <span className="[font-family:var(--font-bodoni)] font-bold tracking-tight text-neutral-900/80 uppercase text-[7.5vw] sm:text-[6.2vw] md:text-[5.2vw] lg:text-[4.4vw] xl:text-[70px] 2xl:text-[82px] leading-none whitespace-nowrap select-none filter blur-[0.8px] md:blur-[1.8px] transition-all duration-500">
+            SIGNATURES
+          </span>
+        </div>
       </div>
 
       {/* Main Container: 12-col grid on desktop, aligned to bottom */}
@@ -445,11 +451,11 @@ export default function HeroSection({ onSelectCategory: _onSelectCategory }: Her
           </div>
         </div>
 
-        {/* Center Column: Model Image (Generously sized like reference, positioned in front of brand text for editorial depth) */}
-        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full h-full flex flex-col items-center justify-end self-end shrink-0 lg:shrink z-10 pointer-events-none">
-          <div className="relative w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[660px] xl:max-w-[740px] 2xl:max-w-[800px] h-[58svh] sm:h-[68svh] lg:h-[86vh] xl:h-[90vh] max-h-[940px] min-h-[380px] mx-auto flex items-end justify-center">
-            {/* Model Photo (Trimmed to 0px top margin so head extends into brand text area) */}
-            <div className="relative w-full h-full">
+        {/* Center Column: Model Image (Generously sized, in sharp focus with depth shadow in front of soft wordmark) */}
+        <div className="order-1 lg:order-2 lg:col-span-5 relative w-full h-full flex flex-col items-center justify-end self-end shrink-0 lg:shrink z-20 pointer-events-none">
+          <div className="relative w-full max-w-[440px] sm:max-w-[500px] lg:max-w-[620px] xl:max-w-[700px] 2xl:max-w-[760px] h-[52svh] sm:h-[62svh] lg:h-[84vh] xl:h-[88vh] max-h-[920px] min-h-[340px] mx-auto flex items-end justify-center">
+            {/* Model Photo (Sharp subject with subtle ambient depth shadow) */}
+            <div className="relative w-full h-full drop-shadow-[0_14px_30px_rgba(0,0,0,0.12)]">
               <Image
                 src="/images/model-refined.png"
                 alt="Omo Esho Model"
